@@ -1,21 +1,27 @@
-import * as P from '@konker.dev/effect-ts-prelude';
+import type * as P from '@konker.dev/effect-ts-prelude';
 
-import type { Environment } from '../index';
-import type { FileSet } from '../mappings';
-import { fsFileSourceReader } from './FsFileSourceReader';
+import type { FuncSmithError } from '../error';
+import type { FileSet, FileSetItem } from '../lib/fileSet';
 
 export type FileSource = {
   type: string;
   path: string;
 };
 
-export type FileSourceReader = <D extends Environment>(fs: FileSource) => P.Effect.Effect<D, Error, FileSet>;
+export type FileSourceReader<T extends FileSetItem> = (
+  sourcePath: string,
+  globPattern?: string
+) => P.Effect.Effect<never, FuncSmithError, FileSet<T>>;
 
-export type FileSourceReaderFactory = <D extends Environment>(
+/* FIXME: remove?
+export type FileSourceReaderFactory<R, T extends FileSetItem> = (
   type: string
-) => P.Effect.Effect<D, Error, FileSourceReader>;
+) => P.Effect.Effect<R, FuncSmithError, FileSourceReader<R, T>>;
 
-export const readerFactory: FileSourceReaderFactory = (_type) => {
+export const readerFactory = <R, T extends FileSetItem>(
+  _type: string
+): P.Effect.Effect<R, FuncSmithError, FileSourceReader<R, T>> => {
   //[TODO: fill in something for fs here to start with]
   return P.Effect.succeed(fsFileSourceReader);
 };
+*/

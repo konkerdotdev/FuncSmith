@@ -4,35 +4,21 @@
 
   The design is initially informed by fs and also S3 as source and/or sink
 */
-import * as P from '@konker.dev/effect-ts-prelude';
+import type * as P from '@konker.dev/effect-ts-prelude';
 
-import type { FileSetMapping } from './mappings';
-import type { FileSink } from './sink';
-import { writerFactory } from './sink';
-import type { FileSource } from './source';
-import { readerFactory } from './source';
+import type { FuncSmithError } from './error';
+import type { FileSet, FileSetItem } from './lib/fileSet';
+import type { FileSetMapping, FuncSmithContext } from './types';
 
-export const Environment = P.Context.Tag<Record<string, unknown>>();
-export type Environment = typeof Environment;
+// --------------------------------------------------------------------------
+export * from './plugins';
+export * from './types';
 
-//[TODO: instead of void return some kind of stats?]
-export function FuncSmith<D extends Environment>(
-  src: FileSource,
-  sink: FileSink,
-  // eslint-disable-next-line fp/no-rest-parameters
-  ...mappings: Array<FileSetMapping<D>>
-): P.Effect.Effect<D, Error, void> {
-  return P.pipe(
-    P.Effect.Do,
-    P.Effect.bind('reader', () => readerFactory<D>(src.type)),
-    P.Effect.bind('writer', () => writerFactory<D>(sink.type)),
-    P.Effect.bind('fileSet', ({ reader }) => reader<D>(src)),
-    P.Effect.bind('mappedFileSet', ({ fileSet }) =>
-      P.pipe(
-        mappings,
-        P.Effect.reduce(fileSet, (acc, val) => val(acc))
-      )
-    ),
-    P.Effect.flatMap(({ mappedFileSet, writer }) => writer<D>(sink, mappedFileSet))
-  );
+// --------------------------------------------------------------------------
+export const EMPTY_FILESET = <T extends FileSetItem>(): FileSet<T> => [];
+
+export function FuncSmith<T extends FileSetItem, R>(
+  pluginStack: FileSetMapping<FileSetItem, T, R>
+): P.Effect.Effect<R | FuncSmithContext, FuncSmithError, FileSet<T>> {
+  return pluginStack(EMPTY_FILESET<T>());
 }

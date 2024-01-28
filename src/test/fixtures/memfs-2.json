@@ -1,0 +1,12 @@
+{
+  "./foo/src/index.md": "# Index\nindex content",
+  "./foo/src/p1.md": "# P1\np1 content",
+  "./foo/src/ignore1.txt": "IGNORE 1",
+  "./foo/src/bar/p2.md": "---\nisBar: true\ndraft: false\n---\n# P2\np2 content",
+  "./foo/src/bar/p3.md": "---\nisBar: true\ndraft: true\n---\n# P3\np2 content",
+  "./foo/b.txt": "B",
+  "./foo/c.csv": "bam,baz\ntrue,false\n",
+  "./foo/d.json": "{\"bam\": true, \"baz\":  false }",
+  "./foo/bar/e.txt": "E",
+  "./foo/bar/f.log": "F"
+}

@@ -1,0 +1,20 @@
+[
+  { "_tag": "Directory", "level": 0, "path": "/tmp/foo" },
+  { "_tag": "File", "level": 1, "path": "/tmp/foo/a.txt", "data": ["A"] },
+  { "_tag": "File", "level": 1, "path": "/tmp/foo/b.txt", "data": ["B"] },
+  {
+    "_tag": "File",
+    "level": 1,
+    "path": "/tmp/foo/c.csv",
+    "data": ["bam,baz\ntrue,false\n"]
+  },
+  {
+    "_tag": "File",
+    "level": 1,
+    "path": "/tmp/foo/d.json",
+    "data": ["{\"bam\": true, \"baz\":  false }"]
+  },
+  { "_tag": "Directory", "level": 1, "path": "/tmp/foo/bar" },
+  { "_tag": "File", "level": 2, "path": "/tmp/foo/bar/e.txt", "data": ["E"] },
+  { "_tag": "File", "level": 2, "path": "/tmp/foo/bar/f.log", "data": ["F"] }
+]

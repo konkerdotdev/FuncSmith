@@ -1,19 +1,25 @@
-import * as P from '@konker.dev/effect-ts-prelude';
+import type * as P from '@konker.dev/effect-ts-prelude';
 
-import type { Environment } from '../index';
-import type { FileSet } from '../mappings';
-import { fsFileSinkWriter } from './FsFileSinkWriter';
+import type { FuncSmithError } from '../error';
+import type { FileSet, FileSetItem } from '../lib/fileSet';
 
 export type FileSink = {
   type: string;
   path: string;
 };
 
-export type FileSinkWriter = <D extends Environment>(fs: FileSink, d: FileSet) => P.Effect.Effect<D, Error, void>;
+export type FileSinkWriter<T extends FileSetItem> = (
+  sinkPath: string,
+  fileSet: FileSet<T>
+) => P.Effect.Effect<never, FuncSmithError, void>;
 
-export type FileSinkWriterFactory = <D extends Environment>(type: string) => P.Effect.Effect<D, Error, FileSinkWriter>;
+/* FIXME: remove?
+export type FileSinkWriterFactory<R, T extends FileSetItem> = (
+  type: string
+) => P.Effect.Effect<R, FuncsmithError, FileSinkWriter<R, T>>;
 
-export const writerFactory: FileSinkWriterFactory = (_type: string) => {
+export const writerFactory = (_type: string) => {
   //[TODO: fill in something for fs here to start with]
   return P.Effect.succeed(fsFileSinkWriter);
 };
+*/

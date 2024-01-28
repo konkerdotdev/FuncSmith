@@ -1,27 +1,61 @@
+/* eslint-disable fp/no-mutating-methods,fp/no-unused-expression */
 import * as P from '@konker.dev/effect-ts-prelude';
-import { NodeTinyFileSystem } from '@konker.dev/tiny-filesystem-fp/dist/node';
+import * as E from '@konker.dev/tiny-event-fp';
+import type { TreeCrawlerData, TreeCrawlerEvent } from '@konker.dev/tiny-treecrawler-fp';
+import { MapTreeCrawlerAccumulator } from '@konker.dev/tiny-treecrawler-fp/dist/accumulator/MapTreeCrawlerAccumultor';
+import { BreadthFirstTreeCrawler } from '@konker.dev/tiny-treecrawler-fp/dist/crawler/breadth-first-tree-crawler';
+import { TrueDirectoryFilter } from '@konker.dev/tiny-treecrawler-fp/dist/filter/directory/true-directory-filter';
+import { GlobFileFilter } from '@konker.dev/tiny-treecrawler-fp/dist/filter/file/glob-file-filter';
+import { TrueFileFilter } from '@konker.dev/tiny-treecrawler-fp/dist/filter/file/true-file-filter';
+import { NoopTreeCrawlerDirectoryHandler } from '@konker.dev/tiny-treecrawler-fp/dist/handler/directory/noop-directory-handler';
+import { DefaultTreeCrawlerFileHandler } from '@konker.dev/tiny-treecrawler-fp/dist/handler/file/default-file-handler';
 
-import type { Environment } from '../index';
-import type { FileItem, FileSet } from '../mappings';
-import { FILE_ITEM_TYPE_FILE } from '../mappings';
-import type { FileSource, FileSourceReader } from './index';
+import type { FuncSmithError } from '../error';
+import { toFuncSmithError } from '../error';
+import type { FileSet, FileSetItem } from '../lib/fileSet';
+import { toFileSystemItemList } from '../lib/fileSet/fileSetItem';
+import { FuncSmithContextFs } from '../types';
 
-export const fsFileSourceReader: FileSourceReader = <D extends Environment>(
-  fs: FileSource
-): P.Effect.Effect<D, Error, FileSet> => {
+export const fsFileSourceReader = (
+  sourcePath: string,
+  globPattern?: string
+): P.Effect.Effect<FuncSmithContextFs, FuncSmithError, FileSet<FileSetItem>> => {
   // Read in the file system at the given path, and convert to a list of FileItems
-  const dataAccessor = NodeTinyFileSystem;
   return P.pipe(
-    NodeTinyFileSystem.listFiles(fs.path),
-    (x) => x,
-    P.Effect.map(
-      P.Array.map(
-        (path: Ref): FileItem => ({
-          name: path,
-          type: FILE_ITEM_TYPE_FILE,
-          content: Buffer.from('UNKNOWN'),
-        })
+    P.Effect.Do,
+    P.Effect.bind('accumulator', () =>
+      P.Effect.succeed(MapTreeCrawlerAccumulator<TreeCrawlerData>((_event, data): TreeCrawlerData => data))
+    ),
+    P.Effect.bind('events', ({ accumulator }) =>
+      P.pipe(
+        E.createTinyEventDispatcher<TreeCrawlerEvent, TreeCrawlerData>(),
+        P.Effect.flatMap(
+          E.addStarListener((_eventType: TreeCrawlerEvent, eventData?: TreeCrawlerData) => {
+            accumulator.push(_eventType, eventData);
+            return P.Effect.unit;
+          })
+        )
       )
-    )
+    ),
+    P.Effect.bind('tfs', () =>
+      P.pipe(
+        FuncSmithContextFs,
+        P.Effect.map((deps) => deps.tinyFs)
+      )
+    ),
+    P.Effect.flatMap(({ accumulator, events, tfs }) =>
+      P.pipe(
+        sourcePath,
+        BreadthFirstTreeCrawler(
+          tfs,
+          events,
+          [globPattern ? GlobFileFilter(globPattern) : TrueFileFilter, TrueDirectoryFilter],
+          [DefaultTreeCrawlerFileHandler, NoopTreeCrawlerDirectoryHandler]
+        ),
+        P.Effect.flatMap(() => accumulator.data()),
+        P.Effect.flatMap(toFileSystemItemList(tfs, sourcePath))
+      )
+    ),
+    P.Effect.mapError(toFuncSmithError)
   );
 };

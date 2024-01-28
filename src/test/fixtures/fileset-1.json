@@ -1,0 +1,68 @@
+[
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/as.txt",
+    "baseDir": "/tmp/foo",
+    "relPath": "as.txt",
+    "relDir": ".",
+    "fileName": "as.txt",
+    "fileBase": "as",
+    "fileExt": "txt",
+    "contents": "A"
+  },
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/b.txt",
+    "baseDir": "/tmp/foo",
+    "relPath": "b.txt",
+    "relDir": ".",
+    "fileName": "b.txt",
+    "fileBase": "b",
+    "fileExt": "txt",
+    "contents": "B"
+  },
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/c.csv",
+    "baseDir": "/tmp/foo",
+    "relPath": "c.csv",
+    "relDir": ".",
+    "fileName": "c.csv",
+    "fileBase": "c",
+    "fileExt": "csv",
+    "contents": "bam,baz\ntrue,false\n"
+  },
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/d.json",
+    "baseDir": "/tmp/foo",
+    "relPath": "d.json",
+    "relDir": ".",
+    "fileName": "d.json",
+    "fileBase": "d",
+    "fileExt": "json",
+    "contents": "{\"bam\": true, \"baz\":  false }"
+  },
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/bar/e.txt",
+    "baseDir": "/tmp/foo",
+    "relPath": "bar/e.txt",
+    "relDir": "bar",
+    "fileName": "e.txt",
+    "fileBase": "e",
+    "fileExt": "txt",
+    "contents": "E"
+  },
+  {
+    "_tag": "File",
+    "path": "/tmp/foo/bar/f.log",
+    "baseDir": "/tmp/foo",
+    "relPath": "bar/f.log",
+    "relDir": "bar",
+    "fileName": "f.log",
+    "fileBase": "f",
+    "fileExt": "log",
+    "contents": "F"
+  }
+]
