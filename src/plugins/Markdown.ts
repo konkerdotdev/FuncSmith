@@ -43,18 +43,25 @@ export const processFileSetItem =
  * substituting / adding to the content a parsed record derived from the file contents.
  * Any kind of error in parsing, file access, etc. is fatal
  */
-export const markdown =
-  <IF extends FrontMatter<FileSetItem>, OF extends FrontMatter<FileSetItem>, R>(
+export const markdownMapping =
+  <IF extends FrontMatter<FileSetItem>>(
     options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
-  ) =>
-  (
-    next: FileSetMapping<IF | Html<IF>, OF | Html<OF>, R>
-  ): FileSetMapping<IF, OF | Html<OF>, R | FuncSmithContextEnv | FuncSmithContextMetadata> =>
+  ): FileSetMapping<IF, IF | Html<IF>, FuncSmithContextEnv | FuncSmithContextMetadata> =>
   (fileSet: FileSet<IF>) =>
     P.pipe(
       P.Effect.all([FuncSmithContextEnv, FuncSmithContextMetadata]),
       P.Effect.flatMap(([_funcSmithContextEnv, _funcSmithContextMetadata]) =>
         P.pipe(fileSet, P.Array.map(processFileSetItem({ ...DEFAULT_MARKDOWN_OPTIONS, ...options })), P.Effect.all)
-      ),
-      P.Effect.flatMap(next)
+      )
     );
+
+// --------------------------------------------------------------------------
+export const markdown =
+  <IF extends FrontMatter<FileSetItem>, OF extends FileSetItem, R>(
+    options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
+  ) =>
+  (
+    next: FileSetMapping<IF | Html<IF>, OF, R>
+  ): FileSetMapping<IF, OF, R | FuncSmithContextEnv | FuncSmithContextMetadata> =>
+  (fileSet: FileSet<IF>) =>
+    P.pipe(fileSet, markdownMapping(options), P.Effect.flatMap(next));

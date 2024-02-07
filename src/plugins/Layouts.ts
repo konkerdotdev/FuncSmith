@@ -141,21 +141,20 @@ export function layoutsLoadTemplates(
   );
 }
 
-export const layouts =
-  <IF extends FrontMatter<FileSetItem>, R>(options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS) =>
-  (
-    next: FileSetMapping<IF | Html<IF>, IF | Html<IF>, R>
+// --------------------------------------------------------------------------
+export const layoutsMapping =
+  <IF extends FrontMatter<FileSetItem>>(
+    options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS
   ): FileSetMapping<
+    IF,
     IF | Html<IF>,
-    IF | Html<IF>,
-    | R
-    | FuncSmithContext
+    | FuncSmithContext<IF>
     | FuncSmithContextEnv
     | FuncSmithContextMetadata
     | FuncSmithContextReader
     | FuncSmithContextWriter
   > =>
-  (fileSet: FileSet<IF | Html<IF>>) => {
+  (fileSet: FileSet<IF>) => {
     const safeOptions = { ...DEFAULT_LAYOUTS_OPTIONS, ...options };
 
     return P.pipe(
@@ -190,7 +189,24 @@ export const layouts =
             ),
             P.Effect.all
           )
-      ),
-      P.Effect.flatMap(next)
+      )
     );
   };
+
+// --------------------------------------------------------------------------
+export const layouts =
+  <IF extends FrontMatter<FileSetItem>, R>(options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS) =>
+  (
+    next: FileSetMapping<IF | Html<IF>, IF | Html<IF>, R>
+  ): FileSetMapping<
+    IF,
+    IF | Html<IF>,
+    | R
+    | FuncSmithContext
+    | FuncSmithContextEnv
+    | FuncSmithContextMetadata
+    | FuncSmithContextReader
+    | FuncSmithContextWriter
+  > =>
+  (fileSet: FileSet<IF>) =>
+    P.pipe(fileSet, layoutsMapping(options), P.Effect.flatMap(next));

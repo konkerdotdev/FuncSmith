@@ -21,8 +21,17 @@ export const shouldKeep =
     return safeOptions.include ? !!draft : !draft;
   };
 
+// --------------------------------------------------------------------------
+export const draftsMapping =
+  <IF extends FrontMatter<FileSetItem>>(
+    options: Partial<DraftsOptions> = DEFAULT_DRAFTS_OPTIONS
+  ): FileSetMapping<IF, IF, never> =>
+  (fileSet: FileSet<IF>) =>
+    P.pipe(fileSet, P.Array.filter(shouldKeep(options)), P.Effect.succeed);
+
+// --------------------------------------------------------------------------
 export const drafts =
   <IF extends FrontMatter<FileSetItem>, OF extends IF, R>(options: Partial<DraftsOptions> = DEFAULT_DRAFTS_OPTIONS) =>
   (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R> =>
   (fileSet: FileSet<IF>) =>
-    P.pipe(fileSet, P.Array.filter(shouldKeep(options)), next);
+    P.pipe(fileSet, draftsMapping(options), P.Effect.flatMap(next));

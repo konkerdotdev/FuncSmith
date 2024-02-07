@@ -5,8 +5,15 @@ import type { FrontMatter } from '../lib/frontMatter';
 import { extractFrontMatter } from '../lib/frontMatter';
 import type { FileSetMapping } from '../types';
 
+// --------------------------------------------------------------------------
+export const frontMatterMapping =
+  <IF extends FileSetItem>(): FileSetMapping<IF, FrontMatter<IF>, never> =>
+  (fileSet: FileSet<IF>) =>
+    P.pipe(fileSet, P.Array.map(extractFrontMatter), P.Effect.all);
+
+// --------------------------------------------------------------------------
 export const frontMatter =
-  <IF extends FileSetItem, OF extends FrontMatter<IF>, R>() =>
+  <IF extends FileSetItem, OF extends FileSetItem, R>() =>
   (next: FileSetMapping<FrontMatter<IF>, OF, R>): FileSetMapping<IF, OF, R> =>
   (fileSet: FileSet<IF>) =>
-    P.pipe(fileSet, P.Array.map(extractFrontMatter), P.Effect.all, P.Effect.flatMap(next));
+    P.pipe(fileSet, frontMatterMapping(), P.Effect.flatMap(next));

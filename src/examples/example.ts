@@ -24,11 +24,13 @@ import {
       },
       globPattern: '**/*.html',
     }),
+    F.debug('KONK90'),
     F.collections({
       posts: 'posts/*.html',
     }),
     F.rename([[/\.md$/, '.html']]),
     F.markdown(),
+    F.identity(),
     F.drafts(),
     F.frontMatter(),
     F.reader(),

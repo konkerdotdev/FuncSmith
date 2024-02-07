@@ -24,18 +24,20 @@ export const renameFileSetItem =
     );
   };
 
-export const rename =
-  <T extends FileSetItem, OF extends T, R>(specs: Array<RenameSpec>) =>
-  (next: FileSetMapping<T, OF, R>): FileSetMapping<T, OF, R | FuncSmithContextWriter> =>
-  (fileSet: FileSet<T>) =>
+// --------------------------------------------------------------------------
+export const renameMapping =
+  <IF extends FileSetItem>(specs: Array<RenameSpec>): FileSetMapping<IF, IF, FuncSmithContextWriter> =>
+  (fileSet: FileSet<IF>) =>
     P.pipe(
       FuncSmithContextWriter,
       P.Effect.flatMap((funcSmithContextWriter) =>
-        P.pipe(
-          fileSet,
-          P.Array.map(renameFileSetItem(funcSmithContextWriter.tinyFs, specs)),
-          P.Effect.all,
-          P.Effect.flatMap(next)
-        )
+        P.pipe(fileSet, P.Array.map(renameFileSetItem(funcSmithContextWriter.tinyFs, specs)), P.Effect.all)
       )
     );
+
+// --------------------------------------------------------------------------
+export const rename =
+  <IF extends FileSetItem, OF extends FileSetItem, R>(specs: Array<RenameSpec>) =>
+  (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R | FuncSmithContextWriter> =>
+  (fileSet: FileSet<IF>) =>
+    P.pipe(fileSet, renameMapping(specs), P.Effect.flatMap(next));
