@@ -19,14 +19,10 @@ import type { FrontMatter } from '../lib/frontMatter';
 import { isFrontMatter } from '../lib/frontMatter';
 import { handlebarsCompile, handlebarsRenderK } from '../lib/handlebars-effect';
 import type { FileSetMapping } from '../types';
-import {
-  FuncSmithContext,
-  FuncSmithContextEnv,
-  FuncSmithContextMetadata,
-  FuncSmithContextReader,
-  FuncSmithContextWriter,
-} from '../types';
+import { FuncSmithContext, FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader } from '../types';
+import { wrapMapping } from './lib';
 
+// --------------------------------------------------------------------------
 export type LayoutsOptions = {
   readonly templateEngine: string;
   readonly directory: string;
@@ -43,6 +39,7 @@ export const DEFAULT_LAYOUTS_OPTIONS: LayoutsOptions = {
   helpers: {},
 };
 
+// --------------------------------------------------------------------------
 export function getLayoutTemplate<T extends FrontMatter<FileSetItem>>(
   templateMap: Record<string, H.TemplateDelegate>,
   options: LayoutsOptions,
@@ -53,6 +50,7 @@ export function getLayoutTemplate<T extends FrontMatter<FileSetItem>>(
   return ret ? P.Effect.succeed(ret) : P.Effect.fail(toFuncSmithError(`Layout not found: ${layout}`));
 }
 
+// --------------------------------------------------------------------------
 export function processFileItem<T extends FileSetItem>(
   env: Record<string, unknown>,
   options: LayoutsOptions,
@@ -72,6 +70,7 @@ export function processFileItem<T extends FileSetItem>(
     : P.Effect.succeed(fileSetItem);
 }
 
+// --------------------------------------------------------------------------
 export function toTemplateMap(options: LayoutsOptions, data: Array<FileSetItem>) {
   return P.pipe(
     data.filter(isFileItem),
@@ -95,6 +94,7 @@ export function toTemplateMap(options: LayoutsOptions, data: Array<FileSetItem>)
   );
 }
 
+// --------------------------------------------------------------------------
 export function layoutsLoadTemplates(
   tfs: TinyFileSystem,
   rootDirPath: string,
@@ -142,17 +142,13 @@ export function layoutsLoadTemplates(
 }
 
 // --------------------------------------------------------------------------
-export const layoutsMapping =
-  <IF extends FrontMatter<FileSetItem>>(
+export const layoutsMappingCtor =
+  <IF extends FileSetItem>(
     options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS
   ): FileSetMapping<
     IF,
     IF | Html<IF>,
-    | FuncSmithContext<IF>
-    | FuncSmithContextEnv
-    | FuncSmithContextMetadata
-    | FuncSmithContextReader
-    | FuncSmithContextWriter
+    FuncSmithContext<IF> | FuncSmithContextEnv | FuncSmithContextMetadata | FuncSmithContextReader
   > =>
   (fileSet: FileSet<IF>) => {
     const safeOptions = { ...DEFAULT_LAYOUTS_OPTIONS, ...options };
@@ -160,22 +156,13 @@ export const layoutsMapping =
     return P.pipe(
       P.Effect.Do,
       P.Effect.bind('deps', () =>
-        P.Effect.all([
-          FuncSmithContext<IF>(),
-          FuncSmithContextEnv,
-          FuncSmithContextMetadata,
-          FuncSmithContextReader,
-          FuncSmithContextWriter,
-        ])
+        P.Effect.all([FuncSmithContext<IF>(), FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader])
       ),
-      P.Effect.bind('templateMap', ({ deps: [funcSmithContext, _, __, funcSmithContextReader, ___] }) =>
+      P.Effect.bind('templateMap', ({ deps: [funcSmithContext, _, __, funcSmithContextReader] }) =>
         layoutsLoadTemplates(funcSmithContextReader.tinyFs, funcSmithContext.rootDirPath, safeOptions)
       ),
       P.Effect.flatMap(
-        ({
-          deps: [_, funcSmithContextEnv, funcSmithContextMetadata, _funcSmithContextReader, _funcSmithContextWriter],
-          templateMap,
-        }) =>
+        ({ deps: [_, funcSmithContextEnv, funcSmithContextMetadata, _funcSmithContextReader], templateMap }) =>
           P.pipe(
             fileSet,
             P.Array.map((fileSetItem) =>
@@ -193,20 +180,4 @@ export const layoutsMapping =
     );
   };
 
-// --------------------------------------------------------------------------
-export const layouts =
-  <IF extends FrontMatter<FileSetItem>, R>(options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS) =>
-  (
-    next: FileSetMapping<IF | Html<IF>, IF | Html<IF>, R>
-  ): FileSetMapping<
-    IF,
-    IF | Html<IF>,
-    | R
-    | FuncSmithContext
-    | FuncSmithContextEnv
-    | FuncSmithContextMetadata
-    | FuncSmithContextReader
-    | FuncSmithContextWriter
-  > =>
-  (fileSet: FileSet<IF>) =>
-    P.pipe(fileSet, layoutsMapping(options), P.Effect.flatMap(next));
+export const layouts = wrapMapping(layoutsMappingCtor);

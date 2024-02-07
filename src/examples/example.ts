@@ -3,17 +3,13 @@ import * as P from '@konker.dev/effect-ts-prelude';
 
 import * as F from '../index';
 import { EMPTY_FILESET } from '../index';
-import {
-  FuncSmithContextEnvDefault,
-  FuncSmithContextMetadataDefault,
-  FuncSmithContextReaderLive,
-  FuncSmithContextWriterLive,
-} from '../layers';
+import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layers';
 
 (async () => {
   const pluginStack = P.pipe(
     P.Effect.succeed,
     F.writer(),
+    F.filter(),
     F.layouts({
       templateEngine: 'handlebars',
       directory: 'example-src/layouts',
@@ -21,17 +17,21 @@ import {
         formattedDate: function (date) {
           return new Date(date).toLocaleDateString();
         },
+        toJSON: function (x) {
+          // eslint-disable-next-line fp/no-nil
+          return JSON.stringify(x, null, 2);
+        },
       },
       globPattern: '**/*.html',
     }),
-    F.debug('KONK90'),
+    // F.debug(),
     F.collections({
       posts: 'posts/*.html',
     }),
     F.rename([[/\.md$/, '.html']]),
     F.markdown(),
-    F.identity(),
     F.drafts(),
+    F.identity(),
     F.frontMatter(),
     F.reader(),
     F.metadata({
@@ -45,7 +45,7 @@ import {
       TEST_SOME_ENV_VAR: 'TEST_SOME_ENV_VAR_VALUE',
     }),
     F.cleaner(),
-    F.use(F.sink('example-build')),
+    F.sink('example-build'),
     F.source('example-src/src'),
     F.root(__dirname)
   );
@@ -53,9 +53,6 @@ import {
   return P.Effect.runPromise(
     P.pipe(
       pluginStack(EMPTY_FILESET()),
-      P.Effect.provide(FuncSmithContextMetadataDefault),
-      P.Effect.provide(FuncSmithContextEnvDefault),
-      // ---
       P.Effect.provide(FuncSmithContextReaderLive),
       P.Effect.provide(FuncSmithContextWriterLive)
     )

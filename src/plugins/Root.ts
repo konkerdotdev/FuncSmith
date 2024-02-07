@@ -1,18 +1,22 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { EMPTY_FILESET } from '../index';
-import type { FileSet, FileSetItem } from '../lib/fileSet';
-import type { FileSetMapping } from '../types';
+import { EMPTY_FILESET, type FileSetMappingResult } from '../index';
+import type { FileSetItem } from '../lib/fileSet';
 import { FuncSmithContext } from '../types';
+import { wrapInjection } from './lib';
 
-export const root =
-  <T extends FileSetItem, R>(rootDirPath: string) =>
-  (next: FileSetMapping<T, T, R>): FileSetMapping<T, T, Exclude<R, FuncSmithContext<T>>> =>
-  (ifs: FileSet<T>) =>
+// FIXME: remove default
+export const DEFAULT_ROOT_DIR_PATH = '.';
+
+export const rootInjectionCtor =
+  <IF extends FileSetItem, R>(rootDirPath = DEFAULT_ROOT_DIR_PATH) =>
+  (result: FileSetMappingResult<IF, R>): FileSetMappingResult<IF, Exclude<R, FuncSmithContext<IF>>> =>
     P.pipe(
-      next(ifs),
+      result,
       P.Effect.provideService(
-        FuncSmithContext<T>(),
-        FuncSmithContext<T>().of({ fileSet: EMPTY_FILESET<T>(), rootDirPath })
+        FuncSmithContext<IF>(),
+        FuncSmithContext<IF>().of({ fileSet: EMPTY_FILESET<IF>(), rootDirPath })
       )
     );
+
+export const root = wrapInjection(rootInjectionCtor);

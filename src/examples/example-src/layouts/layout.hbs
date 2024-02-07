@@ -7,7 +7,8 @@
   <meta name="viewport" content="device-width, initial-scale=1.0">
   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
-  <meta name="generator" content="metalsmith">
+  <link rel="stylesheet" href="/css/prism.css">
+  <meta name="generator" content="funcsmith">
 </head>
 <body>
   <div class="container">
@@ -25,9 +26,9 @@
       {{{ contents }}}
       {{#if postlist}}
         <ul>
-        {{#each posts}}
+        {{#each collections.posts}}
           <li>
-            <a href="/{{ relPath }}">{{ title }}</a>
+            <a href="/{{ relPath }}">{{ title }}</a> [{{collection.len}}][{{collection.previous}}][{{collection.next}}]
           </li>
         {{/each}}
         </ul>
@@ -40,5 +41,6 @@
 
   </div>
 
+  <script src="/scripts/prism.js"></script>
 </body>
 </html>

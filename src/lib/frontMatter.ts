@@ -21,7 +21,7 @@ export function extractFrontMatter<T extends FileSetItemFile>(
       return {
         ...fileSetItem,
         ...data,
-        frontMatter: data,
+        frontMatter: data ?? {},
         contents: content,
       };
     },

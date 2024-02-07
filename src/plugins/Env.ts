@@ -1,11 +1,15 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import type { FileSet, FileSetItem } from '../lib/fileSet';
-import type { FileSetMapping } from '../types';
+import type { FileSetItem } from '../lib/fileSet';
+import type { FileSetMappingResult } from '../types';
 import { FuncSmithContextEnv } from '../types';
+import { wrapInjection } from './lib';
 
-export const env =
-  <T extends FileSetItem, R>(env: Record<string, unknown>) =>
-  (next: FileSetMapping<T, T, R>): FileSetMapping<T, T, Exclude<R, FuncSmithContextEnv>> =>
-  (ifs: FileSet<T>) =>
-    P.pipe(next(ifs), P.Effect.provideService(FuncSmithContextEnv, FuncSmithContextEnv.of({ env })));
+export const DEFAULT_ENV = {};
+
+export const envInjectionCtor =
+  <IF extends FileSetItem, R>(env: Record<string, unknown> = DEFAULT_ENV) =>
+  (result: FileSetMappingResult<IF, R>): FileSetMappingResult<IF, Exclude<R, FuncSmithContextEnv>> =>
+    P.pipe(result, P.Effect.provideService(FuncSmithContextEnv, FuncSmithContextEnv.of({ env })));
+
+export const env = wrapInjection(envInjectionCtor);

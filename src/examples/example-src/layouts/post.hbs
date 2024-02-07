@@ -6,7 +6,8 @@
   <meta name="description" content="{{ description }}">
   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
-  <meta name="generator" content="metalsmith">
+  <link rel="stylesheet" href="/css/prism.css">
+  <meta name="generator" content="funcsmith">
 </head>
 <body>
   <div class="container">
@@ -20,6 +21,10 @@
       <h1>{{ title }}<time class="float-right">{{ formattedDate date }}</time></h1>
     </header>
 
+    <p>[{{collection.len}}][{{collection.previous}}][{{collection.next}}]</p>
+    <pre>
+      {{{ toJSON collection }}}
+    </pre>
     <main>
       {{{ contents }}}
     </main>
@@ -30,5 +35,6 @@
 
   </div>
 
+  <script src="/scripts/prism.js"></script>
 </body>
 </html>

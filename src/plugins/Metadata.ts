@@ -1,11 +1,15 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import type { FileSet, FileSetItem } from '../lib/fileSet';
-import type { FileSetMapping } from '../types';
+import type { FileSetItem } from '../lib/fileSet';
+import type { FileSetMappingResult } from '../types';
 import { FuncSmithContextMetadata } from '../types';
+import { wrapInjection } from './lib';
 
-export const metadata =
-  <IF extends FileSetItem, OF extends FileSetItem, R>(metadata: Record<string, unknown>) =>
-  (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, Exclude<R, FuncSmithContextMetadata>> =>
-  (ifs: FileSet<IF>) =>
-    P.pipe(next(ifs), P.Effect.provideService(FuncSmithContextMetadata, FuncSmithContextMetadata.of({ metadata })));
+export const DEFAULT_METADATA = {};
+
+export const metadataInjectionCtor =
+  <IF extends FileSetItem, R>(metadata: Record<string, unknown> = DEFAULT_METADATA) =>
+  (result: FileSetMappingResult<IF, R>): FileSetMappingResult<IF, Exclude<R, FuncSmithContextMetadata>> =>
+    P.pipe(result, P.Effect.provideService(FuncSmithContextMetadata, FuncSmithContextMetadata.of({ metadata })));
+
+export const metadata = wrapInjection(metadataInjectionCtor);

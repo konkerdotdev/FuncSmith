@@ -7,9 +7,11 @@ import type { RenameSpec } from '../lib/fileSet/fileSetItem';
 import { fileSetItemRename } from '../lib/fileSet/fileSetItem';
 import type { FileSetMapping } from '../types';
 import { FuncSmithContextWriter } from '../types';
+import { wrapMapping } from './lib';
 
+// --------------------------------------------------------------------------
 export const renameFileSetItem =
-  <T extends FileSetItem>(_tfs: TinyFileSystem, specs: Array<RenameSpec>) =>
+  <T extends FileSetItem>(tfs: TinyFileSystem, specs: Array<RenameSpec> = []) =>
   (fileSetItem: T): P.Effect.Effect<never, FuncSmithError, T> => {
     return P.pipe(
       specs,
@@ -17,7 +19,7 @@ export const renameFileSetItem =
         (acc, spec) =>
           P.pipe(
             acc,
-            P.Effect.flatMap((acc) => fileSetItemRename(_tfs, spec, acc))
+            P.Effect.flatMap((acc) => fileSetItemRename(tfs, spec, acc))
           ),
         P.Effect.succeed(fileSetItem) as P.Effect.Effect<never, FuncSmithError, T>
       )
@@ -25,8 +27,8 @@ export const renameFileSetItem =
   };
 
 // --------------------------------------------------------------------------
-export const renameMapping =
-  <IF extends FileSetItem>(specs: Array<RenameSpec>): FileSetMapping<IF, IF, FuncSmithContextWriter> =>
+export const renameMappingCtor =
+  <IF extends FileSetItem>(specs: Array<RenameSpec> = []): FileSetMapping<IF, IF, FuncSmithContextWriter> =>
   (fileSet: FileSet<IF>) =>
     P.pipe(
       FuncSmithContextWriter,
@@ -35,9 +37,4 @@ export const renameMapping =
       )
     );
 
-// --------------------------------------------------------------------------
-export const rename =
-  <IF extends FileSetItem, OF extends FileSetItem, R>(specs: Array<RenameSpec>) =>
-  (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R | FuncSmithContextWriter> =>
-  (fileSet: FileSet<IF>) =>
-    P.pipe(fileSet, renameMapping(specs), P.Effect.flatMap(next));
+export const rename = wrapMapping(renameMappingCtor);

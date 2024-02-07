@@ -8,12 +8,14 @@ import { HtmlString } from '../lib/fileSet';
 import { fileSetItemMatchesPattern } from '../lib/fileSet/fileSetItem';
 import type { FrontMatter } from '../lib/frontMatter';
 import { type FileSetMapping, FuncSmithContextEnv, FuncSmithContextMetadata } from '../types';
+import { wrapMapping } from './lib';
 
+// --------------------------------------------------------------------------
 export type MarkdownOptions = {
   readonly globPattern: string;
 };
 export const DEFAULT_MARKDOWN_OPTIONS: MarkdownOptions = {
-  globPattern: '**/*.html',
+  globPattern: '**/*.md',
 };
 
 // --------------------------------------------------------------------------
@@ -43,7 +45,7 @@ export const processFileSetItem =
  * substituting / adding to the content a parsed record derived from the file contents.
  * Any kind of error in parsing, file access, etc. is fatal
  */
-export const markdownMapping =
+export const markdownMappingCtor =
   <IF extends FrontMatter<FileSetItem>>(
     options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
   ): FileSetMapping<IF, IF | Html<IF>, FuncSmithContextEnv | FuncSmithContextMetadata> =>
@@ -55,13 +57,4 @@ export const markdownMapping =
       )
     );
 
-// --------------------------------------------------------------------------
-export const markdown =
-  <IF extends FrontMatter<FileSetItem>, OF extends FileSetItem, R>(
-    options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
-  ) =>
-  (
-    next: FileSetMapping<IF | Html<IF>, OF, R>
-  ): FileSetMapping<IF, OF, R | FuncSmithContextEnv | FuncSmithContextMetadata> =>
-  (fileSet: FileSet<IF>) =>
-    P.pipe(fileSet, markdownMapping(options), P.Effect.flatMap(next));
+export const markdown = wrapMapping(markdownMappingCtor);

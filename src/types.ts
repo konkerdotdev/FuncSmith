@@ -59,14 +59,22 @@ export type FuncSmithContextWriter = {
 export const FuncSmithContextWriter = P.Context.Tag<FuncSmithContextWriter>('FuncSmithContextWriter');
 
 // --------------------------------------------------------------------------
-export type FileSetMapping<IF extends FileSetItem, OF extends FileSetItem, R = never> = (
-  a: FileSet<IF>
-) => P.Effect.Effect<R, FuncSmithError, FileSet<OF>>;
+export type FileSetMappingResult<IF extends FileSetItem, R> = P.Effect.Effect<R, FuncSmithError, FileSet<IF>>;
 
-export type FuncSmithPlugin<
-  IF extends FileSetItem,
-  OF extends FileSetItem,
-  NIF extends FileSetItem = IF,
-  R1 = never,
-  R2 = R1,
-> = (next: FileSetMapping<NIF, OF, R2 | FuncSmithContext>) => FileSetMapping<IF, OF, R1 | FuncSmithContext>;
+// --------------------------------------------------------------------------
+export type FileSetMapping<IF extends FileSetItem, OF extends FileSetItem, R> = (
+  a: FileSet<IF>
+) => FileSetMappingResult<OF, R>;
+
+export type FileSetMappingCtor<IF extends FileSetItem, OF extends FileSetItem, R, OP = undefined> = (
+  options?: OP
+) => FileSetMapping<IF, OF, R>;
+
+// --------------------------------------------------------------------------
+export type FileSetInjectionMapping<IF extends FileSetItem, R1, R2> = (
+  result: FileSetMappingResult<IF, R1>
+) => FileSetMappingResult<IF, R2>;
+
+export type FileSetInjectionMappingCtor<IF extends FileSetItem, R1, R2, OP = undefined> = (
+  options?: OP
+) => FileSetInjectionMapping<IF, R1, R2>;

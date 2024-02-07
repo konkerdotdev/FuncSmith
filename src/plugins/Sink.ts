@@ -1,24 +1,19 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import { toFuncSmithError } from '../error';
-import type { FileSet, FileSetItem } from '../lib/fileSet';
-import type { FileSetMapping, FuncSmithPlugin } from '../types';
+import type { FileSetItem } from '../lib/fileSet';
+import type { FileSetMappingResult } from '../types';
 import { FuncSmithContext, FuncSmithContextSink, FuncSmithContextWriter } from '../types';
+import { wrapInjection } from './lib';
 
-export const sink =
-  <IF extends FileSetItem, OF extends FileSetItem, R>(
-    sinkPath: string
-  ): FuncSmithPlugin<
-    IF,
-    OF,
-    IF,
-    Exclude<R, FuncSmithContextSink> | FuncSmithContext | FuncSmithContextWriter,
-    R | FuncSmithContext
-  > =>
+// FIXME: remove default
+export const DEFAULT_SINK_PATH = './build';
+
+export const sinkInjectionCtor =
+  <IF extends FileSetItem, R>(sinkPath: string = DEFAULT_SINK_PATH) =>
   (
-    next: FileSetMapping<IF, OF, R | FuncSmithContext>
-  ): FileSetMapping<IF, OF, Exclude<R, FuncSmithContextSink> | FuncSmithContext | FuncSmithContextWriter> =>
-  (ifs: FileSet<IF>) =>
+    result: FileSetMappingResult<IF, R>
+  ): FileSetMappingResult<IF, Exclude<R, FuncSmithContextSink> | FuncSmithContext | FuncSmithContextWriter> =>
     P.pipe(
       P.Effect.Do,
       P.Effect.bind('deps', () => P.Effect.all([FuncSmithContext<IF>(), FuncSmithContextWriter])),
@@ -32,8 +27,10 @@ export const sink =
       ),
       P.Effect.flatMap(({ fullSinkPath }) =>
         P.pipe(
-          next(ifs),
+          result,
           P.Effect.provideService(FuncSmithContextSink, FuncSmithContextSink.of({ sinkPath: fullSinkPath }))
         )
       )
     );
+
+export const sink = wrapInjection(sinkInjectionCtor);
