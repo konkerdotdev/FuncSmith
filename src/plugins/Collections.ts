@@ -7,6 +7,13 @@ import { fileSetViewWithTransform } from '../lib/fileSet/fileSetView';
 import type { FileSetMapping } from '../types';
 import { FuncSmithContextMetadata } from '../types';
 
+/*
+TODO: Add some extra options? sort order, reverse, limit, filter
+TODO: Remove fileSetView and just: 1) annotateCollectionItems, 2) copy annotated posts into metadata?
+TODO: Refactor next/previous to be actually useful for rendering?
+TODO: Split into dir with separate lib module(s)?
+*/
+
 // --------------------------------------------------------------------------
 export type Collection<T extends FileSetItem> = T & {
   readonly collection: {

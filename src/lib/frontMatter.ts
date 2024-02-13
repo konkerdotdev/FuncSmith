@@ -20,8 +20,7 @@ export function extractFrontMatter<T extends FileSetItemFile>(
       const { content, data } = grayMatter(fileSetItem.contents);
       return {
         ...fileSetItem,
-        ...data,
-        frontMatter: data ?? {},
+        frontMatter: data,
         contents: content,
       };
     },
