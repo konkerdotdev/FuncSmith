@@ -1,6 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import * as unit from './frontMatter';
+import * as unit from './lib';
 
 describe('frontMatter', () => {
   describe('isFrontMatter', () => {

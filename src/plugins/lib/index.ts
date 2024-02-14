@@ -32,7 +32,7 @@ export const wrapInjection =
   <IF extends FileSetItem, OF extends FileSetItem, RN, RM, OP = undefined>(
     postMappingCtor: FileSetInjectionMappingCtor<OF, RN, RM, OP>
   ) =>
-  (options?: OP) =>
+  (options: OP) =>
   (next: FileSetMapping<IF, OF, RN>): FileSetMapping<IF, OF, RM> =>
   (fileSet: FileSet<IF>) =>
     P.pipe(next(fileSet), postMappingCtor(options));

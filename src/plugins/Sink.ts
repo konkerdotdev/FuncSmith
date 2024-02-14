@@ -6,11 +6,8 @@ import type { FileSetMappingResult } from '../types';
 import { FuncSmithContext, FuncSmithContextSink, FuncSmithContextWriter } from '../types';
 import { wrapInjection } from './lib';
 
-// FIXME: remove default
-export const DEFAULT_SINK_PATH = './build';
-
 export const sinkInjectionCtor =
-  <IF extends FileSetItem, R>(sinkPath: string = DEFAULT_SINK_PATH) =>
+  <IF extends FileSetItem, R>(sinkPath: string) =>
   (
     result: FileSetMappingResult<IF, R>
   ): FileSetMappingResult<IF, Exclude<R, FuncSmithContextSink> | FuncSmithContext | FuncSmithContextWriter> =>

@@ -6,11 +6,8 @@ import type { FileSetMappingResult } from '../types';
 import { FuncSmithContext, FuncSmithContextReader, FuncSmithContextSource } from '../types';
 import { wrapInjection } from './lib';
 
-// FIXME: remove default
-export const DEFAULT_SOURCE_PATH = './src';
-
 export const sourceInjectionCtor =
-  <IF extends FileSetItem, R>(sourcePath: string = DEFAULT_SOURCE_PATH) =>
+  <IF extends FileSetItem, R>(sourcePath: string) =>
   (
     result: FileSetMappingResult<IF, R>
   ): FileSetMappingResult<IF, Exclude<R, FuncSmithContextSource> | FuncSmithContext<IF> | FuncSmithContextReader> =>

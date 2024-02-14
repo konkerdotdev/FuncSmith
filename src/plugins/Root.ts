@@ -5,11 +5,8 @@ import type { FileSetItem } from '../lib/fileSet';
 import { FuncSmithContext } from '../types';
 import { wrapInjection } from './lib';
 
-// FIXME: remove default
-export const DEFAULT_ROOT_DIR_PATH = '.';
-
 export const rootInjectionCtor =
-  <IF extends FileSetItem, R>(rootDirPath = DEFAULT_ROOT_DIR_PATH) =>
+  <IF extends FileSetItem, R>(rootDirPath: string) =>
   (result: FileSetMappingResult<IF, R>): FileSetMappingResult<IF, Exclude<R, FuncSmithContext<IF>>> =>
     P.pipe(
       result,

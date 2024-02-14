@@ -11,38 +11,19 @@ import { NoopTreeCrawlerDirectoryHandler } from '@konker.dev/tiny-treecrawler-fp
 import { DefaultTreeCrawlerFileHandler } from '@konker.dev/tiny-treecrawler-fp/dist/handler/file/default-file-handler';
 import type * as H from 'handlebars';
 
-import type { FuncSmithError } from '../error';
-import { toFuncSmithError } from '../error';
-import type { FileSet, FileSetItem, Html } from '../lib/fileSet';
+import type { FuncSmithError } from '../../error';
+import { toFuncSmithError } from '../../error';
+import type { FileSetItem } from '../../lib/fileSet';
 import {
   contentsToArrayBuffer,
   fileSetItemMatchesPattern,
   isFileItem,
   toFileSystemItemList,
-} from '../lib/fileSet/fileSetItem';
-import type { FrontMatter } from '../lib/frontMatter';
-import { isFrontMatter } from '../lib/frontMatter';
-import { handlebarsCompile, handlebarsRenderK } from '../lib/handlebars-effect';
-import type { FileSetMapping } from '../types';
-import { FuncSmithContext, FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader } from '../types';
-import { wrapMapping } from './lib';
-
-// --------------------------------------------------------------------------
-export type LayoutsOptions = {
-  readonly templateEngine: string;
-  readonly directory: string;
-  readonly defaultLayout: string;
-  readonly globPattern: string;
-  readonly helpers: Record<string, H.HelperDelegate>;
-};
-
-export const DEFAULT_LAYOUTS_OPTIONS: LayoutsOptions = {
-  templateEngine: 'handlebars',
-  directory: 'layouts',
-  defaultLayout: 'layout.hbs',
-  globPattern: '**',
-  helpers: {},
-};
+} from '../../lib/fileSet/fileSetItem';
+import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
+import { isFrontMatter } from '../FrontMatter/lib';
+import type { FrontMatter } from '../FrontMatter/types';
+import type { LayoutsOptions } from './types';
 
 // --------------------------------------------------------------------------
 export function getLayoutTemplate<T extends FrontMatter<FileSetItem>>(
@@ -51,7 +32,7 @@ export function getLayoutTemplate<T extends FrontMatter<FileSetItem>>(
   fileSetItem: T
 ): P.Effect.Effect<never, FuncSmithError, H.TemplateDelegate> {
   const layout: string = String(fileSetItem.frontMatter['layout']) ?? options.defaultLayout;
-  const ret = templateMap[layout] ?? templateMap[DEFAULT_LAYOUTS_OPTIONS.defaultLayout];
+  const ret = templateMap[layout];
   return ret ? P.Effect.succeed(ret) : P.Effect.fail(toFuncSmithError(`Layout not found: ${layout}`));
 }
 
@@ -68,7 +49,8 @@ export function processFileItem<T extends FileSetItem>(
       fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(
           getLayoutTemplate(templateMap, options, fileSetItem),
-          P.Effect.flatMap(handlebarsRenderK({ ...env, ...metadata, ...fileSetItem, ...fileSetItem.frontMatter })),
+          P.Effect.flatMap(handlebarsRender({ ...env, ...metadata, ...fileSetItem, ...fileSetItem.frontMatter })),
+          P.Effect.mapError(toFuncSmithError),
           P.Effect.map((contents) => ({ ...fileSetItem, contents }))
         )
       : P.Effect.succeed(fileSetItem)
@@ -94,7 +76,8 @@ export function toTemplateMap(options: LayoutsOptions, data: Array<FileSetItem>)
                 [fileSetItem.fileName]: template,
               }))
             )
-          )
+          ),
+          P.Effect.mapError(toFuncSmithError)
         ),
       P.Effect.succeed({})
     )
@@ -147,44 +130,3 @@ export function layoutsLoadTemplates(
     )
   );
 }
-
-// --------------------------------------------------------------------------
-export const layoutsMappingCtor =
-  <IF extends FileSetItem>(
-    options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS
-  ): FileSetMapping<
-    IF,
-    IF | Html<IF>,
-    FuncSmithContext<IF> | FuncSmithContextEnv | FuncSmithContextMetadata | FuncSmithContextReader
-  > =>
-  (fileSet: FileSet<IF>) => {
-    const safeOptions = { ...DEFAULT_LAYOUTS_OPTIONS, ...options };
-
-    return P.pipe(
-      P.Effect.Do,
-      P.Effect.bind('deps', () =>
-        P.Effect.all([FuncSmithContext<IF>(), FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader])
-      ),
-      P.Effect.bind('templateMap', ({ deps: [funcSmithContext, _, __, funcSmithContextReader] }) =>
-        layoutsLoadTemplates(funcSmithContextReader.tinyFs, funcSmithContext.rootDirPath, safeOptions)
-      ),
-      P.Effect.flatMap(
-        ({ deps: [_, funcSmithContextEnv, funcSmithContextMetadata, _funcSmithContextReader], templateMap }) =>
-          P.pipe(
-            fileSet,
-            P.Array.map((fileSetItem) =>
-              processFileItem(
-                funcSmithContextEnv.env,
-                safeOptions,
-                funcSmithContextMetadata.metadata,
-                templateMap,
-                fileSetItem
-              )
-            ),
-            P.Effect.all
-          )
-      )
-    );
-  };
-
-export const layouts = wrapMapping(layoutsMappingCtor);

@@ -24,19 +24,19 @@ describe('handlebars-effect', () => {
   describe('handlebarsRender', () => {
     it('should work as expected', () => {
       const actual = P.Effect.runSync(
-        P.pipe(
-          unit.handlebarsCompile(TEST_HBS_1),
-          P.Effect.flatMap((template) => unit.handlebarsRender(template, { doesWhat: 'rocks!' }))
-        )
+        P.pipe(unit.handlebarsCompile(TEST_HBS_1), P.Effect.flatMap(unit.handlebarsRender({ doesWhat: 'rocks!' })))
       );
       expect(actual).toStrictEqual('Handlebars <b>rocks!</b>');
     });
   });
 
-  describe('handlebarsRenderK', () => {
+  describe('handlebarsRender2', () => {
     it('should work as expected', () => {
       const actual = P.Effect.runSync(
-        P.pipe(unit.handlebarsCompile(TEST_HBS_1), P.Effect.flatMap(unit.handlebarsRenderK({ doesWhat: 'rocks!' })))
+        P.pipe(
+          unit.handlebarsCompile(TEST_HBS_1),
+          P.Effect.flatMap((template) => unit.handlebarsRender2({ doesWhat: 'rocks!' }, template))
+        )
       );
       expect(actual).toStrictEqual('Handlebars <b>rocks!</b>');
     });

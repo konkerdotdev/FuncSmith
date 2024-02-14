@@ -76,5 +76,5 @@ export type FileSetInjectionMapping<IF extends FileSetItem, R1, R2> = (
 ) => FileSetMappingResult<IF, R2>;
 
 export type FileSetInjectionMappingCtor<IF extends FileSetItem, R1, R2, OP = undefined> = (
-  options?: OP
+  options: OP
 ) => FileSetInjectionMapping<IF, R1, R2>;

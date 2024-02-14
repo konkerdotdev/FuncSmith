@@ -1,6 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import type { FrontMatter } from '../frontMatter';
+import type { FrontMatter } from '../../plugins/FrontMatter/types';
 
 export enum FileSetItemType {
   File = 'File',
