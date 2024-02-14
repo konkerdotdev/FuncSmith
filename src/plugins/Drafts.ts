@@ -16,18 +16,17 @@ export const DEFAULT_DRAFTS_OPTIONS: DraftsOptions = {
 };
 
 export const draftsShouldKeep =
-  <T extends FrontMatter<FileSetItem>>(options: Partial<DraftsOptions>) =>
-  (item: T) => {
+  <T extends FileSetItem>(options: Partial<DraftsOptions>) =>
+  (item: T | FrontMatter<T>) => {
     const safeOptions: DraftsOptions = { ...DEFAULT_DRAFTS_OPTIONS, ...options };
-    const draft = item.frontMatter.draft ?? safeOptions.default;
+    const frontMatter = 'frontMatter' in item ? item.frontMatter : {};
+    const draft = frontMatter.draft ?? safeOptions.default;
     return safeOptions.include ? !!draft : !draft;
   };
 
 // --------------------------------------------------------------------------
 export const draftsMappingCtor =
-  <IF extends FrontMatter<FileSetItem>>(
-    options: Partial<DraftsOptions> = DEFAULT_DRAFTS_OPTIONS
-  ): FileSetMapping<IF, IF, never> =>
+  <IF extends FileSetItem>(options: Partial<DraftsOptions> = DEFAULT_DRAFTS_OPTIONS): FileSetMapping<IF, IF, never> =>
   (fileSet: FileSet<IF>) =>
     P.pipe(fileSet, P.Array.filter(draftsShouldKeep(options)), P.Effect.succeed);
 

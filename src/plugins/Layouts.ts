@@ -14,7 +14,12 @@ import type * as H from 'handlebars';
 import type { FuncSmithError } from '../error';
 import { toFuncSmithError } from '../error';
 import type { FileSet, FileSetItem, Html } from '../lib/fileSet';
-import { fileSetItemMatchesPattern, isFileItem, toFileSystemItemList } from '../lib/fileSet/fileSetItem';
+import {
+  contentsToArrayBuffer,
+  fileSetItemMatchesPattern,
+  isFileItem,
+  toFileSystemItemList,
+} from '../lib/fileSet/fileSetItem';
 import type { FrontMatter } from '../lib/frontMatter';
 import { isFrontMatter } from '../lib/frontMatter';
 import { handlebarsCompile, handlebarsRenderK } from '../lib/handlebars-effect';
@@ -78,7 +83,9 @@ export function toTemplateMap(options: LayoutsOptions, data: Array<FileSetItem>)
       (acc: P.Effect.Effect<never, FuncSmithError, Record<string, H.TemplateDelegate>>, fileSetItem: FileSetItem) =>
         P.pipe(
           P.Effect.Do,
-          P.Effect.bind('template', () => handlebarsCompile(fileSetItem.contents, options.helpers)),
+          P.Effect.bind('template', () =>
+            handlebarsCompile(contentsToArrayBuffer(fileSetItem.contents), options.helpers)
+          ),
           P.Effect.flatMap(({ template }) =>
             P.pipe(
               acc,

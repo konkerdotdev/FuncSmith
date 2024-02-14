@@ -4,6 +4,7 @@ import grayMatter from 'gray-matter';
 import type { FuncSmithError } from '../error';
 import { toFuncSmithError } from '../error';
 import type { FileSetItem, FileSetItemFile } from './fileSet';
+import { contentsToArrayBuffer } from './fileSet/fileSetItem';
 
 export type FrontMatter<T extends Partial<FileSetItem>> = T & {
   readonly frontMatter: Record<string, unknown>;
@@ -17,7 +18,7 @@ export function extractFrontMatter<T extends FileSetItemFile>(
 ): P.Effect.Effect<never, FuncSmithError, FrontMatter<T>> {
   return P.Effect.try({
     try: () => {
-      const { content, data } = grayMatter(fileSetItem.contents);
+      const { content, data } = grayMatter(contentsToArrayBuffer(fileSetItem.contents));
       return {
         ...fileSetItem,
         frontMatter: data,

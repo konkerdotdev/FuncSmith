@@ -1,5 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import type { TinyFileSystem, TinyFileSystemError } from '@konker.dev/tiny-filesystem-fp';
+import { arrayBufferToString } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';
 import type { DirectoryData, FileData } from '@konker.dev/tiny-treecrawler-fp';
 import { isFileData } from '@konker.dev/tiny-treecrawler-fp/dist/lib/utils';
 import micromatch from 'micromatch';
@@ -33,7 +34,6 @@ export function fileSetItemSetFileName<T extends FileSetItemFile>(tfs: TinyFileS
     fileName,
     fileBase,
     fileExt,
-    // relPath: tfs.joinPath(item.relDir, fileName),
   };
 }
 
@@ -123,7 +123,7 @@ export const toFileSetItemFile =
         fileName,
         fileExt,
         fileBase: tfs.basename(i.path, fileExt),
-        contents: i.data.map((x) => (typeof x === 'string' ? x : String(x))).join(''),
+        contents: new Uint8Array(i.data),
       }))
     );
   };
@@ -140,4 +140,9 @@ export function fileSetItemMatchesPattern<T extends FileSetItemFile>(
   fileSetItem: T
 ): boolean {
   return !!globPattern ? micromatch([fileSetItem.path], [globPattern])?.length > 0 : true;
+}
+
+// --------------------------------------------------------------------------
+export function contentsToArrayBuffer(contents: ArrayBuffer | string): string {
+  return typeof contents === 'string' ? contents : arrayBufferToString(contents);
 }

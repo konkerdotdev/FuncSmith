@@ -6,7 +6,7 @@ export enum FileSetItemType {
   File = 'File',
 }
 
-export type FileSetItemFile<T = string> = {
+export type FileSetItemFile<T = ArrayBuffer | string> = {
   _tag: FileSetItemType.File;
   path: string;
   baseDir: string;
@@ -18,9 +18,9 @@ export type FileSetItemFile<T = string> = {
   contents: T;
 };
 
-export type FileSetItem<T = string> = FileSetItemFile<T>;
+export type FileSetItem<T = ArrayBuffer | string> = FileSetItemFile<T>;
 
-export type FileSet<T extends FileSetItem<C>, C = string> = Array<T>;
+export type FileSet<T extends FileSetItem<C>, C = ArrayBuffer | string> = Array<T>;
 
 // --------------------------------------------------------------------------
 export const HtmlString = P.pipe(P.Schema.string, P.Schema.brand(Symbol.for('HtmlString')));

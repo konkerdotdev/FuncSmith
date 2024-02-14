@@ -5,7 +5,7 @@ import { toFuncSmithError } from '../error';
 import { commonmarkParse, commonmarkRender } from '../lib/commonmark-effect';
 import type { FileSet, FileSetItem, Html } from '../lib/fileSet';
 import { HtmlString } from '../lib/fileSet';
-import { fileSetItemMatchesPattern } from '../lib/fileSet/fileSetItem';
+import { contentsToArrayBuffer, fileSetItemMatchesPattern } from '../lib/fileSet/fileSetItem';
 import type { FrontMatter } from '../lib/frontMatter';
 import { type FileSetMapping, FuncSmithContextEnv, FuncSmithContextMetadata } from '../types';
 import { wrapMapping } from './lib';
@@ -20,12 +20,12 @@ export const DEFAULT_MARKDOWN_OPTIONS: MarkdownOptions = {
 
 // --------------------------------------------------------------------------
 export const processFileSetItem =
-  <T extends FrontMatter<FileSetItem>>(options: MarkdownOptions) =>
-  (fileSetItem: T): P.Effect.Effect<never, FuncSmithError, T | Html<T>> => {
+  <T extends FileSetItem>(options: MarkdownOptions) =>
+  (fileSetItem: T | FrontMatter<T>): P.Effect.Effect<never, FuncSmithError, T | Html<T>> => {
     // FIXME: more idiomatic way to do conditional?
     return fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(
-          fileSetItem.contents,
+          contentsToArrayBuffer(fileSetItem.contents),
           commonmarkParse(),
           P.Effect.flatMap(commonmarkRender()),
           P.Effect.flatMap(P.Schema.decode(HtmlString)),
@@ -46,10 +46,10 @@ export const processFileSetItem =
  * Any kind of error in parsing, file access, etc. is fatal
  */
 export const markdownMappingCtor =
-  <IF extends FrontMatter<FileSetItem>>(
+  <IF extends FileSetItem>(
     options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
-  ): FileSetMapping<IF, IF | Html<IF>, FuncSmithContextEnv | FuncSmithContextMetadata> =>
-  (fileSet: FileSet<IF>) =>
+  ): FileSetMapping<IF | FrontMatter<IF>, IF | Html<IF>, FuncSmithContextEnv | FuncSmithContextMetadata> =>
+  (fileSet: FileSet<IF | FrontMatter<IF>>) =>
     P.pipe(
       P.Effect.all([FuncSmithContextEnv, FuncSmithContextMetadata]),
       P.Effect.flatMap(([_funcSmithContextEnv, _funcSmithContextMetadata]) =>

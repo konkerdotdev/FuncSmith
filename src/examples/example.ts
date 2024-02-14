@@ -9,6 +9,7 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
   const pluginStack = P.pipe(
     P.Effect.succeed,
     F.writer(),
+    F.debug(),
     F.filter(),
     F.layouts({
       templateEngine: 'handlebars',
@@ -24,7 +25,6 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
       },
       globPattern: '**/*.html',
     }),
-    // F.debug(),
     F.collections({
       posts: 'posts/*.html',
     }),

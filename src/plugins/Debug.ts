@@ -20,8 +20,8 @@ export const debugMappingCtor =
           P.Effect.tap(() => P.Console.log(prefix)),
           P.Effect.tap(() => P.Console.log(funcSmithContextEnv.env)),
           P.Effect.tap(() => P.Console.log(funcSmithContextMetadata.metadata)),
-          P.Effect.tap(() => P.Console.log(funcSmithContextMetadata.metadata.collections))
-          // P.Effect.tap(P.Console.log)
+          P.Effect.tap(() => P.Console.log(funcSmithContextMetadata.metadata.collections)),
+          P.Effect.tap(P.Console.log)
         )
       )
     );
