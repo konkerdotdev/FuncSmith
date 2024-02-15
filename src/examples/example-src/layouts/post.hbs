@@ -21,10 +21,16 @@
       <h1>{{ title }}<time class="float-right">{{ formattedDate date }}</time></h1>
     </header>
 
-    <p>[{{collection.len}}][{{collection.previous}}][{{collection.next}}]</p>
-    <pre>
-      {{{ toJSON collection }}}
-    </pre>
+    <nav>
+    {{#if collection.previous}}
+      <span> &lt; </span><a href="/{{collection.previous.relPath}}">{{collection.previous.title}}</a>
+    {{/if}}
+    <span class="sep">|</span>
+    {{#if collection.next}}
+      <a href="/{{collection.next.relPath}}">{{collection.next.title}}</a><span> &gt; </span>
+    {{/if}}
+    </nav>
+
     <main>
       {{{ contents }}}
     </main>

@@ -7,15 +7,16 @@ export enum FileSetItemType {
 }
 
 export type FileSetItemFile<T = ArrayBuffer | string> = {
-  _tag: FileSetItemType.File;
-  path: string;
-  baseDir: string;
-  relPath: string;
-  relDir: string;
-  fileName: string;
-  fileBase: string;
-  fileExt: string;
-  contents: T;
+  readonly _tag: FileSetItemType.File;
+  readonly _id: string;
+  readonly path: string;
+  readonly baseDir: string;
+  readonly relPath: string;
+  readonly relDir: string;
+  readonly fileName: string;
+  readonly fileBase: string;
+  readonly fileExt: string;
+  readonly contents: T;
 };
 
 export type FileSetItem<T = ArrayBuffer | string> = FileSetItemFile<T>;

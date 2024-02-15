@@ -7,6 +7,8 @@ import micromatch from 'micromatch';
 
 import type { FuncSmithError } from '../../error';
 import { toFuncSmithError } from '../../error';
+import type { GeneralError } from '../utils';
+import { hashHex } from '../utils';
 import type { FileSetItem, FileSetItemFile } from './index';
 import { FileSetItemType } from './index';
 
@@ -107,15 +109,17 @@ export function fileSetItemRename<T extends FileSetItemFile>(
 // --------------------------------------------------------------------------
 export const toFileSetItemFile =
   (tfs: TinyFileSystem, sourcePath: string) =>
-  (i: FileData): P.Effect.Effect<never, TinyFileSystemError, FileSetItemFile> => {
+  (i: FileData): P.Effect.Effect<never, TinyFileSystemError | GeneralError, FileSetItemFile> => {
     const fileName = tfs.basename(i.path);
     const fileExt = tfs.extname(i.path);
 
     return P.pipe(
-      tfs.dirName(tfs.relative(sourcePath, i.path)),
-      (x) => x,
-      P.Effect.map((relDir) => ({
+      P.Effect.Do,
+      P.Effect.bind('relDir', () => tfs.dirName(tfs.relative(sourcePath, i.path))),
+      P.Effect.bind('pathHash', () => hashHex(i.path)),
+      P.Effect.map(({ pathHash, relDir }) => ({
         _tag: FileSetItemType.File,
+        _id: pathHash,
         path: i.path,
         baseDir: sourcePath,
         relPath: tfs.relative(sourcePath, i.path),
@@ -131,7 +135,9 @@ export const toFileSetItemFile =
 // --------------------------------------------------------------------------
 export const toFileSystemItemList =
   (tfs: TinyFileSystem, sourcePath: string) =>
-  (list: Array<DirectoryData | FileData>): P.Effect.Effect<never, TinyFileSystemError, Array<FileSetItem>> =>
+  (
+    list: Array<DirectoryData | FileData>
+  ): P.Effect.Effect<never, TinyFileSystemError | GeneralError, Array<FileSetItem>> =>
     P.pipe(list.filter(isFileData), P.Array.map(toFileSetItemFile(tfs, sourcePath)), P.Effect.all);
 
 // --------------------------------------------------------------------------

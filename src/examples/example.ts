@@ -26,7 +26,10 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
       globPattern: '**/*.html',
     }),
     F.collections({
-      posts: 'posts/*.html',
+      posts: {
+        globPattern: 'posts/*.html',
+        sortBy: 'date',
+      },
     }),
     F.rename([[/\.md$/, '.html']]),
     F.markdown(),

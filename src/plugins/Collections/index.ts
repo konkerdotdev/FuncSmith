@@ -15,13 +15,9 @@ export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
 // --------------------------------------------------------------------------
 /*
 TODO: Add some extra options? sort order, reverse, limit, filter
-TODO: Remove fileSetView and just: 1) annotateCollectionItems, 2) copy annotated posts into metadata?
-TODO: Refactor next/previous to be actually useful for rendering?
 */
 export const collections =
-  <IF extends FileSetItem, OF extends FileSetItem, R>(
-    options: Record<string, Convenience<Partial<CollectionOptions>>> = {}
-  ) =>
+  <IF extends FileSetItem, OF extends FileSetItem, R>(options: Record<string, Convenience<CollectionOptions>> = {}) =>
   (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R | FuncSmithContextMetadata> =>
   (fileSet: FileSet<IF>) => {
     const safeOptions = normaliseAllOptions(options, DEFAULT_COLLECTION_OPTIONS);

@@ -1,10 +1,15 @@
 import type { FileSetItem } from '../../lib/fileSet';
 
-export type Collection<T extends FileSetItem> = T & {
+export type CollectionRef = {
+  readonly title: string | undefined;
+  readonly relPath: string;
+};
+
+export type CollectionItem<T extends FileSetItem> = T & {
   readonly collection: {
     readonly len: number;
-    readonly previous?: number;
-    readonly next?: number;
+    readonly previous?: CollectionRef;
+    readonly next?: CollectionRef;
   };
 };
 
@@ -14,4 +19,4 @@ export type CollectionOptions = {
   readonly reverse: boolean;
 };
 
-export type Convenience<T extends Partial<CollectionOptions>> = string | T;
+export type Convenience<T extends CollectionOptions> = string | Partial<T>;
