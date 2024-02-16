@@ -8,7 +8,7 @@ import type * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FuncSmithError } from './error';
 import type { FileSet, FileSetItem } from './lib/fileSet';
-import type { FileSetMapping, FuncSmithContext } from './types';
+import type { FileSetMapping } from './types';
 
 // --------------------------------------------------------------------------
 export * from './plugins';
@@ -19,6 +19,6 @@ export const EMPTY_FILESET = <T extends FileSetItem>(): FileSet<T> => [];
 
 export function FuncSmith<T extends FileSetItem, R>(
   pluginStack: FileSetMapping<FileSetItem, T, R>
-): P.Effect.Effect<R | FuncSmithContext, FuncSmithError, FileSet<T>> {
+): P.Effect.Effect<R, FuncSmithError, FileSet<T>> {
   return pluginStack(EMPTY_FILESET<T>());
 }

@@ -12,12 +12,15 @@ export type HandlebarsError = ReturnType<typeof toHandlebarsError>;
 // --------------------------------------------------------------------------
 export function handlebarsCompile(
   templateStr: string,
-  helpers: Record<string, H.HelperDelegate> = {}
+  helpers: Record<string, H.HelperDelegate> = {},
+  partials: Array<Record<string, H.TemplateDelegate>> = []
 ): P.Effect.Effect<never, HandlebarsError, H.TemplateDelegate> {
   return P.Effect.try({
     try: () => {
       // eslint-disable-next-line fp/no-unused-expression
       Object.keys(helpers).forEach((name) => H.registerHelper(name, helpers[name]!));
+      // eslint-disable-next-line fp/no-unused-expression
+      partials.forEach((partial) => H.registerPartial(partial));
       return H.compile(templateStr);
     },
     catch: toHandlebarsError,
@@ -40,6 +43,10 @@ export function handlebarsRender2(
 }
 
 export const handlebars =
-  (templateStr: string, helpers: Record<string, H.HelperDelegate> = {}) =>
+  (
+    templateStr: string,
+    helpers: Record<string, H.HelperDelegate> = {},
+    partials: Array<Record<string, H.TemplateDelegate>> = []
+  ) =>
   (context: unknown): P.Effect.Effect<never, HandlebarsError, string> =>
-    P.pipe(handlebarsCompile(templateStr, helpers), P.Effect.flatMap(handlebarsRender(context)));
+    P.pipe(handlebarsCompile(templateStr, helpers, partials), P.Effect.flatMap(handlebarsRender(context)));

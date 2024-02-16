@@ -1,17 +1,19 @@
 /* eslint-disable fp/no-nil */
 import * as P from '@konker.dev/effect-ts-prelude';
 
+import { toFuncSmithError } from '../../error';
 import type { FileSet, FileSetItem, Html } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
 import { FuncSmithContext, FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader } from '../../types';
 import { wrapMapping } from '../lib';
-import { layoutsLoadTemplates, processFileItem } from './lib';
+import { processFileItem, toPartialsList, toTemplateMap } from './lib';
 import type { LayoutsOptions } from './types';
 
 // --------------------------------------------------------------------------
 export const DEFAULT_LAYOUTS_OPTIONS: LayoutsOptions = {
   templateEngine: 'handlebars',
-  directory: 'layouts',
+  layoutsPath: 'layouts',
+  partialsPath: undefined,
   defaultLayout: 'layout.hbs',
   globPattern: '**',
   helpers: {},
@@ -34,8 +36,35 @@ export const layoutsMappingCtor =
       P.Effect.bind('deps', () =>
         P.Effect.all([FuncSmithContext<IF>(), FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader])
       ),
-      P.Effect.bind('templateMap', ({ deps: [funcSmithContext, _, __, funcSmithContextReader] }) =>
-        layoutsLoadTemplates(funcSmithContextReader.tinyFs, funcSmithContext.rootDirPath, safeOptions)
+      P.Effect.bind('layoutsFullPath', ({ deps: [funcSmithContext, __, ___, funcSmithContextReader] }) =>
+        funcSmithContextReader.tinyFs.isAbsolute(safeOptions.layoutsPath)
+          ? P.Effect.succeed(safeOptions.layoutsPath)
+          : P.pipe(
+              funcSmithContextReader.tinyFs.joinPath(funcSmithContext.rootDirPath, safeOptions.layoutsPath),
+              P.Effect.mapError(toFuncSmithError)
+            )
+      ),
+      P.Effect.bind('partialsFullPath', ({ deps: [funcSmithContext, __, ___, funcSmithContextReader] }) =>
+        safeOptions.partialsPath
+          ? funcSmithContextReader.tinyFs.isAbsolute(safeOptions.partialsPath)
+            ? P.Effect.succeed(options.partialsPath)
+            : P.pipe(
+                funcSmithContextReader.tinyFs.joinPath(funcSmithContext.rootDirPath, safeOptions.partialsPath),
+                P.Effect.mapError(toFuncSmithError)
+              )
+          : P.Effect.succeed(undefined)
+      ),
+      P.Effect.bind('layoutsFileSet', ({ deps: [_, __, ___, funcSmithContextReader], layoutsFullPath }) =>
+        P.pipe(funcSmithContextReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
+      ),
+      P.Effect.bind('partialsFileSet', ({ deps: [_, __, ___, funcSmithContextReader], partialsFullPath }) =>
+        partialsFullPath
+          ? P.pipe(funcSmithContextReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
+          : P.Effect.succeed([])
+      ),
+      P.Effect.bind('partialsList', ({ partialsFileSet }) => toPartialsList(safeOptions, partialsFileSet)),
+      P.Effect.bind('templateMap', ({ layoutsFileSet, partialsList }) =>
+        toTemplateMap(safeOptions, layoutsFileSet, partialsList)
       ),
       P.Effect.flatMap(
         ({ deps: [_, funcSmithContextEnv, funcSmithContextMetadata, _funcSmithContextReader], templateMap }) =>

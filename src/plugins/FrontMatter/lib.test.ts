@@ -15,6 +15,7 @@ describe('frontMatter', () => {
       const actual = P.Effect.runSync(unit.extractFrontMatter({ contents: '---\nfoo: bar\n---\nhello world' } as any));
       expect(actual).toStrictEqual({
         contents: 'hello world',
+        foo: 'bar',
         frontMatter: { foo: 'bar' },
       });
     });

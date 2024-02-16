@@ -3,7 +3,7 @@ import * as P from '@konker.dev/effect-ts-prelude';
 import type { FuncSmithError } from '../error';
 import { toFuncSmithError } from '../error';
 import type { FileSet, FileSetItem } from '../lib/fileSet';
-import { isFileItem } from '../lib/fileSet/fileSetItem';
+import { isFileSetItemFile } from '../lib/fileSet/fileSetItem';
 import { FuncSmithContextFs } from '../types';
 
 export const fsFileSinkWriter = <T extends FileSetItem>(
@@ -27,7 +27,7 @@ export const fsFileSinkWriter = <T extends FileSetItem>(
           writePathFile: tfs.joinPath(sinkPath, fileSetItem.relPath),
         })),
         P.Array.map((fileSetItem) => {
-          if (isFileItem(fileSetItem)) {
+          if (isFileSetItemFile(fileSetItem)) {
             return P.pipe(
               fileSetItem.writePathDir,
               P.Effect.flatMap((path) => tfs.createDirectory(path)),

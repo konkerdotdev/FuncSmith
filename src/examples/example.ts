@@ -2,7 +2,7 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import * as F from '../index';
-import { EMPTY_FILESET } from '../index';
+import { FuncSmith } from '../index';
 import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layers';
 
 (async () => {
@@ -13,7 +13,8 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
     F.filter(),
     F.layouts({
       templateEngine: 'handlebars',
-      directory: 'example-src/layouts',
+      layoutsPath: 'example-src/layouts',
+      partialsPath: 'example-src/partials',
       helpers: {
         formattedDate: function (date) {
           return new Date(date).toLocaleDateString();
@@ -55,7 +56,7 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
 
   return P.Effect.runPromise(
     P.pipe(
-      pluginStack(EMPTY_FILESET()),
+      FuncSmith(pluginStack),
       P.Effect.provide(FuncSmithContextReaderLive),
       P.Effect.provide(FuncSmithContextWriterLive)
     )

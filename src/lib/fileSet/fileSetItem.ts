@@ -15,19 +15,10 @@ import { FileSetItemType } from './index';
 export type RenameSpec = [RegExp, string];
 
 // --------------------------------------------------------------------------
-export function isFileItem<T extends FileSetItem>(data: T): data is T & FileSetItemFile {
+export function isFileSetItemFile<T extends FileSetItem>(data: T): data is T & FileSetItemFile {
   return data._tag === FileSetItemType.File;
 }
 
-// --------------------------------------------------------------------------
-/*
-  baseDir: string;
-  relPath: string;
-  relDir: string;
-  fileName: string;
-  fileBase: string;
-  fileExt: string;
- */
 export function fileSetItemSetFileName<T extends FileSetItemFile>(tfs: TinyFileSystem, fileName: string, item: T): T {
   const fileExt = tfs.extname(fileName);
   const fileBase = tfs.basename(fileName, fileExt);
