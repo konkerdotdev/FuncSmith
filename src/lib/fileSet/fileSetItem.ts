@@ -19,58 +19,7 @@ export function isFileSetItemFile<T extends FileSetItem>(data: T): data is T & F
   return data._tag === FileSetItemType.File;
 }
 
-export function fileSetItemSetFileName<T extends FileSetItemFile>(tfs: TinyFileSystem, fileName: string, item: T): T {
-  const fileExt = tfs.extname(fileName);
-  const fileBase = tfs.basename(fileName, fileExt);
-  return {
-    ...item,
-    fileName,
-    fileBase,
-    fileExt,
-  };
-}
-
-export function fileSetItemSetFileBase<T extends FileSetItemFile>(
-  tfs: TinyFileSystem,
-  fileBase: string,
-  item: T
-): P.Effect.Effect<never, TinyFileSystemError, T> {
-  const fileName = `${fileBase}${item.fileExt}`;
-  return P.pipe(
-    P.Effect.Do,
-    P.Effect.bind('relPath', () => tfs.joinPath(item.relDir, fileName)),
-    P.Effect.bind('path', ({ relPath }) => tfs.joinPath(item.baseDir, relPath)),
-    P.Effect.map(({ path, relPath }) => ({
-      ...item,
-      path,
-      fileBase,
-      fileName,
-      relPath,
-    }))
-  );
-}
-
-export function fileSetItemSetFileExtension<T extends FileSetItemFile>(
-  tfs: TinyFileSystem,
-  fileExt: string,
-  item: T
-): P.Effect.Effect<never, FuncSmithError, T> {
-  const fileName = `${item.fileBase}${fileExt}`;
-  return P.pipe(
-    P.Effect.Do,
-    P.Effect.bind('relPath', () => tfs.joinPath(item.relDir, fileName)),
-    P.Effect.bind('path', ({ relPath }) => tfs.joinPath(item.baseDir, relPath)),
-    P.Effect.map(({ path, relPath }) => ({
-      ...item,
-      path,
-      fileExt,
-      fileName,
-      relPath,
-    })),
-    P.Effect.mapError(toFuncSmithError)
-  );
-}
-
+// --------------------------------------------------------------------------
 export function fileSetItemRename<T extends FileSetItemFile>(
   tfs: TinyFileSystem,
   renameSpec: RenameSpec,
@@ -95,6 +44,14 @@ export function fileSetItemRename<T extends FileSetItemFile>(
     })),
     P.Effect.mapError(toFuncSmithError)
   );
+}
+
+// --------------------------------------------------------------------------
+export function fileSetItemMatchesPattern<T extends FileSetItemFile>(
+  globPattern: string | undefined,
+  fileSetItem: T
+): boolean {
+  return !!globPattern ? micromatch([fileSetItem.path], [globPattern])?.length > 0 : true;
 }
 
 // --------------------------------------------------------------------------
@@ -132,14 +89,6 @@ export const toFileSystemItemList =
     P.pipe(list.filter(isFileData), P.Array.map(toFileSetItemFile(tfs, sourcePath)), P.Effect.all);
 
 // --------------------------------------------------------------------------
-export function fileSetItemMatchesPattern<T extends FileSetItemFile>(
-  globPattern: string | undefined,
-  fileSetItem: T
-): boolean {
-  return !!globPattern ? micromatch([fileSetItem.path], [globPattern])?.length > 0 : true;
-}
-
-// --------------------------------------------------------------------------
-export function contentsToArrayBuffer(contents: ArrayBuffer | string): string {
+export function fileSetItemContentsToString(contents: ArrayBuffer | string): string {
   return typeof contents === 'string' ? contents : arrayBufferToString(contents);
 }

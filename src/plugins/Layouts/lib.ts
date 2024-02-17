@@ -5,7 +5,11 @@ import type * as H from 'handlebars';
 import type { FuncSmithError } from '../../error';
 import { toFuncSmithError } from '../../error';
 import type { FileSetItem } from '../../lib/fileSet';
-import { contentsToArrayBuffer, fileSetItemMatchesPattern, isFileSetItemFile } from '../../lib/fileSet/fileSetItem';
+import {
+  fileSetItemContentsToString,
+  fileSetItemMatchesPattern,
+  isFileSetItemFile,
+} from '../../lib/fileSet/fileSetItem';
 import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
 import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
@@ -56,7 +60,7 @@ export function toTemplateMap(
         P.pipe(
           P.Effect.Do,
           P.Effect.bind('template', () =>
-            handlebarsCompile(contentsToArrayBuffer(fileSetItem.contents), options.helpers, partials)
+            handlebarsCompile(fileSetItemContentsToString(fileSetItem.contents), options.helpers, partials)
           ),
           P.Effect.flatMap(({ template }) =>
             P.pipe(

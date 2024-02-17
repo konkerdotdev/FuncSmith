@@ -5,7 +5,7 @@ import { toFuncSmithError } from '../../error';
 import { commonMarkParse, commonMarkRender } from '../../lib/commonMark-effect';
 import type { FileSetItem, Html } from '../../lib/fileSet';
 import { HtmlString } from '../../lib/fileSet';
-import { contentsToArrayBuffer, fileSetItemMatchesPattern } from '../../lib/fileSet/fileSetItem';
+import { fileSetItemContentsToString, fileSetItemMatchesPattern } from '../../lib/fileSet/fileSetItem';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { MarkdownOptions } from './types';
 
@@ -15,7 +15,7 @@ export const processFileSetItem =
     // FIXME: more idiomatic way to do conditional?
     return fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(
-          contentsToArrayBuffer(fileSetItem.contents),
+          fileSetItemContentsToString(fileSetItem.contents),
           commonMarkParse(),
           P.Effect.flatMap(commonMarkRender()),
           P.Effect.flatMap(P.Schema.decode(HtmlString)),
