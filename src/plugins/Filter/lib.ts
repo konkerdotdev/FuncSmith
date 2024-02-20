@@ -13,5 +13,5 @@ export const filterShouldKeep =
     const drop = micromatch.some([item.relPath], safeOptions.drop);
     const keep = micromatch.some([item.relPath], safeOptions.keep);
 
-    return !drop && keep;
+    return !drop || keep;
   };

@@ -8,8 +8,9 @@ import { TEST_TREE_CRAWLER_DATA_1 } from '../../test/fixtures/treecrawler-data-1
 import * as unit from './fileSetItem';
 import type { FileSetItemFile } from './index';
 
+const TEST_TFS = MemFsTinyFileSystem();
+
 describe('fileSetItem', () => {
-  const TEST_TFS = MemFsTinyFileSystem();
   describe('isFileSetItemFile', () => {
     it('should return true if the data is a file', () => {
       const item = TEST_FILE_SET_1[0]!;
@@ -23,7 +24,7 @@ describe('fileSetItem', () => {
       const actual = P.Effect.runSync(unit.fileSetItemRename(TEST_TFS, [/\.txt$/, '.pdf'], item));
       expect(actual).toStrictEqual({
         _tag: 'File',
-        _id: '0000000000001111111111112222222222220001',
+        _id: 'e57ec8617d467edfff00943eac189e0ec6eb1875',
         path: '/tmp/foo/a.pdf',
         baseDir: '/tmp/foo',
         relPath: 'a.pdf',
@@ -40,7 +41,7 @@ describe('fileSetItem', () => {
       const actual = P.Effect.runSync(unit.fileSetItemRename(TEST_TFS, [/a.txt/, 'new-name.pdf'], item));
       expect(actual).toStrictEqual({
         _tag: 'File',
-        _id: '0000000000001111111111112222222222220001',
+        _id: 'e57ec8617d467edfff00943eac189e0ec6eb1875',
         path: '/tmp/foo/new-name.pdf',
         baseDir: '/tmp/foo',
         relPath: 'new-name.pdf',

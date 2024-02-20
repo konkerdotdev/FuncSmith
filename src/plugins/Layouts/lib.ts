@@ -1,4 +1,3 @@
-/* eslint-disable fp/no-nil */
 import * as P from '@konker.dev/effect-ts-prelude';
 import type * as H from 'handlebars';
 
@@ -16,14 +15,14 @@ import type { FrontMatter } from '../FrontMatter/types';
 import type { LayoutsOptions } from './types';
 
 // --------------------------------------------------------------------------
-export function getLayoutTemplate<T extends FrontMatter<FileSetItem>>(
+export function lookupLayoutTemplate<T extends FrontMatter<FileSetItem>>(
   templateMap: Record<string, H.TemplateDelegate>,
   options: LayoutsOptions,
   fileSetItem: T
 ): P.Effect.Effect<never, FuncSmithError, H.TemplateDelegate> {
-  const layout: string = String(fileSetItem.frontMatter['layout']) ?? options.defaultLayout;
-  const ret = templateMap[layout];
-  return ret ? P.Effect.succeed(ret) : P.Effect.fail(toFuncSmithError(`Layout not found: ${layout}`));
+  const layoutName = String(fileSetItem.frontMatter['layout'] ?? options.defaultLayout);
+  const ret = templateMap[layoutName];
+  return ret ? P.Effect.succeed(ret) : P.Effect.fail(toFuncSmithError(`Layout not found: ${layoutName}`));
 }
 
 // --------------------------------------------------------------------------
@@ -38,7 +37,7 @@ export function processFileItem<T extends FileSetItem>(
     ? // FIXME: more idiomatic way to do conditional?
       fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(
-          getLayoutTemplate(templateMap, options, fileSetItem),
+          lookupLayoutTemplate(templateMap, options, fileSetItem),
           P.Effect.flatMap(handlebarsRender({ ...env, ...metadata, ...fileSetItem, ...fileSetItem.frontMatter })),
           P.Effect.mapError(toFuncSmithError),
           P.Effect.map((contents) => ({ ...fileSetItem, contents }))
@@ -50,7 +49,7 @@ export function processFileItem<T extends FileSetItem>(
 // --------------------------------------------------------------------------
 export function toTemplateMap(
   options: LayoutsOptions,
-  data: Array<FileSetItem> = [],
+  data: Array<FileSetItem>,
   partials: Array<Record<string, H.TemplateDelegate>> = []
 ) {
   return P.pipe(
@@ -81,7 +80,7 @@ export function toTemplateMap(
 // --------------------------------------------------------------------------
 export function toPartialsList(
   options: LayoutsOptions,
-  data: Array<FileSetItem> = []
+  data: Array<FileSetItem>
 ): P.Effect.Effect<never, FuncSmithError, Array<Record<string, H.TemplateDelegate>>> {
   return P.pipe(
     toTemplateMap(options, data),

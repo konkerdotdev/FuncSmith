@@ -10,7 +10,7 @@ import type { FilterOptions } from './types';
 export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
   drop: [],
   keep: ['**'],
-};
+} as const;
 
 // --------------------------------------------------------------------------
 export const filterMappingCtor =

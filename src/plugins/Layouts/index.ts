@@ -17,7 +17,7 @@ export const DEFAULT_LAYOUTS_OPTIONS: LayoutsOptions = {
   defaultLayout: 'layout.hbs',
   globPattern: '**',
   helpers: {},
-};
+} as const;
 
 // --------------------------------------------------------------------------
 export const layoutsMappingCtor =

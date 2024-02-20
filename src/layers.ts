@@ -2,11 +2,13 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import { MemFsTinyFileSystem, NodeTinyFileSystem } from '@konker.dev/tiny-filesystem-fp';
 
+import { EMPTY_FILESET, FuncSmithContextSink, FuncSmithContextSource } from './index';
 import type { FileSet, FileSetItem } from './lib/fileSet';
 import { fsFileSinkWriter } from './sink/FsFileSinkWriter';
 import { fsFileSourceReader } from './source/FsFileSourceReader';
-import memFs2 from './test/fixtures/memfs-2.json';
+import memFs1 from './test/fixtures/memfs-1.json';
 import {
+  FuncSmithContext,
   FuncSmithContextEnv,
   FuncSmithContextFs,
   FuncSmithContextMetadata,
@@ -24,9 +26,18 @@ export const FuncSmithContextFsLive = P.Layer.succeed(
 export const FuncSmithContextFsTest = P.Layer.succeed(
   FuncSmithContextFs,
   FuncSmithContextFs.of({
-    tinyFs: MemFsTinyFileSystem(memFs2, '/tmp'),
+    tinyFs: MemFsTinyFileSystem(memFs1, '/tmp'),
   })
 );
+
+// --------------------------------------------------------------------------
+export const FuncSmithContextSourceTest = FuncSmithContextSource.of({
+  sourcePath: '/tmp/foo',
+});
+
+export const FuncSmithContextSinkTest = FuncSmithContextSink.of({
+  sinkPath: '/tmp/build',
+});
 
 // --------------------------------------------------------------------------
 export const FuncSmithContextReaderLayer = P.Layer.effect(
@@ -73,5 +84,23 @@ export const FuncSmithContextMetadataDefault = P.Layer.succeed(
   FuncSmithContextMetadata,
   FuncSmithContextMetadata.of({
     metadata: {},
+  })
+);
+
+export const FuncSmithContextMetadataTest = P.Layer.succeed(
+  FuncSmithContextMetadata,
+  FuncSmithContextMetadata.of({
+    metadata: {
+      testMetaDataName1: 'testMetaDataValue1',
+    },
+  })
+);
+
+// --------------------------------------------------------------------------
+export const FuncSmithContextTest = P.Layer.succeed(
+  FuncSmithContext(),
+  FuncSmithContext().of({
+    rootDirPath: '/tmp',
+    fileSet: EMPTY_FILESET(),
   })
 );

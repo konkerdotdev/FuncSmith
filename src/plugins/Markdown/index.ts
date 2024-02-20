@@ -10,7 +10,7 @@ import type { MarkdownOptions } from './types';
 // --------------------------------------------------------------------------
 export const DEFAULT_MARKDOWN_OPTIONS: MarkdownOptions = {
   globPattern: '**/*.md',
-};
+} as const;
 
 // --------------------------------------------------------------------------
 /**

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plugins Writer should return the same value: plugins-writer-1 1`] = `
+"/
+└─ tmp/
+   ├─ build/
+   │  ├─ a.txt
+   │  ├─ docs/
+   │  │  ├─ d1.doc
+   │  │  ├─ d2.doc
+   │  │  └─ d3.doc
+   │  └─ posts/
+   │     ├─ p1.md
+   │     ├─ p2.md
+   │     └─ p3.md
+   ├─ foo/
+   │  ├─ a.txt
+   │  ├─ b.txt
+   │  ├─ bar/
+   │  │  ├─ e.txt
+   │  │  └─ f.log
+   │  ├─ c.csv
+   │  ├─ d.json
+   │  ├─ ignore1.txt
+   │  └─ posts/
+   │     ├─ index.md
+   │     ├─ p1.md
+   │     └─ p2.md
+   ├─ layouts/
+   │  ├─ bar.hbs
+   │  ├─ foo.hbs
+   │  ├─ layout.hbs
+   │  └─ post.hbs
+   └─ partials/
+      └─ footer.hbs"
+`;

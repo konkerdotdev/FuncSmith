@@ -15,7 +15,7 @@ export function normalizeOptions(
   return typeof options === 'string' ? { ...defaultOptions, globPattern: options } : { ...defaultOptions, ...options };
 }
 
-export function normaliseAllOptions(
+export function normalizeAllOptions(
   options: Record<string, Convenience<CollectionOptions>>,
   defaultOptions: CollectionOptions
 ): Record<string, CollectionOptions> {
@@ -85,7 +85,6 @@ export function createCollection<IF extends FileSetItem>(
   return collection.map((item, i) => collectionTransformer(item, i, collection));
 }
 
-// --------------------------------------------------------------------------
 export function createAllCollections<IF extends FileSetItem>(
   options: Record<string, CollectionOptions>,
   fileSet: FileSet<IF | FrontMatter<IF>>
@@ -125,7 +124,6 @@ export function annotateCollectionItems<IF extends FileSetItem>(
   );
 }
 
-// --------------------------------------------------------------------------
 export function annotateAllCollectionItems<IF extends FileSetItem>(
   allOptions: Record<string, CollectionOptions>,
   fileSet: FileSet<IF>

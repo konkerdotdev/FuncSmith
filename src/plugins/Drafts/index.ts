@@ -10,7 +10,7 @@ import type { DraftsOptions } from './types';
 export const DEFAULT_DRAFTS_OPTIONS: DraftsOptions = {
   default: false,
   include: false,
-};
+} as const;
 
 // --------------------------------------------------------------------------
 export const draftsMappingCtor =

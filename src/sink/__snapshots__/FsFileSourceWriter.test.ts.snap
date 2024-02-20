@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sink FsFileSinkWriter should write files to the file system: fsFileSinkWriter_memfs_tree_1 1`] = `
+"/
+└─ tmp/
+   ├─ foo/
+   │  ├─ a.txt
+   │  ├─ b.txt
+   │  ├─ bar/
+   │  │  ├─ e.txt
+   │  │  └─ f.log
+   │  ├─ c.csv
+   │  ├─ d.json
+   │  ├─ ignore1.txt
+   │  └─ posts/
+   │     ├─ index.md
+   │     ├─ p1.md
+   │     └─ p2.md
+   ├─ layouts/
+   │  ├─ bar.hbs
+   │  ├─ foo.hbs
+   │  ├─ layout.hbs
+   │  └─ post.hbs
+   └─ partials/
+      └─ footer.hbs"
+`;

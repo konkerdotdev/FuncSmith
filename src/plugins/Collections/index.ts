@@ -3,7 +3,7 @@ import * as P from '@konker.dev/effect-ts-prelude';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
 import { FuncSmithContextMetadata } from '../../types';
-import { annotateAllCollectionItems, createAllCollections, normaliseAllOptions } from './lib';
+import { annotateAllCollectionItems, createAllCollections, normalizeAllOptions } from './lib';
 import type { CollectionOptions, Convenience } from './types';
 
 export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
@@ -20,7 +20,7 @@ export const collections =
   <IF extends FileSetItem, OF extends FileSetItem, R>(options: Record<string, Convenience<CollectionOptions>> = {}) =>
   (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R | FuncSmithContextMetadata> =>
   (fileSet: FileSet<IF>) => {
-    const safeOptions = normaliseAllOptions(options, DEFAULT_COLLECTION_OPTIONS);
+    const safeOptions = normalizeAllOptions(options, DEFAULT_COLLECTION_OPTIONS);
 
     return P.pipe(
       P.Effect.Do,

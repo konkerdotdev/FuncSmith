@@ -34,6 +34,7 @@
     "@konker.dev/tiny-treecrawler-fp": "^0.0.14",
     "effect": "^2.2.5",
     "handlebars": "^4.7.8",
+    "memfs": "^4.7.6",
     "micromatch": "^4.0.5"
   },
   "devDependencies": {

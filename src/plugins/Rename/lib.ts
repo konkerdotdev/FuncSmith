@@ -7,7 +7,7 @@ import type { RenameSpec } from '../../lib/fileSet/fileSetItem';
 import { fileSetItemRename } from '../../lib/fileSet/fileSetItem';
 
 export const renameFileSetItem =
-  <T extends FileSetItem>(tfs: TinyFileSystem, specs: Array<RenameSpec> = []) =>
+  <T extends FileSetItem>(tfs: TinyFileSystem, specs: Array<RenameSpec>) =>
   (fileSetItem: T): P.Effect.Effect<never, FuncSmithError, T> => {
     return P.pipe(
       specs,

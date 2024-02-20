@@ -6,7 +6,7 @@ import { FileSetItemType } from '../../lib/fileSet';
 export const TEST_FILE_SET_1: Array<FileSetItem> = [
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220001',
+    _id: 'e57ec8617d467edfff00943eac189e0ec6eb1875',
     path: '/tmp/foo/a.txt',
     baseDir: '/tmp/foo',
     relPath: 'a.txt',
@@ -18,7 +18,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220002',
+    _id: '39c8584020d82dc00bda6e549a6c55284dd2f5f3',
     path: '/tmp/foo/b.txt',
     baseDir: '/tmp/foo',
     relPath: 'b.txt',
@@ -30,7 +30,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220003',
+    _id: 'c7712f15959be6b0c2ad22b5b71d2e367d6ff138',
     path: '/tmp/foo/c.csv',
     baseDir: '/tmp/foo',
     relPath: 'c.csv',
@@ -42,7 +42,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220004',
+    _id: 'c367b94579a7a9ac870a1b33a35075533487d8d6',
     path: '/tmp/foo/d.json',
     baseDir: '/tmp/foo',
     relPath: 'd.json',
@@ -53,8 +53,20 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
     contents: stringToUint8Array('{"bam": true, "baz":  false }'),
   },
   {
+    _id: 'a5e1be9ba6cb5bf18597ee658159266a000426e6',
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220005',
+    baseDir: '/tmp/foo',
+    contents: stringToUint8Array('IGNORE 1'),
+    fileBase: 'ignore1',
+    fileExt: '.txt',
+    fileName: 'ignore1.txt',
+    path: '/tmp/foo/ignore1.txt',
+    relDir: '.',
+    relPath: 'ignore1.txt',
+  },
+  {
+    _tag: FileSetItemType.File,
+    _id: '460eab01f1a4de403aced612ab4230ee610d6c09',
     path: '/tmp/foo/bar/e.txt',
     baseDir: '/tmp/foo',
     relPath: 'bar/e.txt',
@@ -66,7 +78,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220006',
+    _id: 'f8cba7f6ca545e7d307a508d628ef61dc9ac8072',
     path: '/tmp/foo/bar/f.log',
     baseDir: '/tmp/foo',
     relPath: 'bar/f.log',
@@ -75,5 +87,45 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
     fileBase: 'f',
     fileExt: '.log',
     contents: stringToUint8Array('F'),
+  },
+  {
+    _id: '5da00cfdc5bee8aa488d13af769799a7b4043766',
+    _tag: FileSetItemType.File,
+    baseDir: '/tmp/foo',
+    contents: stringToUint8Array('---\ntitle: Home\nlayout: layout.hbs\ndate: 2023-12-31\n---\n# Home\nhome content'),
+    fileBase: 'index',
+    fileExt: '.md',
+    fileName: 'index.md',
+    path: '/tmp/foo/posts/index.md',
+    relDir: 'posts',
+    relPath: 'posts/index.md',
+  },
+  {
+    _id: 'af1250e6e96150b7d36c7b0448d0a11275cddb93',
+    _tag: FileSetItemType.File,
+    baseDir: '/tmp/foo',
+    contents: stringToUint8Array(
+      '---\ntitle: P1\nlayout: post.hbs\ndate: 2024-01-01\ndraft: false\n---\n# P1\np1 content'
+    ),
+    fileBase: 'p1',
+    fileExt: '.md',
+    fileName: 'p1.md',
+    path: '/tmp/foo/posts/p1.md',
+    relDir: 'posts',
+    relPath: 'posts/p1.md',
+  },
+  {
+    _id: 'b5867102be1aca22fcd0ca30e236486c4e409b13',
+    _tag: FileSetItemType.File,
+    baseDir: '/tmp/foo',
+    contents: stringToUint8Array(
+      '---\ntitle: P2\nlayout: post.hbs\ndate: 2024-01-02\ndraft: true\n---\n# P2\np2 content'
+    ),
+    fileBase: 'p2',
+    fileExt: '.md',
+    fileName: 'p2.md',
+    path: '/tmp/foo/posts/p2.md',
+    relDir: 'posts',
+    relPath: 'posts/p2.md',
   },
 ] as const;
