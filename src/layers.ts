@@ -48,6 +48,7 @@ export const FsDepReaderLayer = P.Layer.effect(
 );
 export const FsDepReaderLive = P.pipe(FsDepReaderLayer, P.Layer.provide(FsDepTinyFileSystemLive));
 export const FsDepReaderTest = P.pipe(FsDepReaderLayer, P.Layer.provide(FsDepTinyFileSystemTest));
+export const FsDepReaderDefault = FsDepReaderLive;
 
 // --------------------------------------------------------------------------
 export const FsDepWriterLayer = P.Layer.effect(
@@ -63,6 +64,7 @@ export const FsDepWriterLayer = P.Layer.effect(
 
 export const FsDepWriterLive = P.pipe(FsDepWriterLayer, P.Layer.provide(FsDepTinyFileSystemLive));
 export const FsDepWriterTest = P.pipe(FsDepWriterLayer, P.Layer.provide(FsDepTinyFileSystemTest));
+export const FsDepWriterDefault = FsDepWriterLive;
 
 // --------------------------------------------------------------------------
 export const FsDepEnvDefault = P.Layer.succeed(
