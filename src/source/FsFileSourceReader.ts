@@ -14,12 +14,12 @@ import type { FuncSmithError } from '../error';
 import { toFuncSmithError } from '../error';
 import type { FileSet, FileSetItem } from '../lib/fileSet';
 import { toFileSystemItemList } from '../lib/fileSet/fileSetItem';
-import { FuncSmithContextFs } from '../types';
+import { FsDepTinyFileSystem } from '../types';
 
 export const fsFileSourceReader = (
   sourcePath: string,
   globPattern?: string
-): P.Effect.Effect<FuncSmithContextFs, FuncSmithError, FileSet<FileSetItem>> => {
+): P.Effect.Effect<FsDepTinyFileSystem, FuncSmithError, FileSet<FileSetItem>> => {
   // Read in the file system at the given path, and convert to a list of FileItems
   return P.pipe(
     P.Effect.Do,
@@ -39,7 +39,7 @@ export const fsFileSourceReader = (
     ),
     P.Effect.bind('tfs', () =>
       P.pipe(
-        FuncSmithContextFs,
+        FsDepTinyFileSystem,
         P.Effect.map((deps) => deps.tinyFs)
       )
     ),

@@ -1,6 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { FuncSmithContextTest, FuncSmithContextWriterTest } from '../layers';
+import { FsDepContextTest, FsDepWriterTest } from '../layers';
 import * as fixturesFsFm from '../test/fixtures/fileset-frontmatter-1';
 import * as unit from './Sink';
 
@@ -12,8 +12,8 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextWriterTest),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepWriterTest),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toStrictEqual(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1);
@@ -25,8 +25,8 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextWriterTest),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepWriterTest),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toStrictEqual(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1);

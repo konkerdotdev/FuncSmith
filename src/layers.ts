@@ -2,94 +2,87 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import { MemFsTinyFileSystem, NodeTinyFileSystem } from '@konker.dev/tiny-filesystem-fp';
 
-import { EMPTY_FILESET, FuncSmithContextSink, FuncSmithContextSource } from './index';
+import { EMPTY_FILESET, FsDepSink, FsDepSource } from './index';
 import type { FileSet, FileSetItem } from './lib/fileSet';
 import { fsFileSinkWriter } from './sink/FsFileSinkWriter';
 import { fsFileSourceReader } from './source/FsFileSourceReader';
 import memFs1 from './test/fixtures/memfs-1.json';
-import {
-  FuncSmithContext,
-  FuncSmithContextEnv,
-  FuncSmithContextFs,
-  FuncSmithContextMetadata,
-  FuncSmithContextReader,
-  FuncSmithContextWriter,
-} from './types';
+import { FsDepContext, FsDepEnv, FsDepMetadata, FsDepReader, FsDepTinyFileSystem, FsDepWriter } from './types';
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextFsLive = P.Layer.succeed(
-  FuncSmithContextFs,
-  FuncSmithContextFs.of({
+export const FsDepTinyFileSystemLive = P.Layer.succeed(
+  FsDepTinyFileSystem,
+  FsDepTinyFileSystem.of({
     tinyFs: NodeTinyFileSystem,
   })
 );
-export const FuncSmithContextFsTest = P.Layer.succeed(
-  FuncSmithContextFs,
-  FuncSmithContextFs.of({
+export const FsDepTinyFileSystemTest = P.Layer.succeed(
+  FsDepTinyFileSystem,
+  FsDepTinyFileSystem.of({
     tinyFs: MemFsTinyFileSystem(memFs1, '/tmp'),
   })
 );
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextSourceTest = FuncSmithContextSource.of({
+export const FsDepSourceTest = FsDepSource.of({
   sourcePath: '/tmp/foo',
 });
 
-export const FuncSmithContextSinkTest = FuncSmithContextSink.of({
+export const FsDepSinkTest = FsDepSink.of({
   sinkPath: '/tmp/build',
 });
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextReaderLayer = P.Layer.effect(
-  FuncSmithContextReader,
-  P.Effect.map(FuncSmithContextFs, (funcSmithContextFs) =>
-    FuncSmithContextReader.of({
-      tinyFs: funcSmithContextFs.tinyFs,
+export const FsDepReaderLayer = P.Layer.effect(
+  FsDepReader,
+  P.Effect.map(FsDepTinyFileSystem, (fsDepTinyFileSystem) =>
+    FsDepReader.of({
+      tinyFs: fsDepTinyFileSystem.tinyFs,
       reader: (sourcePath: string, globPattern: string | undefined) =>
         P.pipe(
           fsFileSourceReader(sourcePath, globPattern),
-          P.Effect.provideService(FuncSmithContextFs, funcSmithContextFs)
+          P.Effect.provideService(FsDepTinyFileSystem, fsDepTinyFileSystem)
         ),
     })
   )
 );
-export const FuncSmithContextReaderLive = P.pipe(FuncSmithContextReaderLayer, P.Layer.provide(FuncSmithContextFsLive));
-export const FuncSmithContextReaderTest = P.pipe(FuncSmithContextReaderLayer, P.Layer.provide(FuncSmithContextFsTest));
+export const FsDepReaderLive = P.pipe(FsDepReaderLayer, P.Layer.provide(FsDepTinyFileSystemLive));
+export const FsDepReaderTest = P.pipe(FsDepReaderLayer, P.Layer.provide(FsDepTinyFileSystemTest));
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextWriterLayer = P.Layer.effect(
-  FuncSmithContextWriter,
-  P.Effect.map(FuncSmithContextFs, (funcSmithContextFs) =>
-    FuncSmithContextWriter.of({
-      tinyFs: funcSmithContextFs.tinyFs,
+export const FsDepWriterLayer = P.Layer.effect(
+  FsDepWriter,
+  P.Effect.map(FsDepTinyFileSystem, (fsDepTinyFileSystem) =>
+    FsDepWriter.of({
+      tinyFs: fsDepTinyFileSystem.tinyFs,
       writer: (sinkPath: string, fileSet: FileSet<FileSetItem>) =>
-        P.pipe(fsFileSinkWriter(sinkPath, fileSet), P.Effect.provideService(FuncSmithContextFs, funcSmithContextFs)),
+        P.pipe(fsFileSinkWriter(sinkPath, fileSet), P.Effect.provideService(FsDepTinyFileSystem, fsDepTinyFileSystem)),
     })
   )
 );
 
-export const FuncSmithContextWriterLive = P.pipe(FuncSmithContextWriterLayer, P.Layer.provide(FuncSmithContextFsLive));
-export const FuncSmithContextWriterTest = P.pipe(FuncSmithContextWriterLayer, P.Layer.provide(FuncSmithContextFsTest));
+export const FsDepWriterLive = P.pipe(FsDepWriterLayer, P.Layer.provide(FsDepTinyFileSystemLive));
+export const FsDepWriterTest = P.pipe(FsDepWriterLayer, P.Layer.provide(FsDepTinyFileSystemTest));
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextEnvDefault = P.Layer.succeed(
-  FuncSmithContextEnv,
-  FuncSmithContextEnv.of({
+export const FsDepEnvDefault = P.Layer.succeed(
+  FsDepEnv,
+  FsDepEnv.of({
     env: {},
   })
 );
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextMetadataDefault = P.Layer.succeed(
-  FuncSmithContextMetadata,
-  FuncSmithContextMetadata.of({
+export const FsDepMetadataDefault = P.Layer.succeed(
+  FsDepMetadata,
+  FsDepMetadata.of({
     metadata: {},
   })
 );
 
-export const FuncSmithContextMetadataTest = P.Layer.succeed(
-  FuncSmithContextMetadata,
-  FuncSmithContextMetadata.of({
+export const FsDepMetadataTest = P.Layer.succeed(
+  FsDepMetadata,
+  FsDepMetadata.of({
     metadata: {
       testMetaDataName1: 'testMetaDataValue1',
     },
@@ -97,9 +90,9 @@ export const FuncSmithContextMetadataTest = P.Layer.succeed(
 );
 
 // --------------------------------------------------------------------------
-export const FuncSmithContextTest = P.Layer.succeed(
-  FuncSmithContext(),
-  FuncSmithContext().of({
+export const FsDepContextTest = P.Layer.succeed(
+  FsDepContext(),
+  FsDepContext().of({
     rootDirPath: '/tmp',
     fileSet: EMPTY_FILESET(),
   })

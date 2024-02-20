@@ -4,17 +4,17 @@ import type { FuncSmithError } from '../error';
 import { toFuncSmithError } from '../error';
 import type { FileSet, FileSetItem } from '../lib/fileSet';
 import { isFileSetItemFile } from '../lib/fileSet/fileSetItem';
-import { FuncSmithContextFs } from '../types';
+import { FsDepTinyFileSystem } from '../types';
 
 export const fsFileSinkWriter = <T extends FileSetItem>(
   sinkPath: string,
   fileSet: FileSet<T>
-): P.Effect.Effect<FuncSmithContextFs, FuncSmithError, void> => {
+): P.Effect.Effect<FsDepTinyFileSystem, FuncSmithError, void> => {
   return P.pipe(
     P.Effect.Do,
     P.Effect.bind('tfs', () =>
       P.pipe(
-        FuncSmithContextFs,
+        FsDepTinyFileSystem,
         P.Effect.map((deps) => deps.tinyFs)
       )
     ),

@@ -4,7 +4,7 @@ import * as P from '@konker.dev/effect-ts-prelude';
 import { toFuncSmithError } from '../../error';
 import type { FileSet, FileSetItem, Html } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
-import { FuncSmithContext, FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader } from '../../types';
+import { FsDepContext, FsDepEnv, FsDepMetadata, FsDepReader } from '../../types';
 import { wrapMapping } from '../lib';
 import { processFileItem, toPartialsList, toTemplateMap } from './lib';
 import type { LayoutsOptions } from './types';
@@ -23,64 +23,51 @@ export const DEFAULT_LAYOUTS_OPTIONS: LayoutsOptions = {
 export const layoutsMappingCtor =
   <IF extends FileSetItem>(
     options: Partial<LayoutsOptions> = DEFAULT_LAYOUTS_OPTIONS
-  ): FileSetMapping<
-    IF,
-    IF | Html<IF>,
-    FuncSmithContext<IF> | FuncSmithContextEnv | FuncSmithContextMetadata | FuncSmithContextReader
-  > =>
+  ): FileSetMapping<IF, IF | Html<IF>, FsDepContext<IF> | FsDepEnv | FsDepMetadata | FsDepReader> =>
   (fileSet: FileSet<IF>) => {
     const safeOptions = { ...DEFAULT_LAYOUTS_OPTIONS, ...options };
 
     return P.pipe(
       P.Effect.Do,
-      P.Effect.bind('deps', () =>
-        P.Effect.all([FuncSmithContext<IF>(), FuncSmithContextEnv, FuncSmithContextMetadata, FuncSmithContextReader])
-      ),
-      P.Effect.bind('layoutsFullPath', ({ deps: [funcSmithContext, __, ___, funcSmithContextReader] }) =>
-        funcSmithContextReader.tinyFs.isAbsolute(safeOptions.layoutsPath)
+      P.Effect.bind('deps', () => P.Effect.all([FsDepContext<IF>(), FsDepEnv, FsDepMetadata, FsDepReader])),
+      P.Effect.bind('layoutsFullPath', ({ deps: [fsDepContext, __, ___, fsDepReader] }) =>
+        fsDepReader.tinyFs.isAbsolute(safeOptions.layoutsPath)
           ? P.Effect.succeed(safeOptions.layoutsPath)
           : P.pipe(
-              funcSmithContextReader.tinyFs.joinPath(funcSmithContext.rootDirPath, safeOptions.layoutsPath),
+              fsDepReader.tinyFs.joinPath(fsDepContext.rootDirPath, safeOptions.layoutsPath),
               P.Effect.mapError(toFuncSmithError)
             )
       ),
-      P.Effect.bind('partialsFullPath', ({ deps: [funcSmithContext, __, ___, funcSmithContextReader] }) =>
+      P.Effect.bind('partialsFullPath', ({ deps: [fsDepContext, __, ___, fsDepReader] }) =>
         safeOptions.partialsPath
-          ? funcSmithContextReader.tinyFs.isAbsolute(safeOptions.partialsPath)
+          ? fsDepReader.tinyFs.isAbsolute(safeOptions.partialsPath)
             ? P.Effect.succeed(options.partialsPath)
             : P.pipe(
-                funcSmithContextReader.tinyFs.joinPath(funcSmithContext.rootDirPath, safeOptions.partialsPath),
+                fsDepReader.tinyFs.joinPath(fsDepContext.rootDirPath, safeOptions.partialsPath),
                 P.Effect.mapError(toFuncSmithError)
               )
           : P.Effect.succeed(undefined)
       ),
-      P.Effect.bind('layoutsFileSet', ({ deps: [_, __, ___, funcSmithContextReader], layoutsFullPath }) =>
-        P.pipe(funcSmithContextReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
+      P.Effect.bind('layoutsFileSet', ({ deps: [_, __, ___, fsDepReader], layoutsFullPath }) =>
+        P.pipe(fsDepReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
       ),
-      P.Effect.bind('partialsFileSet', ({ deps: [_, __, ___, funcSmithContextReader], partialsFullPath }) =>
+      P.Effect.bind('partialsFileSet', ({ deps: [_, __, ___, fsDepReader], partialsFullPath }) =>
         partialsFullPath
-          ? P.pipe(funcSmithContextReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
+          ? P.pipe(fsDepReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
           : P.Effect.succeed([])
       ),
       P.Effect.bind('partialsList', ({ partialsFileSet }) => toPartialsList(safeOptions, partialsFileSet)),
       P.Effect.bind('templateMap', ({ layoutsFileSet, partialsList }) =>
         toTemplateMap(safeOptions, layoutsFileSet, partialsList)
       ),
-      P.Effect.flatMap(
-        ({ deps: [_, funcSmithContextEnv, funcSmithContextMetadata, _funcSmithContextReader], templateMap }) =>
-          P.pipe(
-            fileSet,
-            P.Array.map((fileSetItem) =>
-              processFileItem(
-                funcSmithContextEnv.env,
-                safeOptions,
-                funcSmithContextMetadata.metadata,
-                templateMap,
-                fileSetItem
-              )
-            ),
-            P.Effect.all
-          )
+      P.Effect.flatMap(({ deps: [_, fsDepEnv, fsDepMetadata, _fsDepReader], templateMap }) =>
+        P.pipe(
+          fileSet,
+          P.Array.map((fileSetItem) =>
+            processFileItem(fsDepEnv.env, safeOptions, fsDepMetadata.metadata, templateMap, fileSetItem)
+          ),
+          P.Effect.all
+        )
       )
     );
   };

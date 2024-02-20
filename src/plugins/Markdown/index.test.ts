@@ -1,6 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { FuncSmithContextEnvDefault, FuncSmithContextMetadataDefault } from '../../layers';
+import { FsDepEnvDefault, FsDepMetadataDefault } from '../../layers';
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import * as unit from './index';
 
@@ -12,8 +12,8 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextEnvDefault),
-          P.Effect.provide(FuncSmithContextMetadataDefault)
+          P.Effect.provide(FsDepEnvDefault),
+          P.Effect.provide(FsDepMetadataDefault)
         )
       );
       expect(actual).toMatchSnapshot('plugin-markdown-1');

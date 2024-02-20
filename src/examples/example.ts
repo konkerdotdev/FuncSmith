@@ -3,7 +3,7 @@ import * as P from '@konker.dev/effect-ts-prelude';
 
 import * as F from '../index';
 import { FuncSmith } from '../index';
-import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layers';
+import { FsDepReaderLive, FsDepWriterLive } from '../layers';
 
 (async () => {
   const pluginStack = P.pipe(
@@ -55,10 +55,6 @@ import { FuncSmithContextReaderLive, FuncSmithContextWriterLive } from '../layer
   );
 
   return P.Effect.runPromise(
-    P.pipe(
-      FuncSmith(pluginStack),
-      P.Effect.provide(FuncSmithContextReaderLive),
-      P.Effect.provide(FuncSmithContextWriterLive)
-    )
+    P.pipe(FuncSmith(pluginStack), P.Effect.provide(FsDepReaderLive), P.Effect.provide(FsDepWriterLive))
   );
 })();

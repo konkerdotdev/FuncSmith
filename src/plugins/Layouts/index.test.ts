@@ -1,11 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import {
-  FuncSmithContextEnvDefault,
-  FuncSmithContextMetadataDefault,
-  FuncSmithContextReaderTest,
-  FuncSmithContextTest,
-} from '../../layers';
+import { FsDepContextTest, FsDepEnvDefault, FsDepMetadataDefault, FsDepReaderTest } from '../../layers';
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import * as unit from './index';
 
@@ -17,10 +12,10 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextReaderTest),
-          P.Effect.provide(FuncSmithContextEnvDefault),
-          P.Effect.provide(FuncSmithContextMetadataDefault),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepReaderTest),
+          P.Effect.provide(FsDepEnvDefault),
+          P.Effect.provide(FsDepMetadataDefault),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -37,10 +32,10 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextReaderTest),
-          P.Effect.provide(FuncSmithContextEnvDefault),
-          P.Effect.provide(FuncSmithContextMetadataDefault),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepReaderTest),
+          P.Effect.provide(FsDepEnvDefault),
+          P.Effect.provide(FsDepMetadataDefault),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -57,10 +52,10 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextReaderTest),
-          P.Effect.provide(FuncSmithContextEnvDefault),
-          P.Effect.provide(FuncSmithContextMetadataDefault),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepReaderTest),
+          P.Effect.provide(FsDepEnvDefault),
+          P.Effect.provide(FsDepMetadataDefault),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -78,10 +73,10 @@ describe('plugins', () => {
         P.pipe(
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
-          P.Effect.provide(FuncSmithContextReaderTest),
-          P.Effect.provide(FuncSmithContextEnvDefault),
-          P.Effect.provide(FuncSmithContextMetadataDefault),
-          P.Effect.provide(FuncSmithContextTest)
+          P.Effect.provide(FsDepReaderTest),
+          P.Effect.provide(FsDepEnvDefault),
+          P.Effect.provide(FsDepMetadataDefault),
+          P.Effect.provide(FsDepContextTest)
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');

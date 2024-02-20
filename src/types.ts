@@ -7,56 +7,55 @@ import type { FileSinkWriter } from './sink';
 import type { FileSourceReader } from './source';
 
 // --------------------------------------------------------------------------
-export type FuncSmithContext<T extends FileSetItem = FileSetItem> = {
+export type FsDepContext<T extends FileSetItem = FileSetItem> = {
   readonly rootDirPath: string;
   readonly fileSet: FileSet<T>;
 };
-export const FuncSmithContext = <T extends FileSetItem = FileSetItem>() =>
-  P.Context.Tag<FuncSmithContext<T>>('FuncSmithContext');
+export const FsDepContext = <T extends FileSetItem = FileSetItem>() => P.Context.Tag<FsDepContext<T>>('FsDepContext');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextSource = {
-  readonly sourcePath: string; //FIXME: DirectoryPath;
+export type FsDepSource = {
+  readonly sourcePath: string;
 };
-export const FuncSmithContextSource = P.Context.Tag<FuncSmithContextSource>('FuncSmithContextSource');
+export const FsDepSource = P.Context.Tag<FsDepSource>('FsDepSource');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextSink = {
-  readonly sinkPath: string; //FIXME: DirectoryPath;
+export type FsDepSink = {
+  readonly sinkPath: string;
 };
-export const FuncSmithContextSink = P.Context.Tag<FuncSmithContextSink>('FuncSmithContextSink');
+export const FsDepSink = P.Context.Tag<FsDepSink>('FsDepSink');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextEnv = {
+export type FsDepEnv = {
   readonly env: Record<string, unknown>;
 };
-export const FuncSmithContextEnv = P.Context.Tag<FuncSmithContextEnv>('FuncSmithContextEnv');
+export const FsDepEnv = P.Context.Tag<FsDepEnv>('FsDepEnv');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextMetadata = {
+export type FsDepMetadata = {
   readonly metadata: Record<string, unknown>;
 };
-export const FuncSmithContextMetadata = P.Context.Tag<FuncSmithContextMetadata>('FuncSmithContextMetadata');
+export const FsDepMetadata = P.Context.Tag<FsDepMetadata>('FsDepMetadata');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextFs = {
+export type FsDepTinyFileSystem = {
   readonly tinyFs: TinyFileSystem;
 };
-export const FuncSmithContextFs = P.Context.Tag<FuncSmithContextFs>('FuncSmithContextFs');
+export const FsDepTinyFileSystem = P.Context.Tag<FsDepTinyFileSystem>('FsDepTinyFileSystem');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextReader = {
+export type FsDepReader = {
   readonly tinyFs: TinyFileSystem;
   readonly reader: FileSourceReader<FileSetItem>;
 };
-export const FuncSmithContextReader = P.Context.Tag<FuncSmithContextReader>('FuncSmithContextReader');
+export const FsDepReader = P.Context.Tag<FsDepReader>('FsDepReader');
 
 // --------------------------------------------------------------------------
-export type FuncSmithContextWriter = {
+export type FsDepWriter = {
   readonly tinyFs: TinyFileSystem;
   readonly writer: FileSinkWriter<FileSetItem>;
 };
-export const FuncSmithContextWriter = P.Context.Tag<FuncSmithContextWriter>('FuncSmithContextWriter');
+export const FsDepWriter = P.Context.Tag<FsDepWriter>('FsDepWriter');
 
 // --------------------------------------------------------------------------
 export type FileSetMappingResult<IF extends FileSetItem, R> = P.Effect.Effect<R, FuncSmithError, FileSet<IF>>;

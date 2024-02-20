@@ -4,7 +4,7 @@ import { MemFsTinyFileSystem } from '@konker.dev/tiny-filesystem-fp/dist/memfs';
 import * as fileSetItemLib from '../lib/fileSet/fileSetItem';
 import * as fixturesFs from '../test/fixtures/fileset-1';
 import fixturesMemFs1 from '../test/fixtures/memfs-1.json';
-import { FuncSmithContextFs } from '../types';
+import { FsDepTinyFileSystem } from '../types';
 import * as unit from './FsFileSinkWriter';
 
 const TEST_TFS = MemFsTinyFileSystem(fixturesMemFs1, '/tmp');
@@ -26,8 +26,8 @@ describe('sink', () => {
         P.pipe(
           unit.fsFileSinkWriter(sinkPath, fixturesFs.TEST_FILE_SET_1),
           P.Effect.provideService(
-            FuncSmithContextFs,
-            FuncSmithContextFs.of({
+            FsDepTinyFileSystem,
+            FsDepTinyFileSystem.of({
               tinyFs: TEST_TFS,
             })
           )

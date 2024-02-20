@@ -3,7 +3,7 @@ import { MemFsTinyFileSystem } from '@konker.dev/tiny-filesystem-fp/dist/memfs';
 
 import * as fixturesFs from '../test/fixtures/fileset-1';
 import fixturesMemFs1 from '../test/fixtures/memfs-1.json';
-import { FuncSmithContextFs } from '../types';
+import { FsDepTinyFileSystem } from '../types';
 import * as unit from './FsFileSourceReader';
 
 const TEST_TFS = MemFsTinyFileSystem(fixturesMemFs1, '/tmp');
@@ -15,8 +15,8 @@ describe('source', () => {
         P.pipe(
           unit.fsFileSourceReader('/tmp/foo'),
           P.Effect.provideService(
-            FuncSmithContextFs,
-            FuncSmithContextFs.of({
+            FsDepTinyFileSystem,
+            FsDepTinyFileSystem.of({
               tinyFs: TEST_TFS,
             })
           )
@@ -30,8 +30,8 @@ describe('source', () => {
         P.pipe(
           unit.fsFileSourceReader('/tmp/foo', '**/*.md'),
           P.Effect.provideService(
-            FuncSmithContextFs,
-            FuncSmithContextFs.of({
+            FsDepTinyFileSystem,
+            FsDepTinyFileSystem.of({
               tinyFs: TEST_TFS,
             })
           )

@@ -1,8 +1,8 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { FuncSmithContextReaderTest, FuncSmithContextSourceTest } from '../layers';
+import { FsDepReaderTest, FsDepSourceTest } from '../layers';
 import * as fixturesFs from '../test/fixtures/fileset-1';
-import { FuncSmithContextSource } from '../types';
+import { FsDepSource } from '../types';
 import * as unit from './Reader';
 
 describe('plugins', () => {
@@ -13,8 +13,8 @@ describe('plugins', () => {
         P.pipe(
           [],
           pluginStack,
-          P.Effect.provideService(FuncSmithContextSource, FuncSmithContextSourceTest),
-          P.Effect.provide(FuncSmithContextReaderTest)
+          P.Effect.provideService(FsDepSource, FsDepSourceTest),
+          P.Effect.provide(FsDepReaderTest)
         )
       );
       expect(actual).toStrictEqual(fixturesFs.TEST_FILE_SET_1);
