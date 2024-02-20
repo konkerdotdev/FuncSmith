@@ -14,6 +14,7 @@ export const TEST_HBS_TEMPLATE_3 = H.compile(TEST_HBS_TEMPLATE_S_3);
 
 export const TEST_PARTIAL_S_1 = '<footer>{{ testHelper footStuff }}</footer>';
 export const TEST_PARTIAL_1 = H.compile(TEST_PARTIAL_S_1);
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TEST_PARTIAL_SPEC_1 = { 'footer.hbs': TEST_PARTIAL_1 };
 
 export const TEST_HELPER = function (s: string) {

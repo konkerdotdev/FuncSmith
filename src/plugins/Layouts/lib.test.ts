@@ -9,7 +9,9 @@ import { DEFAULT_LAYOUTS_OPTIONS } from './index';
 import * as unit from './lib';
 
 const TEST_TEMPLATE_MAP = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   'foo.hbs': fixturesHb.TEST_HBS_TEMPLATE_1,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   'layout.hbs': fixturesHb.TEST_HBS_TEMPLATE_3,
 };
 

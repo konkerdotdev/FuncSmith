@@ -7,20 +7,17 @@ A static site generator / content processing engine based on the ideas of [metal
 
 ## TODO
 
-- Test coverage
-  - index
-  - layers
-  - types?
-  - source
-  - sink
-  - plugins
-  - plugins/lib
-  - ignore examples
 - Publish npm package
   - Omit examples
   - Check CI/CD
   - Establish that can be used for konker.dev
 - Documentation
   - "Self-hosted" docs inside repo? 🤯
+- Features:
+  - Use schemas to enforce transforms?
+    - Add to FrontMatter?
+    - What else?
+    - How to make later plugins expect optional schema type (e.g. like FrontMatter<IF>)
+  - Some kind of "webpack" for html output?
 - ~~Have a default empty env service automatically injected~~
 - ~~Have a default empty metadata service automatically injected~~

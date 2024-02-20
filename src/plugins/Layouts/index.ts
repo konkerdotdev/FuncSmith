@@ -30,7 +30,7 @@ export const layoutsMappingCtor =
     return P.pipe(
       P.Effect.Do,
       P.Effect.bind('deps', () => P.Effect.all([FsDepContext<IF>(), FsDepEnv, FsDepMetadata, FsDepReader])),
-      P.Effect.bind('layoutsFullPath', ({ deps: [fsDepContext, __, ___, fsDepReader] }) =>
+      P.Effect.bind('layoutsFullPath', ({ deps: [fsDepContext, _, __, fsDepReader] }) =>
         fsDepReader.tinyFs.isAbsolute(safeOptions.layoutsPath)
           ? P.Effect.succeed(safeOptions.layoutsPath)
           : P.pipe(
@@ -38,7 +38,7 @@ export const layoutsMappingCtor =
               P.Effect.mapError(toFuncSmithError)
             )
       ),
-      P.Effect.bind('partialsFullPath', ({ deps: [fsDepContext, __, ___, fsDepReader] }) =>
+      P.Effect.bind('partialsFullPath', ({ deps: [fsDepContext, _fsDepEnv, _fsDepMetadata, fsDepReader] }) =>
         safeOptions.partialsPath
           ? fsDepReader.tinyFs.isAbsolute(safeOptions.partialsPath)
             ? P.Effect.succeed(options.partialsPath)
@@ -48,19 +48,23 @@ export const layoutsMappingCtor =
               )
           : P.Effect.succeed(undefined)
       ),
-      P.Effect.bind('layoutsFileSet', ({ deps: [_, __, ___, fsDepReader], layoutsFullPath }) =>
-        P.pipe(fsDepReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
+      P.Effect.bind(
+        'layoutsFileSet',
+        ({ deps: [_fsDepContext, _fsDepEnv, _fsDepMetadata, fsDepReader], layoutsFullPath }) =>
+          P.pipe(fsDepReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
       ),
-      P.Effect.bind('partialsFileSet', ({ deps: [_, __, ___, fsDepReader], partialsFullPath }) =>
-        partialsFullPath
-          ? P.pipe(fsDepReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
-          : P.Effect.succeed([])
+      P.Effect.bind(
+        'partialsFileSet',
+        ({ deps: [_fsDepContext, _fsDepEnv, _fsDepMetadata, fsDepReader], partialsFullPath }) =>
+          partialsFullPath
+            ? P.pipe(fsDepReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
+            : P.Effect.succeed([])
       ),
       P.Effect.bind('partialsList', ({ partialsFileSet }) => toPartialsList(safeOptions, partialsFileSet)),
       P.Effect.bind('templateMap', ({ layoutsFileSet, partialsList }) =>
         toTemplateMap(safeOptions, layoutsFileSet, partialsList)
       ),
-      P.Effect.flatMap(({ deps: [_, fsDepEnv, fsDepMetadata, _fsDepReader], templateMap }) =>
+      P.Effect.flatMap(({ deps: [_fsDepContext, fsDepEnv, fsDepMetadata, _fsDepReader], templateMap }) =>
         P.pipe(
           fileSet,
           P.Array.map((fileSetItem) =>

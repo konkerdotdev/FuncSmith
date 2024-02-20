@@ -29,9 +29,6 @@ dependencies:
   handlebars:
     specifier: ^4.7.8
     version: 4.7.8
-  memfs:
-    specifier: ^4.7.6
-    version: 4.7.6
   micromatch:
     specifier: ^4.0.5
     version: 4.0.5
@@ -115,6 +112,9 @@ devDependencies:
   madge:
     specifier: ^6.1.0
     version: 6.1.0(typescript@5.3.3)
+  memfs:
+    specifier: ^4.7.6
+    version: 4.7.6
   npx:
     specifier: ^10.2.2
     version: 10.2.2
@@ -6231,7 +6231,6 @@ packages:
     engines: {node: '>= 4.0.0'}
     dependencies:
       tslib: 2.6.2
-    dev: false
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}

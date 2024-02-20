@@ -42,7 +42,7 @@ import { FsDepReaderLive, FsDepWriterLive } from '../layers';
       siteName: 'My Static Site & Blog',
       siteUrl: 'https://example.com/',
       description: "It's about saying »Hello« to the world.",
-      generatorName: 'FuncSmith',
+      generatorName: 'funcsmith',
       generatorUrl: 'https://konker.dev/funcsmith/',
     }),
     F.env({
