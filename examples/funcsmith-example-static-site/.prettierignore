@@ -5,4 +5,4 @@ tsconfig.json
 dist
 **/.cdk-*.out/
 **/.serverless/
-examples
+

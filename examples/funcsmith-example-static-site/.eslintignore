@@ -3,4 +3,5 @@ dist
 coverage
 **/.cdk-*.out
 **/.serverless/**/*
-examples
+www
+src
