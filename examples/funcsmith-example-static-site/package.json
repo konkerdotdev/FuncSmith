@@ -45,7 +45,6 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-destructure-keys": "^1.5.0",
     "gulp": "^4.0.2",
-    "husky": "^8.0.0",
     "jest": "^29.7.0",
     "leasot": "^13.3.0",
     "madge": "^6.1.0",
@@ -57,7 +56,6 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "prepare": "husky install",
     "test": "jest --no-cache --passWithNoTests -w 4",
     "clean": "rm -rf dist && rm -rf coverage && rm -f tsconfig.tsbuildinfo",
     "typecheck": "tsc --noEmit",
