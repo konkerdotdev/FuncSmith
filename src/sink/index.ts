@@ -11,7 +11,7 @@ export type FileSink = {
 export type FileSinkWriter<T extends FileSetItem> = (
   sinkPath: string,
   fileSet: FileSet<T>
-) => P.Effect.Effect<never, FuncSmithError, void>;
+) => P.Effect.Effect<void, FuncSmithError>;
 
 /* FIXME: remove?
 export type FileSinkWriterFactory<R, T extends FileSetItem> = (

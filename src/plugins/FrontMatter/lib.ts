@@ -16,7 +16,7 @@ export function isFrontMatter<T extends FileSetItem>(fileSetItem: T): fileSetIte
 // --------------------------------------------------------------------------
 export function extractFrontMatter<T extends FileSetItemFile>(
   fileSetItem: T
-): P.Effect.Effect<never, FuncSmithError, FrontMatter<T>> {
+): P.Effect.Effect<FrontMatter<T>, FuncSmithError> {
   return P.Effect.try({
     try: () => {
       const { content, data } = grayMatter(fileSetItemContentsToString(fileSetItem.contents));
@@ -34,5 +34,5 @@ export function extractFrontMatter<T extends FileSetItemFile>(
 // --------------------------------------------------------------------------
 export const processItemFrontMatter =
   <T extends FileSetItem>(globPattern: string) =>
-  (item: T): P.Effect.Effect<never, FuncSmithError, T | FrontMatter<T>> =>
+  (item: T): P.Effect.Effect<T | FrontMatter<T>, FuncSmithError> =>
     micromatch.some([item.relPath], [globPattern]) ? extractFrontMatter(item) : P.Effect.succeed(item);

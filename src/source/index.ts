@@ -11,7 +11,7 @@ export type FileSource = {
 export type FileSourceReader<T extends FileSetItem> = (
   sourcePath: string,
   globPattern?: string
-) => P.Effect.Effect<never, FuncSmithError, FileSet<T>>;
+) => P.Effect.Effect<FileSet<T>, FuncSmithError>;
 
 /* FIXME: remove?
 export type FileSourceReaderFactory<R, T extends FileSetItem> = (

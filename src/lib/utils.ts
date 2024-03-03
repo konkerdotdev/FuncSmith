@@ -11,7 +11,7 @@ export const toGeneralError = toTinyError<ERROR_TAG>(ERROR_TAG);
 export type GeneralError = ReturnType<typeof toGeneralError>;
 
 // --------------------------------------------------------------------------
-export function hashHex(s: string): P.Effect.Effect<never, GeneralError, string> {
+export function hashHex(s: string): P.Effect.Effect<string, GeneralError> {
   return P.pipe(
     P.Effect.tryPromise({
       try: async () => crypto.subtle.digest('SHA-1', stringToUint8Array(s)),

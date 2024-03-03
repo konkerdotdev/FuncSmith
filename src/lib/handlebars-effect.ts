@@ -14,7 +14,7 @@ export function handlebarsCompile(
   templateStr: string,
   helpers: Record<string, H.HelperDelegate> = {},
   partials: Array<Record<string, H.TemplateDelegate>> = []
-): P.Effect.Effect<never, HandlebarsError, H.TemplateDelegate> {
+): P.Effect.Effect<H.TemplateDelegate, HandlebarsError> {
   return P.Effect.try({
     try: () => {
       // eslint-disable-next-line fp/no-unused-expression
@@ -29,7 +29,7 @@ export function handlebarsCompile(
 
 export const handlebarsRender =
   (context: unknown) =>
-  (template: H.TemplateDelegate): P.Effect.Effect<never, HandlebarsError, string> =>
+  (template: H.TemplateDelegate): P.Effect.Effect<string, HandlebarsError> =>
     P.Effect.try({
       try: () => template(context),
       catch: toHandlebarsError,
@@ -38,7 +38,7 @@ export const handlebarsRender =
 export function handlebarsRender2(
   context: unknown,
   template: H.TemplateDelegate
-): P.Effect.Effect<never, HandlebarsError, string> {
+): P.Effect.Effect<string, HandlebarsError> {
   return handlebarsRender(context)(template);
 }
 
@@ -48,5 +48,5 @@ export const handlebars =
     helpers: Record<string, H.HelperDelegate> = {},
     partials: Array<Record<string, H.TemplateDelegate>> = []
   ) =>
-  (context: unknown): P.Effect.Effect<never, HandlebarsError, string> =>
+  (context: unknown): P.Effect.Effect<string, HandlebarsError> =>
     P.pipe(handlebarsCompile(templateStr, helpers, partials), P.Effect.flatMap(handlebarsRender(context)));

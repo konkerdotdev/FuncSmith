@@ -9,7 +9,7 @@ import { FsDepTinyFileSystem } from '../types';
 export const fsFileSinkWriter = <T extends FileSetItem>(
   sinkPath: string,
   fileSet: FileSet<T>
-): P.Effect.Effect<FsDepTinyFileSystem, FuncSmithError, void> => {
+): P.Effect.Effect<void, FuncSmithError, FsDepTinyFileSystem> => {
   return P.pipe(
     P.Effect.Do,
     P.Effect.bind('tfs', () =>

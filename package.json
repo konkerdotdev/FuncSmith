@@ -26,13 +26,13 @@
     "gray-matter": "^4.0.3"
   },
   "dependencies": {
-    "@effect/schema": "^0.61.5",
-    "@konker.dev/effect-ts-prelude": "0.0.12",
+    "@effect/schema": "^0.63.2",
+    "@konker.dev/effect-ts-prelude": "^0.0.13",
     "@konker.dev/tiny-error-fp": "^0.0.1",
-    "@konker.dev/tiny-event-fp": "^0.0.6",
-    "@konker.dev/tiny-filesystem-fp": "^0.0.15",
-    "@konker.dev/tiny-treecrawler-fp": "^0.0.15",
-    "effect": "^2.2.5",
+    "@konker.dev/tiny-event-fp": "^0.0.7",
+    "@konker.dev/tiny-filesystem-fp": "^0.0.16",
+    "@konker.dev/tiny-treecrawler-fp": "^0.0.16",
+    "effect": "^2.4.1",
     "handlebars": "^4.7.8",
     "micromatch": "^4.0.5"
   },

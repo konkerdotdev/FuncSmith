@@ -88,7 +88,7 @@ export function createCollection<IF extends FileSetItem>(
 export function createAllCollections<IF extends FileSetItem>(
   options: Record<string, CollectionOptions>,
   fileSet: FileSet<IF | FrontMatter<IF>>
-): P.Effect.Effect<never, FuncSmithError, Record<string, string>> {
+): P.Effect.Effect<Record<string, string>, FuncSmithError> {
   return P.pipe(
     Object.entries(options),
     P.Array.foldl((acc, [name, options]) => {

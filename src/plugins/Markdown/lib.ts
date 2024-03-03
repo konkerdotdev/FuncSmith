@@ -11,7 +11,7 @@ import type { MarkdownOptions } from './types';
 
 export const processFileSetItem =
   <T extends FileSetItem>(options: MarkdownOptions) =>
-  (fileSetItem: T | FrontMatter<T>): P.Effect.Effect<never, FuncSmithError, T | Html<T>> => {
+  (fileSetItem: T | FrontMatter<T>): P.Effect.Effect<T | Html<T>, FuncSmithError> => {
     // FIXME: more idiomatic way to do conditional?
     return fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(

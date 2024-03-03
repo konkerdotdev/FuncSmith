@@ -12,10 +12,10 @@ export type CommonMarkError = ReturnType<typeof toCommonMarkError>;
 // --------------------------------------------------------------------------
 export const commonMarkParse =
   (options: M.ParserOptions = {}) =>
-  (markdown: string): P.Effect.Effect<never, CommonMarkError, M.Node> =>
+  (markdown: string): P.Effect.Effect<M.Node, CommonMarkError> =>
     P.Effect.try({ try: () => new M.Parser(options).parse(markdown), catch: toCommonMarkError });
 
 export const commonMarkRender =
   (options: M.HtmlRenderingOptions = {}) =>
-  (node: M.Node): P.Effect.Effect<never, CommonMarkError, string> =>
+  (node: M.Node): P.Effect.Effect<string, CommonMarkError> =>
     P.Effect.try({ try: () => new M.HtmlRenderer(options).render(node), catch: toCommonMarkError });

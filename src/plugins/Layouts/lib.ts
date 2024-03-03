@@ -19,7 +19,7 @@ export function lookupLayoutTemplate<T extends FrontMatter<FileSetItem>>(
   templateMap: Record<string, H.TemplateDelegate>,
   options: LayoutsOptions,
   fileSetItem: T
-): P.Effect.Effect<never, FuncSmithError, H.TemplateDelegate> {
+): P.Effect.Effect<H.TemplateDelegate, FuncSmithError> {
   const layoutName = String(fileSetItem.frontMatter['layout'] ?? options.defaultLayout);
   const ret = templateMap[layoutName];
   return ret ? P.Effect.succeed(ret) : P.Effect.fail(toFuncSmithError(`Layout not found: ${layoutName}`));
@@ -32,7 +32,7 @@ export function processFileItem<T extends FileSetItem>(
   metadata: Record<string, unknown>,
   templateMap: Record<string, H.TemplateDelegate>,
   fileSetItem: T
-): P.Effect.Effect<never, FuncSmithError, T> {
+): P.Effect.Effect<T, FuncSmithError> {
   return isFrontMatter(fileSetItem)
     ? // FIXME: more idiomatic way to do conditional?
       fileSetItemMatchesPattern(options.globPattern, fileSetItem)
@@ -55,7 +55,7 @@ export function toTemplateMap(
   return P.pipe(
     data.filter(isFileSetItemFile),
     P.Array.foldl(
-      (acc: P.Effect.Effect<never, FuncSmithError, Record<string, H.TemplateDelegate>>, fileSetItem: FileSetItem) =>
+      (acc: P.Effect.Effect<Record<string, H.TemplateDelegate>, FuncSmithError>, fileSetItem: FileSetItem) =>
         P.pipe(
           P.Effect.Do,
           P.Effect.bind('template', () =>
@@ -81,7 +81,7 @@ export function toTemplateMap(
 export function toPartialsList(
   options: LayoutsOptions,
   data: Array<FileSetItem>
-): P.Effect.Effect<never, FuncSmithError, Array<Record<string, H.TemplateDelegate>>> {
+): P.Effect.Effect<Array<Record<string, H.TemplateDelegate>>, FuncSmithError> {
   return P.pipe(
     toTemplateMap(options, data),
     P.Effect.map((templateMap) => Object.entries(templateMap).map(([key, template]) => ({ [key]: template })))

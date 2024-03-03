@@ -24,7 +24,7 @@ export function fileSetItemRename<T extends FileSetItemFile>(
   tfs: TinyFileSystem,
   renameSpec: RenameSpec,
   item: T
-): P.Effect.Effect<never, FuncSmithError, T> {
+): P.Effect.Effect<T, FuncSmithError> {
   const relPath = item.relPath.replace(renameSpec[0], renameSpec[1]);
   const fileName = tfs.basename(relPath);
   const fileExt = tfs.extname(fileName);
@@ -57,7 +57,7 @@ export function fileSetItemMatchesPattern<T extends FileSetItemFile>(
 // --------------------------------------------------------------------------
 export const toFileSetItemFile =
   (tfs: TinyFileSystem, sourcePath: string) =>
-  (i: FileData): P.Effect.Effect<never, TinyFileSystemError | GeneralError, FileSetItemFile> => {
+  (i: FileData): P.Effect.Effect<FileSetItemFile, TinyFileSystemError | GeneralError> => {
     const fileName = tfs.basename(i.path);
     const fileExt = tfs.extname(i.path);
 
@@ -83,9 +83,7 @@ export const toFileSetItemFile =
 // --------------------------------------------------------------------------
 export const toFileSystemItemList =
   (tfs: TinyFileSystem, sourcePath: string) =>
-  (
-    list: Array<DirectoryData | FileData>
-  ): P.Effect.Effect<never, TinyFileSystemError | GeneralError, Array<FileSetItem>> =>
+  (list: Array<DirectoryData | FileData>): P.Effect.Effect<Array<FileSetItem>, TinyFileSystemError | GeneralError> =>
     P.pipe(list.filter(isFileData), P.Array.map(toFileSetItemFile(tfs, sourcePath)), P.Effect.all);
 
 // --------------------------------------------------------------------------

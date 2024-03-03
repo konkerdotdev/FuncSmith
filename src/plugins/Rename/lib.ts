@@ -8,7 +8,7 @@ import { fileSetItemRename } from '../../lib/fileSet/fileSetItem';
 
 export const renameFileSetItem =
   <T extends FileSetItem>(tfs: TinyFileSystem, specs: Array<RenameSpec>) =>
-  (fileSetItem: T): P.Effect.Effect<never, FuncSmithError, T> => {
+  (fileSetItem: T): P.Effect.Effect<T, FuncSmithError> => {
     return P.pipe(
       specs,
       P.Array.foldl(
@@ -17,7 +17,7 @@ export const renameFileSetItem =
             acc,
             P.Effect.flatMap((acc) => fileSetItemRename(tfs, spec, acc))
           ),
-        P.Effect.succeed(fileSetItem) as P.Effect.Effect<never, FuncSmithError, T>
+        P.Effect.succeed(fileSetItem) as P.Effect.Effect<T, FuncSmithError>
       )
     );
   };

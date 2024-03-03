@@ -19,6 +19,6 @@ export const EMPTY_FILESET = <T extends FileSetItem>(): FileSet<T> => [];
 
 export function FuncSmith<T extends FileSetItem, R>(
   pluginStack: FileSetMapping<FileSetItem, T, R>
-): P.Effect.Effect<R, FuncSmithError, FileSet<T>> {
+): P.Effect.Effect<FileSet<T>, FuncSmithError, R> {
   return pluginStack(EMPTY_FILESET<T>());
 }

@@ -19,7 +19,7 @@ import { FsDepTinyFileSystem } from '../types';
 export const fsFileSourceReader = (
   sourcePath: string,
   globPattern?: string
-): P.Effect.Effect<FsDepTinyFileSystem, FuncSmithError, FileSet<FileSetItem>> => {
+): P.Effect.Effect<FileSet<FileSetItem>, FuncSmithError, FsDepTinyFileSystem> => {
   // Read in the file system at the given path, and convert to a list of FileItems
   return P.pipe(
     P.Effect.Do,
