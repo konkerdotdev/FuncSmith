@@ -18,5 +18,3 @@ export type CollectionOptions = {
   readonly sortBy: string;
   readonly reverse: boolean;
 };
-
-export type Convenience<T extends CollectionOptions> = string | Partial<T>;

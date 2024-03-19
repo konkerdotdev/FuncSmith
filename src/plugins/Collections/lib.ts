@@ -5,7 +5,8 @@ import type { FuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
-import type { CollectionItem, CollectionOptions, Convenience } from './types';
+import type { Convenience } from '../lib';
+import type { CollectionItem, CollectionOptions } from './types';
 
 // --------------------------------------------------------------------------
 export function normalizeOptions(

@@ -4,6 +4,26 @@ import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FileSetInjectionMappingCtor, FileSetMapping, FileSetMappingCtor } from '../../types';
 
 /**
+ * A type when the plugin wants to accept either a full options record, or a string convenience version.
+ * E.g.
+ * ```
+ *     F.collections({
+ *       posts: {
+ *         globPattern: 'posts/*.html',
+ *         sortBy: 'date',
+ *       },
+ *     }),
+ * ```
+ * vs
+ * ```
+ *     F.collections({
+ *       posts: 'posts/*.html',
+ *     }),
+ * ```
+ */
+export type Convenience<T> = string | Partial<T>;
+
+/**
  * IF - input fileSetItem
  * OF - output fileSetItem
  * MF - mapping output fileSetItem

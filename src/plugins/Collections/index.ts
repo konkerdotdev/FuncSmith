@@ -3,8 +3,9 @@ import * as P from '@konker.dev/effect-ts-prelude';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
 import { FsDepMetadata } from '../../types';
+import type { Convenience } from '../lib';
 import { annotateAllCollectionItems, createAllCollections, normalizeAllOptions } from './lib';
-import type { CollectionOptions, Convenience } from './types';
+import type { CollectionOptions } from './types';
 
 export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
   globPattern: '**',
