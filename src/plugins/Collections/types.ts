@@ -2,7 +2,7 @@ import type { FileSetItem } from '../../lib/fileSet';
 
 export type CollectionRef = {
   readonly title: string | undefined;
-  readonly relPath: string;
+  readonly link: string;
 };
 
 export type CollectionItem<T extends FileSetItem> = T & {
@@ -18,5 +18,3 @@ export type CollectionOptions = {
   readonly sortBy: string;
   readonly reverse: boolean;
 };
-
-export type Convenience<T extends CollectionOptions> = string | Partial<T>;

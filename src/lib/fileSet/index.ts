@@ -13,6 +13,7 @@ export type FileSetItemFile<T = ArrayBuffer | string> = {
   readonly baseDir: string;
   readonly relPath: string;
   readonly relDir: string;
+  readonly link: string;
   readonly fileName: string;
   readonly fileBase: string;
   readonly fileExt: string;

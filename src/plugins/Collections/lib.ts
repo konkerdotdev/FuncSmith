@@ -5,7 +5,8 @@ import type { FuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
-import type { CollectionItem, CollectionOptions, Convenience } from './types';
+import type { Convenience } from '../lib';
+import type { CollectionItem, CollectionOptions } from './types';
 
 // --------------------------------------------------------------------------
 export function normalizeOptions(
@@ -54,7 +55,7 @@ export function collectionTransformer<IF extends FileSetItem>(
             previous: {
               title: collection[i - 1]?.frontMatter.title as string | undefined,
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-              relPath: collection[i - 1]?.relPath!,
+              link: collection[i - 1]?.link!,
             },
           }
         : {},
@@ -63,7 +64,7 @@ export function collectionTransformer<IF extends FileSetItem>(
             next: {
               title: collection[i + 1]?.frontMatter.title as string | undefined,
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-              relPath: collection[i + 1]?.relPath!,
+              link: collection[i + 1]?.link!,
             },
           }
         : {}

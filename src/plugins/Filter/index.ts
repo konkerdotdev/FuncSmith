@@ -6,7 +6,7 @@ import { wrapMapping } from '../lib';
 import { filterShouldKeep } from './lib';
 import type { FilterOptions } from './types';
 
-// --------------------------------------------------------------------------
+// ---------------------------------a-----------------------------------------
 export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
   drop: [],
   keep: ['**'],

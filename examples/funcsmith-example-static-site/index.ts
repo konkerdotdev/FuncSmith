@@ -2,7 +2,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import * as F from '@konker.dev/funcsmith';
-import { FuncSmith } from '@konker.dev/funcsmith';
 import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/layers';
 
 (async () => {
@@ -54,6 +53,6 @@ import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/lay
   );
 
   return P.Effect.runPromise(
-    P.pipe(FuncSmith(pluginStack), P.Effect.provide(FsDepReaderLive), P.Effect.provide(FsDepWriterLive))
+    P.pipe(F.FuncSmith(pluginStack), P.Effect.provide(FsDepReaderLive), P.Effect.provide(FsDepWriterLive))
   );
 })();

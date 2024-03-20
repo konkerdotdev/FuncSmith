@@ -20,6 +20,55 @@ export function isFileSetItemFile<T extends FileSetItem>(data: T): data is T & F
 }
 
 // --------------------------------------------------------------------------
+export function fileSetSetFileName<T extends FileSetItemFile>(
+  tfs: TinyFileSystem,
+  newValue: string,
+  item: T
+): P.Effect.Effect<T, FuncSmithError> {
+  const fileName = newValue;
+  const fileExt = tfs.extname(newValue);
+  const fileBase = tfs.basename(newValue, fileExt);
+  return P.pipe(
+    P.Effect.Do,
+    P.Effect.bind('relPath', () => tfs.joinPath(item.relDir, fileName)),
+    P.Effect.bind('link', ({ relPath }) => tfs.joinPath(tfs.PATH_SEP, relPath)),
+    P.Effect.bind('path', ({ relPath }) => tfs.joinPath(item.baseDir, relPath)),
+    P.Effect.map(({ link, path, relPath }) => ({
+      ...item,
+      path,
+      relPath,
+      link,
+      fileName,
+      fileBase,
+      fileExt,
+    })),
+    P.Effect.mapError(toFuncSmithError)
+  );
+}
+
+export function fileSetSetRelDir<T extends FileSetItemFile>(
+  tfs: TinyFileSystem,
+  newValue: string,
+  item: T
+): P.Effect.Effect<T, FuncSmithError> {
+  const relDir = newValue;
+  return P.pipe(
+    P.Effect.Do,
+    P.Effect.bind('relPath', () => tfs.joinPath(relDir, item.fileName)),
+    P.Effect.bind('link', ({ relPath }) => tfs.joinPath(tfs.PATH_SEP, relPath)),
+    P.Effect.bind('path', ({ relPath }) => tfs.joinPath(item.baseDir, relPath)),
+    P.Effect.map(({ link, path, relPath }) => ({
+      ...item,
+      path,
+      relPath,
+      link,
+      relDir,
+    })),
+    P.Effect.mapError(toFuncSmithError)
+  );
+}
+
+// --------------------------------------------------------------------------
 export function fileSetItemRename<T extends FileSetItemFile>(
   tfs: TinyFileSystem,
   renameSpec: RenameSpec,
@@ -31,12 +80,14 @@ export function fileSetItemRename<T extends FileSetItemFile>(
   const fileBase = tfs.basename(fileName, fileExt);
   return P.pipe(
     P.Effect.Do,
+    P.Effect.bind('link', () => tfs.joinPath(tfs.PATH_SEP, relPath)),
     P.Effect.bind('path', () => tfs.joinPath(item.baseDir, relPath)),
     P.Effect.bind('relDir', () => tfs.dirName(relPath)),
-    P.Effect.map(({ path, relDir }) => ({
+    P.Effect.map(({ link, path, relDir }) => ({
       ...item,
       path,
       relPath,
+      link,
       relDir,
       fileName,
       fileBase,
@@ -60,17 +111,20 @@ export const toFileSetItemFile =
   (i: FileData): P.Effect.Effect<FileSetItemFile, TinyFileSystemError | GeneralError> => {
     const fileName = tfs.basename(i.path);
     const fileExt = tfs.extname(i.path);
+    const relPath = tfs.relative(sourcePath, i.path);
 
     return P.pipe(
       P.Effect.Do,
+      P.Effect.bind('link', () => tfs.joinPath(tfs.PATH_SEP, relPath)),
       P.Effect.bind('relDir', () => tfs.dirName(tfs.relative(sourcePath, i.path))),
       P.Effect.bind('pathHash', () => hashHex(i.path)),
-      P.Effect.map(({ pathHash, relDir }) => ({
+      P.Effect.map(({ link, pathHash, relDir }) => ({
         _tag: FileSetItemType.File,
         _id: pathHash,
         path: i.path,
         baseDir: sourcePath,
-        relPath: tfs.relative(sourcePath, i.path),
+        relPath,
+        link,
         relDir,
         fileName,
         fileExt,

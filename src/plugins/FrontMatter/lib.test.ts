@@ -36,6 +36,7 @@ describe('frontMatter', () => {
         path: '/tmp/foo/posts/p2.md',
         relDir: 'posts',
         relPath: 'posts/p2.md',
+        link: '/posts/p2.md',
         title: 'P2',
       });
     });
@@ -55,6 +56,7 @@ describe('frontMatter', () => {
         path: '/tmp/foo/a.txt',
         relDir: '.',
         relPath: 'a.txt',
+        link: '/a.txt',
       });
     });
   });
@@ -83,6 +85,7 @@ describe('frontMatter', () => {
         path: '/tmp/foo/posts/p2.md',
         relDir: 'posts',
         relPath: 'posts/p2.md',
+        link: '/posts/p2.md',
         title: 'P2',
       });
     });
@@ -103,6 +106,7 @@ describe('frontMatter', () => {
         path: '/tmp/foo/posts/p2.md',
         relDir: 'posts',
         relPath: 'posts/p2.md',
+        link: '/posts/p2.md',
       });
     });
 
@@ -121,6 +125,7 @@ describe('frontMatter', () => {
         path: '/tmp/foo/a.txt',
         relDir: '.',
         relPath: 'a.txt',
+        link: '/a.txt',
       });
     });
   });

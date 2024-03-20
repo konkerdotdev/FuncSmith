@@ -15,7 +15,8 @@ exports[`sink FsFileSinkWriter should write files to the file system: fsFileSink
    │  └─ posts/
    │     ├─ index.md
    │     ├─ p1.md
-   │     └─ p2.md
+   │     ├─ p2.md
+   │     └─ p3.md
    ├─ layouts/
    │  ├─ bar.hbs
    │  ├─ foo.hbs

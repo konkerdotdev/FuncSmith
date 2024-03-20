@@ -9,6 +9,7 @@ export * from './Identity';
 export * from './Layouts';
 export * from './Markdown';
 export * from './Metadata';
+export * from './Permalinks';
 export * from './Reader';
 export * from './Rename';
 export * from './Root';

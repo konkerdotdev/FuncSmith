@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`plugins Filter should return the expected value with default options: plugin-drafts-1 1`] = `
+exports[`plugins Permalinks should return the expected value with default options: plugin-permalinks-1 1`] = `
 [
   {
     "_id": "0000000000001111111111112222222222220001",
@@ -146,7 +146,7 @@ exports[`plugins Filter should return the expected value with default options: p
 ]
 `;
 
-exports[`plugins Filter should return the expected value with specific options: plugin-drafts-2 1`] = `
+exports[`plugins Permalinks should return the expected value with default options: plugin-permalinks-2 1`] = `
 [
   {
     "_id": "0000000000001111111111112222222222220001",
@@ -193,9 +193,9 @@ exports[`plugins Filter should return the expected value with specific options: 
     "contents": "p2 content",
     "date": "2024-01-01",
     "draft": true,
-    "fileBase": "p2",
+    "fileBase": "index",
     "fileExt": ".md",
-    "fileName": "p2.md",
+    "fileName": "index.md",
     "frontMatter": {
       "date": "2024-02-02",
       "draft": true,
@@ -203,10 +203,10 @@ exports[`plugins Filter should return the expected value with specific options: 
       "title": "P2",
     },
     "layout": "bar.hbs",
-    "link": "/posts/p2.md",
-    "path": "/tmp/foo/posts/p2.md",
-    "relDir": "posts",
-    "relPath": "posts/p2.md",
+    "link": "/posts/p2",
+    "path": "/tmp/foo/posts/p2/index.md",
+    "relDir": "posts/p2",
+    "relPath": "posts/p2/index.md",
     "title": "P2",
   },
   {
@@ -215,17 +215,17 @@ exports[`plugins Filter should return the expected value with specific options: 
     "baseDir": "/tmp/foo",
     "contents": "p3 content",
     "date": "2024-01-01",
-    "fileBase": "p3",
+    "fileBase": "index",
     "fileExt": ".md",
-    "fileName": "p3.md",
+    "fileName": "index.md",
     "frontMatter": {
       "date": "2024-03-03",
       "title": "P3",
     },
-    "link": "/posts/p3.md",
-    "path": "/tmp/foo/posts/p3.md",
-    "relDir": "posts",
-    "relPath": "posts/p3.md",
+    "link": "/posts/p3",
+    "path": "/tmp/foo/posts/p3/index.md",
+    "relDir": "posts/p3",
+    "relPath": "posts/p3/index.md",
     "title": "P3",
   },
   {
