@@ -55,7 +55,7 @@ export function collectionTransformer<IF extends FileSetItem>(
             previous: {
               title: collection[i - 1]?.frontMatter.title as string | undefined,
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-              relPath: collection[i - 1]?.relPath!,
+              link: collection[i - 1]?.link!,
             },
           }
         : {},
@@ -64,7 +64,7 @@ export function collectionTransformer<IF extends FileSetItem>(
             next: {
               title: collection[i + 1]?.frontMatter.title as string | undefined,
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-              relPath: collection[i + 1]?.relPath!,
+              link: collection[i + 1]?.link!,
             },
           }
         : {}

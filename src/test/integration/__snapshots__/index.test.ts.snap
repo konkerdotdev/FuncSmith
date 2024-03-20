@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`plugins FrontMatter should return the expected value: plugin-front-matter-1 1`] = `
+exports[`funcsmith integration: integration-test-1 1`] = `
 [
   {
     "_id": "e57ec8617d467edfff00943eac189e0ec6eb1875",
@@ -164,35 +164,51 @@ exports[`plugins FrontMatter should return the expected value: plugin-front-matt
     "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
     "_tag": "File",
     "baseDir": "/tmp/foo",
-    "contents": "# Home
-home content",
+    "collection": {
+      "len": 3,
+      "next": {
+        "link": "/posts/p1",
+        "title": "P1",
+      },
+    },
+    "contents": "LAYOUT Home",
     "date": 2023-12-31T00:00:00.000Z,
     "fileBase": "index",
-    "fileExt": ".md",
-    "fileName": "index.md",
+    "fileExt": ".html",
+    "fileName": "index.html",
     "frontMatter": {
       "date": 2023-12-31T00:00:00.000Z,
       "layout": "layout.hbs",
       "title": "Home",
     },
     "layout": "layout.hbs",
-    "link": "/posts/index.md",
-    "path": "/tmp/foo/posts/index.md",
+    "link": "/posts/index.html",
+    "path": "/tmp/foo/posts/index.html",
     "relDir": "posts",
-    "relPath": "posts/index.md",
+    "relPath": "posts/index.html",
     "title": "Home",
   },
   {
     "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
     "_tag": "File",
     "baseDir": "/tmp/foo",
-    "contents": "# P1
-p1 content",
+    "collection": {
+      "len": 3,
+      "next": {
+        "link": "/posts/p3",
+        "title": "P3",
+      },
+      "previous": {
+        "link": "/posts/index.html",
+        "title": "Home",
+      },
+    },
+    "contents": "POST: P1",
     "date": 2024-01-01T00:00:00.000Z,
     "draft": false,
-    "fileBase": "p1",
-    "fileExt": ".md",
-    "fileName": "p1.md",
+    "fileBase": "index",
+    "fileExt": ".html",
+    "fileName": "index.html",
     "frontMatter": {
       "date": 2024-01-01T00:00:00.000Z,
       "draft": false,
@@ -200,47 +216,29 @@ p1 content",
       "title": "P1",
     },
     "layout": "post.hbs",
-    "link": "/posts/p1.md",
-    "path": "/tmp/foo/posts/p1.md",
-    "relDir": "posts",
-    "relPath": "posts/p1.md",
+    "link": "/posts/p1",
+    "path": "/tmp/foo/posts/p1/index.html",
+    "relDir": "posts/p1",
+    "relPath": "posts/p1/index.html",
     "title": "P1",
-  },
-  {
-    "_id": "b5867102be1aca22fcd0ca30e236486c4e409b13",
-    "_tag": "File",
-    "baseDir": "/tmp/foo",
-    "contents": "# P2
-p2 content",
-    "date": 2024-01-02T00:00:00.000Z,
-    "draft": true,
-    "fileBase": "p2",
-    "fileExt": ".md",
-    "fileName": "p2.md",
-    "frontMatter": {
-      "date": 2024-01-02T00:00:00.000Z,
-      "draft": true,
-      "layout": "post.hbs",
-      "title": "P2",
-    },
-    "layout": "post.hbs",
-    "link": "/posts/p2.md",
-    "path": "/tmp/foo/posts/p2.md",
-    "relDir": "posts",
-    "relPath": "posts/p2.md",
-    "title": "P2",
   },
   {
     "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
     "_tag": "File",
     "baseDir": "/tmp/foo",
-    "contents": "# P3
-p3 content",
+    "collection": {
+      "len": 3,
+      "previous": {
+        "link": "/posts/p1",
+        "title": "P1",
+      },
+    },
+    "contents": "POST: P3",
     "date": 2024-01-03T00:00:00.000Z,
     "draft": false,
-    "fileBase": "p3",
-    "fileExt": ".md",
-    "fileName": "p3.md",
+    "fileBase": "index",
+    "fileExt": ".html",
+    "fileName": "index.html",
     "frontMatter": {
       "date": 2024-01-03T00:00:00.000Z,
       "draft": false,
@@ -248,11 +246,52 @@ p3 content",
       "title": "P3",
     },
     "layout": "post.hbs",
-    "link": "/posts/p3.md",
-    "path": "/tmp/foo/posts/p3.md",
-    "relDir": "posts",
-    "relPath": "posts/p3.md",
+    "link": "/posts/p3",
+    "path": "/tmp/foo/posts/p3/index.html",
+    "relDir": "posts/p3",
+    "relPath": "posts/p3/index.html",
     "title": "P3",
   },
 ]
+`;
+
+exports[`funcsmith integration: integration-test-fs-1 1`] = `
+"/
+└─ tmp/
+   ├─ foo/
+   │  ├─ a.txt
+   │  ├─ b.txt
+   │  ├─ bar/
+   │  │  ├─ e.txt
+   │  │  └─ f.log
+   │  ├─ c.csv
+   │  ├─ d.json
+   │  ├─ ignore1.txt
+   │  └─ posts/
+   │     ├─ index.md
+   │     ├─ p1.md
+   │     ├─ p2.md
+   │     └─ p3.md
+   ├─ layouts/
+   │  ├─ bar.hbs
+   │  ├─ foo.hbs
+   │  ├─ layout.hbs
+   │  └─ post.hbs
+   ├─ partials/
+   │  └─ footer.hbs
+   └─ www/
+      ├─ a.txt
+      ├─ b.txt
+      ├─ bar/
+      │  ├─ e.txt
+      │  └─ f.log
+      ├─ c.csv
+      ├─ d.json
+      ├─ ignore1.txt
+      └─ posts/
+         ├─ index.html
+         ├─ p1/
+         │  └─ index.html
+         └─ p3/
+            └─ index.html"
 `;

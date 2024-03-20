@@ -18,7 +18,47 @@ describe('fileSetItem', () => {
     });
   });
 
-  describe('fileSetItemSetFileName', () => {
+  describe('fileSetSetFileName', () => {
+    it('should function as expected', () => {
+      const item = TEST_FILE_SET_1[0]!;
+      const actual = P.Effect.runSync(unit.fileSetSetFileName(TEST_TFS, 'new-name.pdf', item));
+      expect(actual).toStrictEqual({
+        _tag: 'File',
+        _id: 'e57ec8617d467edfff00943eac189e0ec6eb1875',
+        path: '/tmp/foo/new-name.pdf',
+        baseDir: '/tmp/foo',
+        relPath: 'new-name.pdf',
+        link: '/new-name.pdf',
+        relDir: '.',
+        fileName: 'new-name.pdf',
+        fileBase: 'new-name',
+        fileExt: '.pdf',
+        contents: stringToUint8Array('A'),
+      });
+    });
+  });
+
+  describe('fileSetSetRelDir', () => {
+    it('should function as expected', () => {
+      const item = TEST_FILE_SET_1[0]!;
+      const actual = P.Effect.runSync(unit.fileSetSetRelDir(TEST_TFS, 'new-dir-name', item));
+      expect(actual).toStrictEqual({
+        _tag: 'File',
+        _id: 'e57ec8617d467edfff00943eac189e0ec6eb1875',
+        path: '/tmp/foo/new-dir-name/a.txt',
+        baseDir: '/tmp/foo',
+        relPath: 'new-dir-name/a.txt',
+        link: '/new-dir-name/a.txt',
+        relDir: 'new-dir-name',
+        fileName: 'a.txt',
+        fileBase: 'a',
+        fileExt: '.txt',
+        contents: stringToUint8Array('A'),
+      });
+    });
+  });
+
+  describe('fileSetItemRename', () => {
     it('should work as expected', () => {
       const item = TEST_FILE_SET_1[0]!;
       const actual = P.Effect.runSync(unit.fileSetItemRename(TEST_TFS, [/\.txt$/, '.pdf'], item));
@@ -28,6 +68,7 @@ describe('fileSetItem', () => {
         path: '/tmp/foo/a.pdf',
         baseDir: '/tmp/foo',
         relPath: 'a.pdf',
+        link: '/a.pdf',
         relDir: '.',
         fileName: 'a.pdf',
         fileBase: 'a',
@@ -45,6 +86,7 @@ describe('fileSetItem', () => {
         path: '/tmp/foo/new-name.pdf',
         baseDir: '/tmp/foo',
         relPath: 'new-name.pdf',
+        link: '/new-name.pdf',
         relDir: '.',
         fileName: 'new-name.pdf',
         fileBase: 'new-name',
@@ -84,6 +126,7 @@ describe('fileSetItem', () => {
         path: '/tmp/foo/a.txt',
         baseDir: '/tmp/foo',
         relPath: 'a.txt',
+        link: '/a.txt',
         relDir: '.',
         fileName: 'a.txt',
         fileBase: 'a',
@@ -105,6 +148,7 @@ describe('fileSetItem', () => {
         path: '/tmp/foo/a.txt',
         baseDir: '/tmp/foo',
         relPath: 'a.txt',
+        link: '/a.txt',
         relDir: '.',
         fileName: 'a.txt',
         fileBase: 'a',

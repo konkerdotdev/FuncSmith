@@ -6,7 +6,7 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     collection: {
       len: 3,
       next: {
-        relPath: 'docs/d1.doc',
+        link: '/docs/d1.doc',
         title: 'D1',
       },
     },
@@ -24,6 +24,7 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     path: '/tmp/foo/docs/d2.doc',
     relDir: 'docs',
     relPath: 'docs/d2.doc',
+    link: '/docs/d2.doc',
     title: 'D2',
   },
   {
@@ -33,11 +34,11 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     collection: {
       len: 3,
       next: {
-        relPath: 'docs/d3.doc',
+        link: '/docs/d3.doc',
         title: 'P3',
       },
       previous: {
-        relPath: 'docs/d2.doc',
+        link: '/docs/d2.doc',
         title: 'D2',
       },
     },
@@ -55,6 +56,7 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     path: '/tmp/foo/docs/d1.md',
     relDir: 'docs',
     relPath: 'docs/d1.doc',
+    link: '/docs/d1.doc',
     title: 'D1',
   },
   {
@@ -64,7 +66,7 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     collection: {
       len: 3,
       previous: {
-        relPath: 'docs/d1.doc',
+        link: '/docs/d1.doc',
         title: 'D1',
       },
     },
@@ -80,6 +82,7 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     path: '/tmp/foo/docs/d3.doc',
     relDir: 'docs',
     relPath: 'docs/d3.doc',
+    link: '/docs/d3.doc',
     title: 'D3',
   },
 ];
@@ -92,7 +95,7 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     collection: {
       len: 3,
       next: {
-        relPath: 'posts/p2.md',
+        link: '/posts/p2.md',
         title: 'P2',
       },
     },
@@ -111,6 +114,7 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     path: '/tmp/foo/posts/p1.md',
     relDir: 'posts',
     relPath: 'posts/p1.md',
+    link: '/posts/p1.md',
     title: 'P1',
     draft: false,
   },
@@ -121,11 +125,11 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     collection: {
       len: 3,
       next: {
-        relPath: 'posts/p3.md',
+        link: '/posts/p3.md',
         title: 'P3',
       },
       previous: {
-        relPath: 'posts/p1.md',
+        link: '/posts/p1.md',
         title: 'P1',
       },
     },
@@ -144,6 +148,7 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     path: '/tmp/foo/posts/p2.md',
     relDir: 'posts',
     relPath: 'posts/p2.md',
+    link: '/posts/p2.md',
     title: 'P2',
     draft: true,
   },
@@ -154,7 +159,7 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     collection: {
       len: 3,
       previous: {
-        relPath: 'posts/p2.md',
+        link: '/posts/p2.md',
         title: 'P2',
       },
     },
@@ -170,6 +175,7 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     path: '/tmp/foo/posts/p3.md',
     relDir: 'posts',
     relPath: 'posts/p3.md',
+    link: '/posts/p3.md',
     title: 'P3',
   },
 ];

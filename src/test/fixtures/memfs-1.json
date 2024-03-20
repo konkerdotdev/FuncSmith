@@ -3,6 +3,7 @@
   "./foo/posts/index.md": "---\ntitle: Home\nlayout: layout.hbs\ndate: 2023-12-31\n---\n# Home\nhome content",
   "./foo/posts/p1.md": "---\ntitle: P1\nlayout: post.hbs\ndate: 2024-01-01\ndraft: false\n---\n# P1\np1 content",
   "./foo/posts/p2.md": "---\ntitle: P2\nlayout: post.hbs\ndate: 2024-01-02\ndraft: true\n---\n# P2\np2 content",
+  "./foo/posts/p3.md": "---\ntitle: P3\nlayout: post.hbs\ndate: 2024-01-03\ndraft: false\n---\n# P3\np3 content",
   "./foo/ignore1.txt": "IGNORE 1",
   "./foo/b.txt": "B",
   "./foo/c.csv": "bam,baz\ntrue,false\n",
