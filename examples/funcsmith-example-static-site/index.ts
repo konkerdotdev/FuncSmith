@@ -26,9 +26,15 @@ import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/lay
     }),
     F.collections({
       posts: {
-        globPattern: 'posts/*.html',
+        globPattern: 'posts/**/*.html',
         sortBy: 'date',
       },
+    }),
+    F.permalinks({
+      match: ['**/*.html'],
+      ignore: ['404.html'],
+      directoryIndex: 'index.html',
+      trailingSlash: false,
     }),
     F.rename([[/\.md$/, '.html']]),
     F.markdown(),
