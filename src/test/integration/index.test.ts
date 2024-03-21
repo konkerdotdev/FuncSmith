@@ -11,6 +11,9 @@ describe('funcsmith', () => {
     const pluginStack = P.pipe(
       P.Effect.succeed,
       F.writer(),
+      F.debug((_, __, fileSet) => {
+        console.log('DEBUG', fileSet.length);
+      }),
       F.filter(),
       F.layouts({
         templateEngine: 'handlebars',
