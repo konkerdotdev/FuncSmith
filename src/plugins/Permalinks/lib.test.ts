@@ -46,7 +46,21 @@ describe('Permalinks', () => {
           unit.mapPermalink(TEST_TFS, { match: ['**/*.md'], directoryIndex: 'p1.md' }, DEFAULT_PERMALINKS_OPTIONS)(item)
         );
         expect(actual.relPath).toEqual('posts/p1.md');
-        expect(actual.link).toEqual('/posts/p1.md');
+        expect(actual.link).toEqual('/posts');
+        expect(actual.fileName).toEqual('p1.md');
+      });
+
+      it('should work as expected with index item and trailing slash', () => {
+        const item = fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[1]!;
+        const actual = P.Effect.runSync(
+          unit.mapPermalink(
+            TEST_TFS,
+            { match: ['**/*.md'], directoryIndex: 'p1.md', trailingSlash: true },
+            DEFAULT_PERMALINKS_OPTIONS
+          )(item)
+        );
+        expect(actual.relPath).toEqual('posts/p1.md');
+        expect(actual.link).toEqual('/posts/');
         expect(actual.fileName).toEqual('p1.md');
       });
 

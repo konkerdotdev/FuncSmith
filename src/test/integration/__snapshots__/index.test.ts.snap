@@ -182,7 +182,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
       "title": "Home",
     },
     "layout": "layout.hbs",
-    "link": "/posts/index.html",
+    "link": "/posts",
     "path": "/tmp/foo/posts/index.html",
     "relDir": "posts",
     "relPath": "posts/index.html",
@@ -199,7 +199,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         "title": "P3",
       },
       "previous": {
-        "link": "/posts/index.html",
+        "link": "/posts",
         "title": "Home",
       },
     },

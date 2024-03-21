@@ -24,9 +24,16 @@ export const mapPermalink =
       return P.Effect.succeed(item);
     }
 
-    // Skip this item if it is already a directory index
+    // If this file is already a directory index, amend the link
     if (item.fileName === safeOptions.directoryIndex) {
-      return P.Effect.succeed(item);
+      return P.pipe(
+        tfs.joinPath(tfs.PATH_SEP, item.relDir, safeOptions.trailingSlash ? tfs.PATH_SEP : ''),
+        P.Effect.map((link) => ({
+          ...item,
+          link,
+        })),
+        P.Effect.mapError(toFuncSmithError)
+      );
     }
 
     // Set the relDir, then the fileName
