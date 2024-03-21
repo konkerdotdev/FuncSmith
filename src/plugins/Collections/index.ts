@@ -11,6 +11,7 @@ export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
   globPattern: '**',
   sortBy: 'date',
   reverse: false,
+  directoryIndex: 'index.html',
 } as const;
 
 // --------------------------------------------------------------------------

@@ -165,11 +165,11 @@ exports[`funcsmith integration: integration-test-1 1`] = `
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "collection": {
-      "len": 3,
-      "next": {
-        "link": "/posts/p1",
-        "title": "P1",
+      "index": {
+        "link": "/posts",
+        "title": "Home",
       },
+      "len": 3,
     },
     "contents": "LAYOUT Home",
     "date": 2023-12-31T00:00:00.000Z,
@@ -193,14 +193,14 @@ exports[`funcsmith integration: integration-test-1 1`] = `
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "collection": {
+      "index": {
+        "link": "/posts",
+        "title": "Home",
+      },
       "len": 3,
       "next": {
         "link": "/posts/p3",
         "title": "P3",
-      },
-      "previous": {
-        "link": "/posts",
-        "title": "Home",
       },
     },
     "contents": "POST: P1",
@@ -227,6 +227,10 @@ exports[`funcsmith integration: integration-test-1 1`] = `
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "collection": {
+      "index": {
+        "link": "/posts",
+        "title": "Home",
+      },
       "len": 3,
       "previous": {
         "link": "/posts/p1",

@@ -8,6 +8,7 @@ export type CollectionRef = {
 export type CollectionItem<T extends FileSetItem> = T & {
   readonly collection: {
     readonly len: number;
+    readonly index?: CollectionRef;
     readonly previous?: CollectionRef;
     readonly next?: CollectionRef;
   };
@@ -17,4 +18,5 @@ export type CollectionOptions = {
   readonly globPattern: string;
   readonly sortBy: string;
   readonly reverse: boolean;
+  readonly directoryIndex?: string;
 };

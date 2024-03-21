@@ -12,6 +12,7 @@ describe('Collections', () => {
       it('should work as expected', () => {
         const actual = unit.normalizeOptions({ reverse: true }, DEFAULT_COLLECTION_OPTIONS);
         expect(actual).toStrictEqual({
+          directoryIndex: 'index.html',
           globPattern: '**',
           reverse: true,
           sortBy: 'date',
@@ -21,6 +22,7 @@ describe('Collections', () => {
       it('should work as expected with "convenience" options', () => {
         const actual = unit.normalizeOptions('**/*.doc', DEFAULT_COLLECTION_OPTIONS);
         expect(actual).toStrictEqual({
+          directoryIndex: 'index.html',
           globPattern: '**/*.doc',
           reverse: false,
           sortBy: 'date',
@@ -31,16 +33,18 @@ describe('Collections', () => {
     describe('normalizeAllOptions', () => {
       it('should work as expected', () => {
         const actual = unit.normalizeAllOptions(
-          { posts: { reverse: true }, docs: '**/*.doc' },
+          { posts: { directoryIndex: 'foo.html', reverse: true }, docs: '**/*.doc' },
           DEFAULT_COLLECTION_OPTIONS
         );
         expect(actual).toStrictEqual({
           posts: {
+            directoryIndex: 'foo.html',
             globPattern: '**',
             reverse: true,
             sortBy: 'date',
           },
           docs: {
+            directoryIndex: 'index.html',
             globPattern: '**/*.doc',
             reverse: false,
             sortBy: 'date',
@@ -56,6 +60,17 @@ describe('Collections', () => {
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item1, item2)).toEqual(-1);
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item2, item1)).toEqual(1);
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item1, item1)).toEqual(0);
+      });
+
+      it('should work as expected with index file', () => {
+        const item1 = fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[1]!;
+        const item2 = fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[2]!;
+        expect(unit.collectionSorter({ ...DEFAULT_COLLECTION_OPTIONS, directoryIndex: 'p1.md' })(item1, item2)).toEqual(
+          1
+        );
+        expect(unit.collectionSorter({ ...DEFAULT_COLLECTION_OPTIONS, directoryIndex: 'p1.md' })(item2, item1)).toEqual(
+          -1
+        );
       });
 
       it('should work as expected with reverse', () => {

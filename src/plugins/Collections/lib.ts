@@ -29,6 +29,15 @@ export function normalizeAllOptions(
 export const collectionSorter =
   <IF extends FileSetItem>(options: CollectionOptions) =>
   (a: FrontMatter<IF>, b: FrontMatter<IF>) => {
+    // Ensure that directoryIndex is first
+    if (options.directoryIndex && a.fileName === options.directoryIndex) {
+      return 1;
+    }
+    if (options.directoryIndex && b.fileName === options.directoryIndex) {
+      return -1;
+    }
+
+    // Otherwise sort by the sortBy field
     if ((a.frontMatter[options.sortBy] as string) < (b.frontMatter[options.sortBy] as string)) {
       return options.reverse ? 1 : -1;
     }
@@ -40,17 +49,35 @@ export const collectionSorter =
 
 // --------------------------------------------------------------------------
 export function collectionTransformer<IF extends FileSetItem>(
+  options: CollectionOptions,
   item: FrontMatter<IF>,
   i: number,
   collection: Array<FrontMatter<IF>>
 ): CollectionItem<IF> {
+  // Check if there is an index file for the collection.
+  // If so, basically this will be skipped in the logic below
+  const indexItem = options.directoryIndex ? collection.find((i) => i.fileName === options.directoryIndex) : false;
+  const indexItemIndex = options.directoryIndex
+    ? collection.findIndex((i) => i.fileName === options.directoryIndex)
+    : false;
+
   return {
     ...item,
     collection: Object.assign(
       {
         len: collection.length,
       },
-      i > 0
+      // Add an index property if there is an index file
+      indexItem
+        ? {
+            index: {
+              title: indexItem.frontMatter.title as string,
+              link: indexItem.link,
+            },
+          }
+        : {},
+      // Add a previous property if this is not an index file, and this is not the first item
+      i !== indexItemIndex && i > 0 && i - 1 !== indexItemIndex
         ? {
             previous: {
               title: collection[i - 1]?.frontMatter.title as string | undefined,
@@ -59,7 +86,8 @@ export function collectionTransformer<IF extends FileSetItem>(
             },
           }
         : {},
-      i < collection.length - 1
+      // Add a next property if this is not an index file, and this is not the last item
+      i !== indexItemIndex && i < collection.length - 1
         ? {
             next: {
               title: collection[i + 1]?.frontMatter.title as string | undefined,
@@ -81,9 +109,10 @@ export function createCollection<IF extends FileSetItem>(
   const collection: FileSet<FrontMatter<IF>> = fileSet
     .filter((item) => micromatch([item.relPath], [options.globPattern])?.length > 0)
     .filter(isFrontMatter)
+    .filter((item) => !options.directoryIndex || item.fileName !== options.directoryIndex)
     .sort(collectionSorter(options));
 
-  return collection.map((item, i) => collectionTransformer(item, i, collection));
+  return collection.map((item, i) => collectionTransformer(options, item, i, collection));
 }
 
 export function createAllCollections<IF extends FileSetItem>(
@@ -119,7 +148,7 @@ export function annotateCollectionItems<IF extends FileSetItem>(
     fileSet,
     P.Array.map((item: IF | FrontMatter<IF>, i: number) =>
       collectionIndices.includes(i) && isFrontMatter(item)
-        ? collectionTransformer(item, collectionIndices.indexOf(i), collection)
+        ? collectionTransformer(options, item, collectionIndices.indexOf(i), collection)
         : item
     )
   );
