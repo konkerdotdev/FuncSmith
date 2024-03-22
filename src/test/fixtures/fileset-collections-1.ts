@@ -21,7 +21,7 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
-      len: 3,
+      len: 4,
       next: {
         link: '/posts/p2.md',
         title: 'P2',
@@ -51,7 +51,7 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
-      len: 3,
+      len: 4,
       next: {
         link: '/posts/p3.md',
         title: 'P3',
@@ -62,7 +62,7 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
       },
     },
     contents: 'p2 content',
-    date: '2024-01-01',
+    date: '2024-02-02',
     fileBase: 'p2',
     fileExt: '.md',
     fileName: 'p2.md',
@@ -85,14 +85,18 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
-      len: 3,
+      len: 4,
+      next: {
+        link: '/posts/p4.md',
+        title: 'P4',
+      },
       previous: {
         link: '/posts/p2.md',
         title: 'P2',
       },
     },
     contents: 'p3 content',
-    date: '2024-01-01',
+    date: '2024-03-03',
     fileBase: 'p3',
     fileExt: '.md',
     fileName: 'p3.md',
@@ -108,6 +112,32 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220005',
+    _tag: FileSetItemType.File,
+    baseDir: '/tmp/foo',
+    collection: {
+      len: 4,
+      previous: {
+        link: '/posts/p3.md',
+        title: 'P3',
+      },
+    },
+    contents: 'p4 content',
+    date: '2024-04-04',
+    fileBase: 'p4',
+    fileExt: '.md',
+    fileName: 'p4.md',
+    frontMatter: {
+      date: '2024-04-04',
+      title: 'P4',
+    },
+    path: '/tmp/foo/posts/p4.md',
+    relDir: 'posts',
+    relPath: 'posts/p4.md',
+    link: '/posts/p4.md',
+    title: 'P4',
+  },
+  {
+    _id: '0000000000001111111111112222222222220006',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
@@ -139,7 +169,7 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
     title: 'D1',
   },
   {
-    _id: '0000000000001111111111112222222222220006',
+    _id: '0000000000001111111111112222222222220007',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
@@ -167,7 +197,7 @@ export const TEST_FILE_SET_COLLECTIONS_1 = [
     title: 'D2',
   },
   {
-    _id: '0000000000001111111111112222222222220007',
+    _id: '0000000000001111111111112222222222220008',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {

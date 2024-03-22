@@ -56,8 +56,10 @@ export function collectionTransformer<IF extends FileSetItem>(
 ): CollectionItem<IF> {
   // Check if there is an index file for the collection.
   // If so, basically this will be skipped in the logic below
-  const indexItem = options.directoryIndex ? collection.find((i) => i.fileName === options.directoryIndex) : false;
-  const indexItemIndex = options.directoryIndex
+  const directoryIndexItem = options.directoryIndex
+    ? collection.find((i) => i.fileName === options.directoryIndex)
+    : false;
+  const directoryIndexItemIdx = options.directoryIndex
     ? collection.findIndex((i) => i.fileName === options.directoryIndex)
     : false;
 
@@ -65,19 +67,19 @@ export function collectionTransformer<IF extends FileSetItem>(
     ...item,
     collection: Object.assign(
       {
-        len: collection.length,
+        len: directoryIndexItem ? collection.length - 1 : collection.length,
       },
       // Add an index property if there is an index file
-      indexItem
+      directoryIndexItem
         ? {
             index: {
-              title: indexItem.frontMatter.title as string,
-              link: indexItem.link,
+              title: directoryIndexItem.frontMatter.title as string,
+              link: directoryIndexItem.link,
             },
           }
         : {},
       // Add a previous property if this is not an index file, and this is not the first item
-      i !== indexItemIndex && i > 0 && i - 1 !== indexItemIndex
+      i !== directoryIndexItemIdx && i > 0 && i - 1 !== directoryIndexItemIdx
         ? {
             previous: {
               title: collection[i - 1]?.frontMatter.title as string | undefined,
@@ -87,7 +89,7 @@ export function collectionTransformer<IF extends FileSetItem>(
           }
         : {},
       // Add a next property if this is not an index file, and this is not the last item
-      i !== indexItemIndex && i < collection.length - 1
+      i !== directoryIndexItemIdx && i < collection.length - 1
         ? {
             next: {
               title: collection[i + 1]?.frontMatter.title as string | undefined,

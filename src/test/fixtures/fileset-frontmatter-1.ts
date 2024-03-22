@@ -51,7 +51,7 @@ export const TEST_FILE_SET_FRONT_MATTER_1 = [
     fileBase: 'p2',
     fileExt: '.md',
     title: 'P2',
-    date: '2024-01-01',
+    date: '2024-02-02',
     layout: 'bar.hbs',
     draft: true,
     frontMatter: {
@@ -74,7 +74,7 @@ export const TEST_FILE_SET_FRONT_MATTER_1 = [
     fileBase: 'p3',
     fileExt: '.md',
     title: 'P3',
-    date: '2024-01-01',
+    date: '2024-03-03',
     frontMatter: {
       title: 'P3',
       date: '2024-03-03',
@@ -84,6 +84,25 @@ export const TEST_FILE_SET_FRONT_MATTER_1 = [
   {
     _tag: FileSetItemType.File,
     _id: '0000000000001111111111112222222222220005',
+    path: '/tmp/foo/posts/p4.md',
+    baseDir: '/tmp/foo',
+    relPath: 'posts/p4.md',
+    link: '/posts/p4.md',
+    relDir: 'posts',
+    fileName: 'p4.md',
+    fileBase: 'p4',
+    fileExt: '.md',
+    title: 'P4',
+    date: '2024-04-04',
+    frontMatter: {
+      title: 'P4',
+      date: '2024-04-04',
+    },
+    contents: 'p4 content',
+  },
+  {
+    _tag: FileSetItemType.File,
+    _id: '0000000000001111111111112222222222220006',
     path: '/tmp/foo/docs/d1.md',
     baseDir: '/tmp/foo',
     relPath: 'docs/d1.doc',
@@ -104,7 +123,7 @@ export const TEST_FILE_SET_FRONT_MATTER_1 = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220006',
+    _id: '0000000000001111111111112222222222220007',
     path: '/tmp/foo/docs/d2.doc',
     baseDir: '/tmp/foo',
     relPath: 'docs/d2.doc',
@@ -125,7 +144,7 @@ export const TEST_FILE_SET_FRONT_MATTER_1 = [
   },
   {
     _tag: FileSetItemType.File,
-    _id: '0000000000001111111111112222222222220007',
+    _id: '0000000000001111111111112222222222220008',
     path: '/tmp/foo/docs/d3.doc',
     baseDir: '/tmp/foo',
     relPath: 'docs/d3.doc',

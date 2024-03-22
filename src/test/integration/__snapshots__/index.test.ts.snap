@@ -169,7 +169,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         "link": "/posts",
         "title": "Home",
       },
-      "len": 3,
+      "len": 2,
     },
     "contents": "LAYOUT Home",
     "date": 2023-12-31T00:00:00.000Z,
@@ -197,7 +197,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         "link": "/posts",
         "title": "Home",
       },
-      "len": 3,
+      "len": 2,
       "next": {
         "link": "/posts/p3",
         "title": "P3",
@@ -231,7 +231,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         "link": "/posts",
         "title": "Home",
       },
-      "len": 3,
+      "len": 2,
       "previous": {
         "link": "/posts/p1",
         "title": "P1",

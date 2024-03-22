@@ -12,7 +12,8 @@ exports[`plugins Writer should return the same value: plugins-writer-1 1`] = `
    │  └─ posts/
    │     ├─ p1.md
    │     ├─ p2.md
-   │     └─ p3.md
+   │     ├─ p3.md
+   │     └─ p4.md
    ├─ foo/
    │  ├─ a.txt
    │  ├─ b.txt

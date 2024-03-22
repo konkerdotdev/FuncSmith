@@ -89,6 +89,14 @@ describe('Collections', () => {
         ]);
         expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
       });
+
+      xit('should work as expected with directoryIndex', () => {
+        const actual = unit.createCollection(
+          { globPattern: 'posts/*.md', reverse: false, sortBy: 'date', directoryIndex: 'p1.md' },
+          [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
+        );
+        expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
+      });
     });
 
     describe('createAllCollections', () => {
