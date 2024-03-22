@@ -136,6 +136,7 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
       draft: false,
       nav: true,
       navOrder: 1,
+      tags: ['tag1', 'tag2'],
     },
     layout: 'foo.hbs',
     path: '/tmp/foo/posts/p1.md',

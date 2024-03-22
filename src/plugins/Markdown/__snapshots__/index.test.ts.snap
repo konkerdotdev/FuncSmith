@@ -34,6 +34,10 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
       "layout": "foo.hbs",
       "nav": true,
       "navOrder": 1,
+      "tags": [
+        "tag1",
+        "tag2",
+      ],
       "title": "P1",
     },
     "layout": "foo.hbs",
@@ -122,6 +126,10 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
       "layout": "foo.hbs",
       "nav": true,
       "navOrder": 2,
+      "tags": [
+        "tag1",
+        "tag3",
+      ],
       "title": "DOCS-INDEX",
     },
     "layout": "foo.hbs",

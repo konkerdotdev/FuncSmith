@@ -4,7 +4,7 @@ import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import { DEFAULT_NAV_OPTIONS } from './index';
 import * as unit from './lib';
 
-describe('Collections', () => {
+describe('Nav', () => {
   describe('lib', () => {
     describe('isNavItem', () => {
       it('should work as expected', () => {
