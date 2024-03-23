@@ -134,6 +134,8 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
       layout: 'foo.hbs',
       title: 'P1',
       draft: false,
+      nav: true,
+      navOrder: 1,
     },
     layout: 'foo.hbs',
     path: '/tmp/foo/posts/p1.md',
