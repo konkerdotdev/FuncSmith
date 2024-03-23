@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" >
-  <title>{{ title }}</title>
+  <title>{{ siteName }} &mdash; {{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <meta name="viewport" content="device-width, initial-scale=1.0">
   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" href="/styles/prism.css">
@@ -11,6 +12,9 @@
 </head>
 <body>
   <div class="container">
+    <div id="ucl">
+      <img src="/images/uc-strip-left.png" alt="Under Construction" title="Under Construction">
+    </div>
 
     <header>
       <nav>
@@ -18,25 +22,18 @@
         <a href="/">Home</a> |
         <a href="/about">About</a>
       </nav>
-      <h1>{{ title }}<time class="float-right">{{ formattedDate date }}</time></h1>
+      <h1>{{ title }}</h1>
     </header>
-
-    <nav>
-    {{#if collection.index}}
-      <span> ^ </span><a href="{{collection.index.link}}">{{collection.index.title}}</a>
-      <span class="sep">|</span>
-    {{/if}}
-    {{#if collection.previous}}
-      <span> &lt; </span><a href="{{collection.previous.link}}">{{collection.previous.title}}</a>
-      <span class="sep">|</span>
-    {{/if}}
-    {{#if collection.next}}
-      <a href="{{collection.next.link}}">{{collection.next.title}}</a><span> &gt; </span>
-    {{/if}}
-    </nav>
 
     <main>
       {{{ contents }}}
+      <ul>
+      {{#each collections.posts}}
+        <li>
+          <a href="{{ link }}">{{ title }}</a>
+        </li>
+      {{/each}}
+      </ul>
     </main>
 
     {{> footer.hbs }}

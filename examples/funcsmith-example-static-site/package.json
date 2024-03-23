@@ -23,7 +23,7 @@
   "packageManager": "pnpm@8",
   "dependencies": {
     "@konker.dev/effect-ts-prelude": "^0.0.13",
-    "@konker.dev/funcsmith": "^0.0.9",
+    "@konker.dev/funcsmith": "^0.0.10",
     "effect": "^2.4.1"
   },
   "devDependencies": {
