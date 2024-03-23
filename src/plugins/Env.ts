@@ -5,6 +5,9 @@ import type { FileSetMappingResult } from '../types';
 import { FsDepEnv } from '../types';
 import { wrapInjection } from './lib';
 
+/*
+TODO: Amend to be an additive operation, adding stuff to env rather than clobbering?
+*/
 export const envInjectionCtor =
   <IF extends FileSetItem, R>(env: Record<string, unknown>) =>
   (result: FileSetMappingResult<IF, R>): FileSetMappingResult<IF, Exclude<R, FsDepEnv>> =>

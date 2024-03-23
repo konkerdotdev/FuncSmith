@@ -1,4 +1,4 @@
-/* eslint-disable fp/no-unused-expression,fp/no-nil */
+/* eslint-disable fp/no-unused-expression,fp/no-nil,fp/no-mutation,fp/no-let */
 import * as P from '@konker.dev/effect-ts-prelude';
 import { fs } from 'memfs';
 import { toTreeSync } from 'memfs/lib/print';
@@ -7,12 +7,17 @@ import * as F from '../../index';
 import { FsDepReaderTest, FsDepWriterTest } from '../../layers';
 
 describe('funcsmith', () => {
+  let env: any;
+  let metadata: any;
+
   test('integration', async () => {
     const pluginStack = P.pipe(
       P.Effect.succeed,
       F.writer(),
-      F.debug((_, __, fileSet) => {
+      F.debug((fsDepEnv, fsDepMetadata, fileSet) => {
         console.log('DEBUG', fileSet.length);
+        env = fsDepEnv;
+        metadata = fsDepMetadata;
       }),
       F.filter(),
       F.layouts({
@@ -30,6 +35,7 @@ describe('funcsmith', () => {
         },
         globPattern: '**/*.html',
       }),
+      F.nav(),
       F.collections({
         posts: {
           globPattern: 'posts/**/*.html',
@@ -68,6 +74,8 @@ describe('funcsmith', () => {
     );
 
     expect(actual).toMatchSnapshot('integration-test-1');
-    expect(toTreeSync(fs)).toMatchSnapshot('integration-test-fs-1');
+    expect(toTreeSync(fs)).toMatchSnapshot('integration-test-1-fs');
+    expect(env).toMatchSnapshot('integration-test-env-1-env');
+    expect(metadata).toMatchSnapshot('integration-test-env-1-metadat');
   });
 });

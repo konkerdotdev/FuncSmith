@@ -99,7 +99,9 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
     _id: '5da00cfdc5bee8aa488d13af769799a7b4043766',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    contents: stringToUint8Array('---\ntitle: Home\nlayout: layout.hbs\ndate: 2023-12-31\n---\n# Home\nhome content'),
+    contents: stringToUint8Array(
+      '---\ntitle: Home\nlayout: layout.hbs\ndate: 2023-12-31\nnav: true\nnavOrder: 2\n---\n# Home\nhome content'
+    ),
     fileBase: 'index',
     fileExt: '.md',
     fileName: 'index.md',
@@ -143,7 +145,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     contents: stringToUint8Array(
-      '---\ntitle: P3\nlayout: post.hbs\ndate: 2024-01-03\ndraft: false\n---\n# P3\np3 content'
+      '---\ntitle: P3\nlayout: post.hbs\ndate: 2024-01-03\ndraft: false\nnav: true\nnavOrder: 1\n---\n# P3\np3 content'
     ),
     fileBase: 'p3',
     fileExt: '.md',

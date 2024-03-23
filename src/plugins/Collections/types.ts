@@ -1,11 +1,6 @@
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FrontMatter } from '../FrontMatter/types';
 
-// export type CollectionRef = {
-//   readonly title: string | undefined;
-//   readonly link: string;
-// };
-
 export type CollectionItem<T extends FileSetItem> = T & {
   readonly collection: {
     readonly len: number;
