@@ -8,11 +8,38 @@ import * as unit from './lib';
 
 describe('Collections', () => {
   describe('lib', () => {
+    describe('isCollectionIndex', () => {
+      it('should work as expected', () => {
+        expect(unit.isCollectionIndex(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5]!)).toEqual(true);
+        expect(unit.isCollectionIndex(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[6]!)).toEqual(false);
+      });
+    });
+
+    describe('isNotCollectionIndex', () => {
+      it('should work as expected', () => {
+        expect(unit.isNotCollectionIndex(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5]!)).toEqual(false);
+        expect(unit.isNotCollectionIndex(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[6]!)).toEqual(true);
+      });
+    });
+
+    describe('isCollectionExcluded', () => {
+      it('should work as expected', () => {
+        expect(unit.isCollectionExcluded(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[9]!)).toEqual(true);
+        expect(unit.isCollectionExcluded(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[8]!)).toEqual(false);
+      });
+    });
+
+    describe('isNotCollectionExcluded', () => {
+      it('should work as expected', () => {
+        expect(unit.isNotCollectionExcluded(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[9]!)).toEqual(false);
+        expect(unit.isNotCollectionExcluded(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[8]!)).toEqual(true);
+      });
+    });
+
     describe('normalizeOptions', () => {
       it('should work as expected', () => {
         const actual = unit.normalizeOptions({ reverse: true }, DEFAULT_COLLECTION_OPTIONS);
         expect(actual).toStrictEqual({
-          directoryIndex: 'index.html',
           globPattern: '**',
           reverse: true,
           sortBy: 'date',
@@ -22,7 +49,6 @@ describe('Collections', () => {
       it('should work as expected with "convenience" options', () => {
         const actual = unit.normalizeOptions('**/*.doc', DEFAULT_COLLECTION_OPTIONS);
         expect(actual).toStrictEqual({
-          directoryIndex: 'index.html',
           globPattern: '**/*.doc',
           reverse: false,
           sortBy: 'date',
@@ -33,18 +59,16 @@ describe('Collections', () => {
     describe('normalizeAllOptions', () => {
       it('should work as expected', () => {
         const actual = unit.normalizeAllOptions(
-          { posts: { directoryIndex: 'foo.html', reverse: true }, docs: '**/*.doc' },
+          { posts: { reverse: true }, docs: '**/*.doc' },
           DEFAULT_COLLECTION_OPTIONS
         );
         expect(actual).toStrictEqual({
           posts: {
-            directoryIndex: 'foo.html',
             globPattern: '**',
             reverse: true,
             sortBy: 'date',
           },
           docs: {
-            directoryIndex: 'index.html',
             globPattern: '**/*.doc',
             reverse: false,
             sortBy: 'date',
@@ -60,17 +84,6 @@ describe('Collections', () => {
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item1, item2)).toEqual(-1);
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item2, item1)).toEqual(1);
         expect(unit.collectionSorter(DEFAULT_COLLECTION_OPTIONS)(item1, item1)).toEqual(0);
-      });
-
-      it('should work as expected with index file', () => {
-        const item1 = fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[1]!;
-        const item2 = fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[2]!;
-        expect(unit.collectionSorter({ ...DEFAULT_COLLECTION_OPTIONS, directoryIndex: 'p1.md' })(item1, item2)).toEqual(
-          1
-        );
-        expect(unit.collectionSorter({ ...DEFAULT_COLLECTION_OPTIONS, directoryIndex: 'p1.md' })(item2, item1)).toEqual(
-          -1
-        );
       });
 
       it('should work as expected with reverse', () => {
@@ -90,12 +103,11 @@ describe('Collections', () => {
         expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
       });
 
-      xit('should work as expected with directoryIndex', () => {
-        const actual = unit.createCollection(
-          { globPattern: 'posts/*.md', reverse: false, sortBy: 'date', directoryIndex: 'p1.md' },
-          [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
-        );
-        expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
+      it('should work as expected with collectionIndex', () => {
+        const actual = unit.createCollection({ globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' }, [
+          ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1,
+        ]);
+        expect(actual).toStrictEqual(fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1);
       });
     });
 
@@ -105,7 +117,7 @@ describe('Collections', () => {
           unit.createAllCollections(
             {
               posts: { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' },
-              docs: { globPattern: 'docs/*.doc', reverse: true, sortBy: 'date' },
+              docs: { globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' },
             },
             [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
           )
@@ -131,7 +143,7 @@ describe('Collections', () => {
         const actual = unit.annotateAllCollectionItems(
           {
             posts: { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' },
-            docs: { globPattern: 'docs/*.doc', reverse: true, sortBy: 'date' },
+            docs: { globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' },
           },
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
         );

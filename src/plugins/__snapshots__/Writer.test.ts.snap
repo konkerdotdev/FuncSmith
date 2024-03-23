@@ -8,7 +8,9 @@ exports[`plugins Writer should return the same value: plugins-writer-1 1`] = `
    │  ├─ docs/
    │  │  ├─ d1.doc
    │  │  ├─ d2.doc
-   │  │  └─ d3.doc
+   │  │  ├─ d3.doc
+   │  │  ├─ d4.doc
+   │  │  └─ index.doc
    │  └─ posts/
    │     ├─ p1.md
    │     ├─ p2.md

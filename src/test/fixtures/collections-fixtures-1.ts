@@ -1,14 +1,54 @@
 export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
   {
-    _id: '0000000000001111111111112222222222220007',
+    _id: '0000000000001111111111112222222222220031',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 3,
-      next: {
+      index: expect.objectContaining({
+        link: '/docs/index.doc',
+        title: 'DOCS-INDEX',
+      }),
+      next: expect.objectContaining({
+        link: '/docs/d2.doc',
+        title: 'D2',
+      }),
+    },
+    contents: 'd1 content',
+    date: '2024-11-01',
+    fileBase: 'd1',
+    fileExt: '.doc',
+    fileName: 'd1.doc',
+    frontMatter: {
+      date: '2024-11-01',
+      layout: 'foo.hbs',
+      title: 'D1',
+    },
+    layout: 'foo.hbs',
+    path: '/tmp/foo/docs/d1.doc',
+    relDir: 'docs',
+    relPath: 'docs/d1.doc',
+    link: '/docs/d1.doc',
+    title: 'D1',
+  },
+  {
+    _id: '0000000000001111111111112222222222220032',
+    _tag: 'File',
+    baseDir: '/tmp/foo',
+    collection: {
+      len: 3,
+      index: expect.objectContaining({
+        link: '/docs/index.doc',
+        title: 'DOCS-INDEX',
+      }),
+      previous: expect.objectContaining({
         link: '/docs/d1.doc',
         title: 'D1',
-      },
+      }),
+      next: expect.objectContaining({
+        link: '/docs/d3.doc',
+        title: 'D3',
+      }),
     },
     contents: 'd2 content',
     date: '2024-11-02',
@@ -28,47 +68,19 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     title: 'D2',
   },
   {
-    _id: '0000000000001111111111112222222222220006',
+    _id: '0000000000001111111111112222222222220033',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 3,
-      next: {
-        link: '/docs/d3.doc',
-        title: 'P3',
-      },
-      previous: {
+      index: expect.objectContaining({
+        link: '/docs/index.doc',
+        title: 'DOCS-INDEX',
+      }),
+      previous: expect.objectContaining({
         link: '/docs/d2.doc',
         title: 'D2',
-      },
-    },
-    contents: 'd1 content',
-    date: '2024-11-01',
-    fileBase: 'p1',
-    fileExt: '.doc',
-    fileName: 'd1.doc',
-    frontMatter: {
-      date: '2024-11-01',
-      layout: 'foo.hbs',
-      title: 'D1',
-    },
-    layout: 'foo.hbs',
-    path: '/tmp/foo/docs/d1.md',
-    relDir: 'docs',
-    relPath: 'docs/d1.doc',
-    link: '/docs/d1.doc',
-    title: 'D1',
-  },
-  {
-    _id: '0000000000001111111111112222222222220008',
-    _tag: 'File',
-    baseDir: '/tmp/foo',
-    collection: {
-      len: 3,
-      previous: {
-        link: '/docs/d1.doc',
-        title: 'D1',
-      },
+      }),
     },
     contents: 'd3 content',
     date: '2024-11-03',
@@ -76,8 +88,8 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
     fileExt: '.doc',
     fileName: 'd3.doc',
     frontMatter: {
-      date: '2024-03-03',
-      title: 'P3',
+      date: '2024-11-03',
+      title: 'D3',
     },
     path: '/tmp/foo/docs/d3.doc',
     relDir: 'docs',
@@ -89,15 +101,15 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
 
 export const COLLECTIONS_FIXTURES_POSTS_1 = [
   {
-    _id: '0000000000001111111111112222222222220002',
+    _id: '0000000000001111111111112222222222220021',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 4,
-      next: {
+      next: expect.objectContaining({
         link: '/posts/p2.md',
         title: 'P2',
-      },
+      }),
     },
     contents: 'p1 content',
     date: '2024-01-01',
@@ -119,19 +131,19 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     draft: false,
   },
   {
-    _id: '0000000000001111111111112222222222220003',
+    _id: '0000000000001111111111112222222222220022',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 4,
-      next: {
+      next: expect.objectContaining({
         link: '/posts/p3.md',
         title: 'P3',
-      },
-      previous: {
+      }),
+      previous: expect.objectContaining({
         link: '/posts/p1.md',
         title: 'P1',
-      },
+      }),
     },
     contents: 'p2 content',
     date: '2024-02-02',
@@ -153,19 +165,19 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     draft: true,
   },
   {
-    _id: '0000000000001111111111112222222222220004',
+    _id: '0000000000001111111111112222222222220023',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 4,
-      next: {
+      next: expect.objectContaining({
         link: '/posts/p4.md',
         title: 'P4',
-      },
-      previous: {
+      }),
+      previous: expect.objectContaining({
         link: '/posts/p2.md',
         title: 'P2',
-      },
+      }),
     },
     contents: 'p3 content',
     date: '2024-03-03',
@@ -183,15 +195,15 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     title: 'P3',
   },
   {
-    _id: '0000000000001111111111112222222222220005',
+    _id: '0000000000001111111111112222222222220024',
     _tag: 'File',
     baseDir: '/tmp/foo',
     collection: {
       len: 4,
-      previous: {
+      previous: expect.objectContaining({
         link: '/posts/p3.md',
         title: 'P3',
-      },
+      }),
     },
     contents: 'p4 content',
     date: '2024-04-04',
@@ -207,98 +219,5 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
     relPath: 'posts/p4.md',
     link: '/posts/p4.md',
     title: 'P4',
-  },
-];
-
-export const COLLECTIONS_FIXTURES_POSTS_2 = [
-  {
-    _id: '0000000000001111111111112222222222220002',
-    _tag: 'File',
-    baseDir: '/tmp/foo',
-    collection: {
-      len: 2,
-      next: {
-        link: '/posts/p2.md',
-        title: 'P2',
-      },
-    },
-    contents: 'p1 content',
-    date: '2024-01-01',
-    fileBase: 'p1',
-    fileExt: '.md',
-    fileName: 'p1.md',
-    frontMatter: {
-      date: '2024-01-01',
-      layout: 'foo.hbs',
-      title: 'P1',
-      draft: false,
-    },
-    layout: 'foo.hbs',
-    path: '/tmp/foo/posts/p1.md',
-    relDir: 'posts',
-    relPath: 'posts/p1.md',
-    link: '/posts/p1.md',
-    title: 'P1',
-    draft: false,
-  },
-  {
-    _id: '0000000000001111111111112222222222220003',
-    _tag: 'File',
-    baseDir: '/tmp/foo',
-    collection: {
-      len: 4,
-      next: {
-        link: '/posts/p3.md',
-        title: 'P3',
-      },
-      previous: {
-        link: '/posts/p1.md',
-        title: 'P1',
-      },
-    },
-    contents: 'p2 content',
-    date: '2024-01-01',
-    fileBase: 'p2',
-    fileExt: '.md',
-    fileName: 'p2.md',
-    frontMatter: {
-      date: '2024-02-02',
-      layout: 'bar.hbs',
-      title: 'P2',
-      draft: true,
-    },
-    layout: 'bar.hbs',
-    path: '/tmp/foo/posts/p2.md',
-    relDir: 'posts',
-    relPath: 'posts/p2.md',
-    link: '/posts/p2.md',
-    title: 'P2',
-    draft: true,
-  },
-  {
-    _id: '0000000000001111111111112222222222220004',
-    _tag: 'File',
-    baseDir: '/tmp/foo',
-    collection: {
-      len: 4,
-      previous: {
-        link: '/posts/p2.md',
-        title: 'P2',
-      },
-    },
-    contents: 'p3 content',
-    date: '2024-01-01',
-    fileBase: 'p3',
-    fileExt: '.md',
-    fileName: 'p3.md',
-    frontMatter: {
-      date: '2024-03-03',
-      title: 'P3',
-    },
-    path: '/tmp/foo/posts/p3.md',
-    relDir: 'posts',
-    relPath: 'posts/p3.md',
-    link: '/posts/p3.md',
-    title: 'P3',
   },
 ];
