@@ -131,10 +131,12 @@ describe('Collections', () => {
 
     describe('annotateCollectionItems', () => {
       it('should work as expected', () => {
-        const actual = unit.createCollection({ globPattern: 'posts/*.md', reverse: false, sortBy: 'date' }, [
-          ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1,
-        ]);
-        expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
+        const actual = unit.annotateCollectionItems(
+          'posts',
+          { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' },
+          [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
+        );
+        expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_POSTS_1);
       });
     });
 
@@ -147,7 +149,7 @@ describe('Collections', () => {
           },
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
         );
-        expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_1);
+        expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_POSTS_DOCS_1);
       });
     });
   });

@@ -4,7 +4,7 @@ import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
 import { FsDepMetadata } from '../../types';
 import type { Convenience } from '../lib';
-import { annotateAllCollectionItems, createAllCollections, normalizeAllOptions } from './lib';
+import { createAllCollections, normalizeAllOptions } from './lib';
 import type { CollectionOptions } from './types';
 
 export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
@@ -26,11 +26,10 @@ export const collections =
     return P.pipe(
       P.Effect.Do,
       P.Effect.bind('fsDepMetadata', () => FsDepMetadata),
-      P.Effect.bind('annotatedItems', () => P.Effect.succeed(annotateAllCollectionItems(safeOptions, fileSet))),
-      P.Effect.bind('collections', ({ annotatedItems }) => createAllCollections(safeOptions, annotatedItems)),
-      P.Effect.flatMap(({ annotatedItems, collections, fsDepMetadata }) =>
+      P.Effect.bind('collections', () => createAllCollections(safeOptions, fileSet)),
+      P.Effect.flatMap(({ collections, fsDepMetadata }) =>
         P.pipe(
-          annotatedItems,
+          fileSet,
           next,
           P.Effect.provideService(
             FsDepMetadata,

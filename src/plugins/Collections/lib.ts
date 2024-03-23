@@ -118,39 +118,22 @@ export function createAllCollections<IF extends FileSetItem>(
 
 // --------------------------------------------------------------------------
 export function annotateCollectionItems<IF extends FileSetItem>(
+  collectionName: string,
   options: CollectionOptions,
   fileSet: FileSet<IF>
 ): FileSet<IF | CollectionItem<IF>> {
-  /*
-  // eslint-disable-next-line fp/no-mutating-methods
-  const collection = fileSet
-    .filter((item, _) => micromatch([item.relPath], [options.globPattern])?.length > 0)
-    .filter(isFrontMatter)
-    .sort(collectionSorter(options));
-
-  const collectionIndices = collection.map((item) => fileSet.findIndex((i) => i._id === item._id));
-  */
   // Gather the collection, including any collectionIndex
   const collection: FileSet<FrontMatter<IF>> = fileSet
     .filter((item) => micromatch([item.relPath], [options.globPattern])?.length > 0)
     .filter(isFrontMatter)
     .filter(isNotCollectionExcluded);
 
-  // Pull out a possible collectionIndex
-  const collectionIndexItem = collection.find(isCollectionIndex);
-
-  // Remove the collection index and sort
-  // eslint-disable-next-line fp/no-mutating-methods
-  const sortedCollection = collection.filter(isNotCollectionIndex).sort(collectionSorter(options));
-
-  const collectionIndices = sortedCollection.map((item) => fileSet.findIndex((i) => i._id === item._id));
+  const collectionIndices = collection.map((item) => fileSet.findIndex((i) => i._id === item._id));
 
   return P.pipe(
     fileSet,
     P.Array.map((item: IF | FrontMatter<IF>, i: number) =>
-      collectionIndices.includes(i) && isFrontMatter(item)
-        ? collectionTransformer(item, collectionIndices.indexOf(i), sortedCollection, collectionIndexItem)
-        : item
+      collectionIndices.includes(i) ? { ...item, collection: collectionName } : item
     )
   );
 }
@@ -161,8 +144,8 @@ export function annotateAllCollectionItems<IF extends FileSetItem>(
 ): FileSet<IF | CollectionItem<IF>> {
   return P.pipe(
     Object.entries(allOptions),
-    P.Array.foldl((acc, [_, options]) => {
-      return [...annotateCollectionItems(options, acc)];
+    P.Array.foldl((acc, [name, options]) => {
+      return [...annotateCollectionItems(name, options, acc)];
     }, fileSet)
   );
 }
