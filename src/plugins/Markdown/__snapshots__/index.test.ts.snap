@@ -18,7 +18,7 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "relPath": "a.txt",
   },
   {
-    "_id": "0000000000001111111111112222222222220002",
+    "_id": "0000000000001111111111112222222222220021",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "<p>p1 content</p>
@@ -42,7 +42,7 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "title": "P1",
   },
   {
-    "_id": "0000000000001111111111112222222222220003",
+    "_id": "0000000000001111111111112222222222220022",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "<p>p2 content</p>
@@ -66,7 +66,7 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "title": "P2",
   },
   {
-    "_id": "0000000000001111111111112222222222220004",
+    "_id": "0000000000001111111111112222222222220023",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "<p>p3 content</p>
@@ -86,7 +86,7 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "title": "P3",
   },
   {
-    "_id": "0000000000001111111111112222222222220005",
+    "_id": "0000000000001111111111112222222222220024",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "<p>p4 content</p>
@@ -106,13 +106,34 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "title": "P4",
   },
   {
-    "_id": "0000000000001111111111112222222222220006",
+    "_id": "0000000000001111111111112222222222220030",
     "_tag": "File",
     "baseDir": "/tmp/foo",
-    "contents": "<p>d1 content</p>
-",
+    "contents": "docs-index content",
     "date": "2024-11-01",
-    "fileBase": "p1",
+    "fileBase": "index",
+    "fileExt": ".doc",
+    "fileName": "index.doc",
+    "frontMatter": {
+      "collectionIndex": true,
+      "date": "2024-11-01",
+      "layout": "foo.hbs",
+      "title": "DOCS-INDEX",
+    },
+    "layout": "foo.hbs",
+    "link": "/docs/index.doc",
+    "path": "/tmp/foo/docs/index.doc",
+    "relDir": "docs",
+    "relPath": "docs/index.doc",
+    "title": "DOCS-INDEX",
+  },
+  {
+    "_id": "0000000000001111111111112222222222220031",
+    "_tag": "File",
+    "baseDir": "/tmp/foo",
+    "contents": "d1 content",
+    "date": "2024-11-01",
+    "fileBase": "d1",
     "fileExt": ".doc",
     "fileName": "d1.doc",
     "frontMatter": {
@@ -122,13 +143,13 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     },
     "layout": "foo.hbs",
     "link": "/docs/d1.doc",
-    "path": "/tmp/foo/docs/d1.md",
+    "path": "/tmp/foo/docs/d1.doc",
     "relDir": "docs",
     "relPath": "docs/d1.doc",
     "title": "D1",
   },
   {
-    "_id": "0000000000001111111111112222222222220007",
+    "_id": "0000000000001111111111112222222222220032",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "d2 content",
@@ -149,7 +170,7 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "title": "D2",
   },
   {
-    "_id": "0000000000001111111111112222222222220008",
+    "_id": "0000000000001111111111112222222222220033",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "d3 content",
@@ -158,14 +179,34 @@ exports[`plugins Markdown should return the expected value: plugin-markdown-1 1`
     "fileExt": ".doc",
     "fileName": "d3.doc",
     "frontMatter": {
-      "date": "2024-03-03",
-      "title": "P3",
+      "date": "2024-11-03",
+      "title": "D3",
     },
     "link": "/docs/d3.doc",
     "path": "/tmp/foo/docs/d3.doc",
     "relDir": "docs",
     "relPath": "docs/d3.doc",
     "title": "D3",
+  },
+  {
+    "_id": "0000000000001111111111112222222222220034",
+    "_tag": "File",
+    "baseDir": "/tmp/foo",
+    "contents": "d4 content",
+    "date": "2024-11-04",
+    "fileBase": "d4",
+    "fileExt": ".doc",
+    "fileName": "d4.doc",
+    "frontMatter": {
+      "collectionExclude": true,
+      "date": "2024-11-04",
+      "title": "D4",
+    },
+    "link": "/docs/d4.doc",
+    "path": "/tmp/foo/docs/d4.doc",
+    "relDir": "docs",
+    "relPath": "docs/d4.doc",
+    "title": "D4",
   },
 ]
 `;
