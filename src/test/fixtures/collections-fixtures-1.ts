@@ -1,9 +1,17 @@
-export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
+import type { FileSet, FileSetItem } from '../../lib/fileSet';
+import { FileSetItemType } from '../../lib/fileSet';
+import type { CollectionItem } from '../../plugins/Collections/types';
+import type { FrontMatter } from '../../plugins/FrontMatter/types';
+
+export const TEST_COLLECTIONS_FIXTURES_DOCS_1: FileSet<
+  CollectionItem<FrontMatter<FileSetItem & Record<string, unknown>>>
+> = [
   {
     _id: '0000000000001111111111112222222222220031',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'docs',
       len: 3,
       index: expect.objectContaining({
         link: '/docs/index.doc',
@@ -33,9 +41,10 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220032',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'docs',
       len: 3,
       index: expect.objectContaining({
         link: '/docs/index.doc',
@@ -69,9 +78,10 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220033',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'docs',
       len: 3,
       index: expect.objectContaining({
         link: '/docs/index.doc',
@@ -99,12 +109,15 @@ export const TEST_COLLECTIONS_FIXTURES_DOCS_1 = [
   },
 ];
 
-export const COLLECTIONS_FIXTURES_POSTS_1 = [
+export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
+  CollectionItem<FrontMatter<FileSetItem & Record<string, unknown>>>
+> = [
   {
     _id: '0000000000001111111111112222222222220021',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'posts',
       len: 4,
       next: expect.objectContaining({
         link: '/posts/p2.md',
@@ -132,9 +145,10 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220022',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'posts',
       len: 4,
       next: expect.objectContaining({
         link: '/posts/p3.md',
@@ -166,9 +180,10 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220023',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'posts',
       len: 4,
       next: expect.objectContaining({
         link: '/posts/p4.md',
@@ -196,9 +211,10 @@ export const COLLECTIONS_FIXTURES_POSTS_1 = [
   },
   {
     _id: '0000000000001111111111112222222222220024',
-    _tag: 'File',
+    _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     collection: {
+      name: 'posts',
       len: 4,
       previous: expect.objectContaining({
         link: '/posts/p3.md',

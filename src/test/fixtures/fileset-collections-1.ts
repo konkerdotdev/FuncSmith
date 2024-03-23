@@ -223,7 +223,13 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     _id: '0000000000001111111111112222222222220021',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'posts',
+    collection: {
+      name: 'posts',
+      len: 4,
+      next: expect.objectContaining({
+        relPath: 'posts/p2.md',
+      }),
+    },
     contents: 'p1 content',
     date: '2024-01-01',
     fileBase: 'p1',
@@ -247,7 +253,16 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     _id: '0000000000001111111111112222222222220022',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'posts',
+    collection: {
+      name: 'posts',
+      len: 4,
+      previous: expect.objectContaining({
+        relPath: 'posts/p1.md',
+      }),
+      next: expect.objectContaining({
+        relPath: 'posts/p3.md',
+      }),
+    },
     contents: 'p2 content',
     date: '2024-02-02',
     fileBase: 'p2',
@@ -271,7 +286,16 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     _id: '0000000000001111111111112222222222220023',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'posts',
+    collection: {
+      name: 'posts',
+      len: 4,
+      previous: expect.objectContaining({
+        relPath: 'posts/p2.md',
+      }),
+      next: expect.objectContaining({
+        relPath: 'posts/p4.md',
+      }),
+    },
     contents: 'p3 content',
     date: '2024-03-03',
     fileBase: 'p3',
@@ -291,7 +315,13 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     _id: '0000000000001111111111112222222222220024',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'posts',
+    collection: {
+      name: 'posts',
+      len: 4,
+      previous: expect.objectContaining({
+        relPath: 'posts/p3.md',
+      }),
+    },
     contents: 'p4 content',
     date: '2024-04-04',
     fileBase: 'p4',
@@ -317,7 +347,6 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     _tag: FileSetItemType.File,
     path: '/tmp/foo/docs/index.doc',
     baseDir: '/tmp/foo',
-    collection: 'docs',
     relPath: 'docs/index.doc',
     link: '/docs/index.doc',
     relDir: 'docs',
@@ -339,7 +368,16 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     _id: '0000000000001111111111112222222222220031',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'docs',
+    collection: {
+      name: 'docs',
+      len: 3,
+      index: expect.objectContaining({
+        relPath: 'docs/index.doc',
+      }),
+      next: expect.objectContaining({
+        relPath: 'docs/d2.doc',
+      }),
+    },
     contents: 'd1 content',
     date: '2024-11-01',
     fileBase: 'd1',
@@ -361,7 +399,19 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     _id: '0000000000001111111111112222222222220032',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'docs',
+    collection: {
+      name: 'docs',
+      len: 3,
+      index: expect.objectContaining({
+        relPath: 'docs/index.doc',
+      }),
+      previous: expect.objectContaining({
+        relPath: 'docs/d1.doc',
+      }),
+      next: expect.objectContaining({
+        relPath: 'docs/d3.doc',
+      }),
+    },
     contents: 'd2 content',
     date: '2024-11-02',
     fileBase: 'd2',
@@ -383,7 +433,16 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     _id: '0000000000001111111111112222222222220033',
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
-    collection: 'docs',
+    collection: {
+      name: 'docs',
+      len: 3,
+      index: expect.objectContaining({
+        relPath: 'docs/index.doc',
+      }),
+      previous: expect.objectContaining({
+        relPath: 'docs/d2.doc',
+      }),
+    },
     contents: 'd3 content',
     date: '2024-11-03',
     fileBase: 'd3',

@@ -97,17 +97,25 @@ describe('Collections', () => {
 
     describe('createCollection', () => {
       it('should work as expected', () => {
-        const actual = unit.createCollection({ globPattern: 'posts/*.md', reverse: false, sortBy: 'date' }, [
+        const actual = unit.createCollection('posts', { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' }, [
           ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1,
         ]);
-        expect(actual).toStrictEqual(fixturesCo.COLLECTIONS_FIXTURES_POSTS_1);
+        expect(actual).toStrictEqual({
+          name: 'posts',
+          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+          collectionIndexItem: undefined,
+        });
       });
 
       it('should work as expected with collectionIndex', () => {
-        const actual = unit.createCollection({ globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' }, [
+        const actual = unit.createCollection('docs', { globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' }, [
           ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1,
         ]);
-        expect(actual).toStrictEqual(fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1);
+        expect(actual).toStrictEqual({
+          name: 'docs',
+          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
+          collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+        });
       });
     });
 
@@ -123,8 +131,16 @@ describe('Collections', () => {
           )
         );
         expect(actual).toStrictEqual({
-          docs: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
-          posts: fixturesCo.COLLECTIONS_FIXTURES_POSTS_1,
+          posts: {
+            name: 'posts',
+            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+            collectionIndexItem: undefined,
+          },
+          docs: {
+            name: 'docs',
+            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
+            collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+          },
         });
       });
     });
@@ -132,8 +148,7 @@ describe('Collections', () => {
     describe('annotateCollectionItems', () => {
       it('should work as expected', () => {
         const actual = unit.annotateCollectionItems(
-          'posts',
-          { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' },
+          { name: 'posts', items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1, collectionIndexItem: undefined },
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
         );
         expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_POSTS_1);
@@ -142,12 +157,22 @@ describe('Collections', () => {
 
     describe('annotateAllCollectionItems', () => {
       it('should work as expected', () => {
-        const actual = unit.annotateAllCollectionItems(
-          {
-            posts: { globPattern: 'posts/*.md', reverse: false, sortBy: 'date' },
-            docs: { globPattern: 'docs/*.doc', reverse: false, sortBy: 'date' },
-          },
-          [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
+        const actual = P.Effect.runSync(
+          unit.annotateAllCollectionItems(
+            {
+              posts: {
+                name: 'posts',
+                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+                collectionIndexItem: undefined,
+              },
+              docs: {
+                name: 'docs',
+                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
+                collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+              },
+            },
+            [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
+          )
         );
         expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_POSTS_DOCS_1);
       });

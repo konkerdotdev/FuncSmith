@@ -6,7 +6,7 @@ import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { Convenience } from '../lib';
-import type { CollectionItem, CollectionOptions } from './types';
+import type { Collection, CollectionItem, CollectionOptions } from './types';
 
 // --------------------------------------------------------------------------
 export function isCollectionIndex<T extends FileSetItem>(fileSetItem: T): fileSetItem is FrontMatter<T> {
@@ -59,13 +59,14 @@ export const collectionSorter =
 export function collectionTransformer<IF extends FileSetItem>(
   item: FrontMatter<IF>,
   i: number,
+  collectionName: string,
   collection: Array<FrontMatter<IF>>,
   collectionIndexItem: FrontMatter<IF> | undefined
-): CollectionItem<IF> {
+): CollectionItem<FrontMatter<IF>> {
   return {
     ...item,
     collection: Object.assign(
-      { len: collection.length },
+      { name: collectionName, len: collection.length },
 
       // Add an index property if there is an index file
       collectionIndexItem ? { index: collectionIndexItem } : {},
@@ -81,9 +82,10 @@ export function collectionTransformer<IF extends FileSetItem>(
 
 // --------------------------------------------------------------------------
 export function createCollection<IF extends FileSetItem>(
+  collectionName: string,
   options: CollectionOptions,
   fileSet: FileSet<IF | FrontMatter<IF>>
-): FileSet<CollectionItem<IF>> {
+): Collection<IF> {
   // Gather the collection, including any collectionIndex
   const collection: FileSet<FrontMatter<IF>> = fileSet
     .filter((item) => micromatch([item.relPath], [options.globPattern])?.length > 0)
@@ -97,19 +99,25 @@ export function createCollection<IF extends FileSetItem>(
   // eslint-disable-next-line fp/no-mutating-methods
   const sortedCollection = collection.filter(isNotCollectionIndex).sort(collectionSorter(options));
 
-  return sortedCollection.map((item, i) => collectionTransformer(item, i, sortedCollection, collectionIndexItem));
+  return {
+    name: collectionName,
+    collectionIndexItem,
+    items: sortedCollection.map((item, i) =>
+      collectionTransformer(item, i, collectionName, sortedCollection, collectionIndexItem)
+    ),
+  };
 }
 
 export function createAllCollections<IF extends FileSetItem>(
   options: Record<string, CollectionOptions>,
   fileSet: FileSet<IF | FrontMatter<IF>>
-): P.Effect.Effect<Record<string, string>, FuncSmithError> {
+): P.Effect.Effect<Record<string, Collection<IF>>, FuncSmithError> {
   return P.pipe(
     Object.entries(options),
     P.Array.foldl((acc, [name, options]) => {
       return {
         ...acc,
-        [name]: createCollection(options, fileSet),
+        [name]: createCollection(name, options, fileSet),
       };
     }, {}),
     P.Effect.succeed
@@ -118,34 +126,36 @@ export function createAllCollections<IF extends FileSetItem>(
 
 // --------------------------------------------------------------------------
 export function annotateCollectionItems<IF extends FileSetItem>(
-  collectionName: string,
-  options: CollectionOptions,
+  collection: Collection<IF>,
   fileSet: FileSet<IF>
-): FileSet<IF | CollectionItem<IF>> {
-  // Gather the collection, including any collectionIndex
-  const collection: FileSet<FrontMatter<IF>> = fileSet
-    .filter((item) => micromatch([item.relPath], [options.globPattern])?.length > 0)
-    .filter(isFrontMatter)
-    .filter(isNotCollectionExcluded);
-
-  const collectionIndices = collection.map((item) => fileSet.findIndex((i) => i._id === item._id));
+): FileSet<IF | CollectionItem<FrontMatter<IF>>> {
+  const collectionIndices = collection.items.map((item) => fileSet.findIndex((i) => i._id === item._id));
 
   return P.pipe(
     fileSet,
     P.Array.map((item: IF | FrontMatter<IF>, i: number) =>
-      collectionIndices.includes(i) ? { ...item, collection: collectionName } : item
+      collectionIndices.includes(i) && isFrontMatter(item)
+        ? collectionTransformer(
+            item as FrontMatter<IF>,
+            collectionIndices.indexOf(i),
+            collection.name,
+            collection.items,
+            collection.collectionIndexItem
+          )
+        : item
     )
   );
 }
 
 export function annotateAllCollectionItems<IF extends FileSetItem>(
-  allOptions: Record<string, CollectionOptions>,
+  collections: Record<string, Collection<IF>>,
   fileSet: FileSet<IF>
-): FileSet<IF | CollectionItem<IF>> {
+): P.Effect.Effect<FileSet<IF | CollectionItem<IF>>, FuncSmithError> {
   return P.pipe(
-    Object.entries(allOptions),
-    P.Array.foldl((acc, [name, options]) => {
-      return [...annotateCollectionItems(name, options, acc)];
-    }, fileSet)
+    Object.values(collections),
+    P.Array.foldl((acc, collection) => {
+      return [...annotateCollectionItems(collection, acc)];
+    }, fileSet),
+    P.Effect.succeed
   );
 }
