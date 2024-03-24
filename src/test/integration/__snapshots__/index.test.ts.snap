@@ -647,7 +647,7 @@ exports[`funcsmith integration: integration-test-env-1-env 1`] = `
 }
 `;
 
-exports[`funcsmith integration: integration-test-env-1-metadat 1`] = `
+exports[`funcsmith integration: integration-test-env-1-metadata 1`] = `
 {
   "metadata": {
     "collections": {
