@@ -16,4 +16,5 @@ export * from './Rename';
 export * from './Root';
 export * from './Sink';
 export * from './Source';
+export * from './Tags';
 export * from './Writer';

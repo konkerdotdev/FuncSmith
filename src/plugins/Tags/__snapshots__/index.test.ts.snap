@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`plugins Nav should return the expected value: plugin-nav-1 1`] = `
+exports[`plugins Tags should return the expected value: plugin-tags-1 1`] = `
 [
   {
     "_id": "0000000000001111111111112222222222220001",

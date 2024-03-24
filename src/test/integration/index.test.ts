@@ -36,6 +36,7 @@ describe('funcsmith', () => {
         globPattern: '**/*.html',
       }),
       F.nav(),
+      F.tags(),
       F.collections({
         posts: {
           globPattern: 'posts/**/*.html',
@@ -50,7 +51,6 @@ describe('funcsmith', () => {
       F.rename([[/\.md$/, '.html']]),
       F.markdown(),
       F.drafts(),
-      F.identity(),
       F.frontMatter(),
       F.reader(),
       F.metadata({
