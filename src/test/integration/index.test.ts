@@ -76,6 +76,6 @@ describe('funcsmith', () => {
     expect(actual).toMatchSnapshot('integration-test-1');
     expect(toTreeSync(fs)).toMatchSnapshot('integration-test-1-fs');
     expect(env).toMatchSnapshot('integration-test-env-1-env');
-    expect(metadata).toMatchSnapshot('integration-test-env-1-metadat');
+    expect(metadata).toMatchSnapshot('integration-test-env-1-metadata');
   });
 });
