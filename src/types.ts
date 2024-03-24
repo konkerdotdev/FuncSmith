@@ -78,3 +78,8 @@ export type FileSetInjectionMapping<IF extends FileSetItem, R1, R2> = (
 export type FileSetInjectionMappingCtor<IF extends FileSetItem, R1, R2, OP = undefined> = (
   options: OP
 ) => FileSetInjectionMapping<IF, R1, R2>;
+
+// --------------------------------------------------------------------------
+export type FuncSmithPlugin<IF extends FileSetItem, OF extends FileSetItem, RN, RM> = (
+  next: FileSetMapping<IF, OF, RN>
+) => FileSetMapping<IF, OF, RM>;
