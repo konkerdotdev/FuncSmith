@@ -10,6 +10,7 @@ import {
   isFileSetItemFile,
 } from '../../lib/fileSet/fileSetItem';
 import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
+import type { DefaultContext } from '../../types';
 import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { LayoutsOptions } from './types';
@@ -26,10 +27,10 @@ export function lookupLayoutTemplate<T extends FrontMatter<FileSetItem>>(
 }
 
 // --------------------------------------------------------------------------
-export function processFileItem<T extends FileSetItem>(
+export function processFileItem<T extends FileSetItem, C extends DefaultContext>(
   env: Record<string, unknown>,
   options: LayoutsOptions,
-  metadata: Record<string, unknown>,
+  context: C,
   templateMap: Record<string, H.TemplateDelegate>,
   fileSetItem: T
 ): P.Effect.Effect<T, FuncSmithError> {
@@ -38,7 +39,7 @@ export function processFileItem<T extends FileSetItem>(
       fileSetItemMatchesPattern(options.globPattern, fileSetItem)
       ? P.pipe(
           lookupLayoutTemplate(templateMap, options, fileSetItem),
-          P.Effect.flatMap(handlebarsRender({ ...env, ...metadata, ...fileSetItem, ...fileSetItem.frontMatter })),
+          P.Effect.flatMap(handlebarsRender({ ...env, ...context, ...fileSetItem, ...fileSetItem.frontMatter })),
           P.Effect.mapError(toFuncSmithError),
           P.Effect.map((contents) => ({ ...fileSetItem, contents }))
         )

@@ -1,7 +1,9 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { FsDepContextTest, FsDepEnvDefault, FsDepMetadataDefault, FsDepReaderTest } from '../../layers';
+import { FsDepEnvDefault, FsDepReaderTest } from '../../layers';
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
+import { FsDepContext } from '../../types';
+import type { RootContext } from '../Root';
 import * as unit from './index';
 
 describe('plugins', () => {
@@ -14,8 +16,7 @@ describe('plugins', () => {
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
           P.Effect.provide(FsDepEnvDefault),
-          P.Effect.provide(FsDepMetadataDefault),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provideService(FsDepContext<RootContext>(), FsDepContext<RootContext>().of({ rootDirPath: '/tmp' }))
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -34,8 +35,7 @@ describe('plugins', () => {
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
           P.Effect.provide(FsDepEnvDefault),
-          P.Effect.provide(FsDepMetadataDefault),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provideService(FsDepContext<RootContext>(), FsDepContext<RootContext>().of({ rootDirPath: '/tmp' }))
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -54,8 +54,7 @@ describe('plugins', () => {
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
           P.Effect.provide(FsDepEnvDefault),
-          P.Effect.provide(FsDepMetadataDefault),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provideService(FsDepContext<RootContext>(), FsDepContext<RootContext>().of({ rootDirPath: '/tmp' }))
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
@@ -75,8 +74,7 @@ describe('plugins', () => {
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
           P.Effect.provide(FsDepEnvDefault),
-          P.Effect.provide(FsDepMetadataDefault),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provideService(FsDepContext<RootContext>(), FsDepContext<RootContext>().of({ rootDirPath: '/tmp' }))
         )
       );
       expect(actual).toMatchSnapshot('plugin-layouts-1');
