@@ -60,7 +60,7 @@ export function collectionTransformer<IF extends FileSetItem>(
   item: FrontMatter<IF>,
   i: number,
   collectionName: string,
-  collection: Array<FrontMatter<IF>>,
+  collection: ReadonlyArray<FrontMatter<IF>>,
   collectionIndexItem: FrontMatter<IF> | undefined
 ): CollectionItem<FrontMatter<IF>> {
   return {
@@ -136,7 +136,7 @@ export function annotateCollectionItems<IF extends FileSetItem>(
     P.Array.map((item: IF | FrontMatter<IF>, i: number) =>
       collectionIndices.includes(i) && isFrontMatter(item)
         ? collectionTransformer(
-            item as FrontMatter<IF>,
+            item,
             collectionIndices.indexOf(i),
             collection.name,
             collection.items,

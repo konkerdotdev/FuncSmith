@@ -20,13 +20,14 @@ export const sinkInjectionCtor =
   ): FileSetMappingResult<IF, Exclude<R, FsDepSink | FsDepContext<C & SinkContext>> | FsDepContext<C> | FsDepWriter> =>
     P.pipe(
       P.Effect.Do,
-      P.Effect.bind('deps', () => P.Effect.all([FsDepContext<C>(), FsDepWriter])),
-      P.Effect.bind('fullSinkPath', ({ deps: [fsDepContext, fsDepWriter] }) =>
+      P.Effect.bind('fsDepContext', () => FsDepContext<C>()),
+      P.Effect.bind('fsDepWriter', () => FsDepWriter),
+      P.Effect.bind('fullSinkPath', ({ fsDepContext, fsDepWriter }) =>
         fsDepWriter.tinyFs.isAbsolute(sinkPath)
           ? P.Effect.succeed(sinkPath)
           : P.pipe(fsDepWriter.tinyFs.joinPath(fsDepContext.rootDirPath, sinkPath), P.Effect.mapError(toFuncSmithError))
       ),
-      P.Effect.flatMap(({ deps: [fsDepContext, _], fullSinkPath }) =>
+      P.Effect.flatMap(({ fsDepContext, fullSinkPath }) =>
         P.pipe(
           result,
           P.Effect.provideService(FsDepSink, FsDepSink.of({ sinkPath: fullSinkPath })),

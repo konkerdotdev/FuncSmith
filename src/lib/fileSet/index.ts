@@ -22,7 +22,7 @@ export type FileSetItemFile<T = ArrayBuffer | string> = {
 
 export type FileSetItem<T = ArrayBuffer | string> = FileSetItemFile<T>;
 
-export type FileSet<T extends FileSetItem<C>, C = ArrayBuffer | string> = Array<T>;
+export type FileSet<T extends FileSetItem<C>, C = ArrayBuffer | string> = ReadonlyArray<T>;
 
 // --------------------------------------------------------------------------
 export const HtmlString = P.pipe(P.Schema.string, P.Schema.brand(Symbol.for('HtmlString')));

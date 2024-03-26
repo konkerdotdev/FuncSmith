@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.63.2
     version: 0.63.2(effect@2.4.1)(fast-check@3.15.1)
   '@konker.dev/effect-ts-prelude':
-    specifier: ^0.0.13
-    version: 0.0.13(@effect/schema@0.63.2)(effect@2.4.1)
+    specifier: ^0.0.14
+    version: 0.0.14(@effect/schema@0.63.2)(effect@2.4.1)
   '@konker.dev/tiny-error-fp':
     specifier: ^0.0.1
     version: 0.0.1
@@ -1524,6 +1524,16 @@ packages:
 
   /@konker.dev/effect-ts-prelude@0.0.13(@effect/schema@0.63.2)(effect@2.4.1):
     resolution: {integrity: sha512-dZw6PAlnIB+33bETsHvxRclYchIdIvqEulCClgtzuMEN5Ktr0mJwTCpQZXs5TfwTrqC4IMEz/5pvaieVrlPfsA==}
+    peerDependencies:
+      '@effect/schema': ^0.63.2
+      effect: ^2.4.1
+    dependencies:
+      '@effect/schema': 0.63.2(effect@2.4.1)(fast-check@3.15.1)
+      effect: 2.4.1
+    dev: false
+
+  /@konker.dev/effect-ts-prelude@0.0.14(@effect/schema@0.63.2)(effect@2.4.1):
+    resolution: {integrity: sha512-/8f9M07UhIyegvjHYO3AOl9tssL4F/YV+/Y8Pr30XpYQDsGsI8h/5xfiRvfffce1rju92Hrr2EXM1l4nu6Yc/g==}
     peerDependencies:
       '@effect/schema': ^0.63.2
       effect: ^2.4.1

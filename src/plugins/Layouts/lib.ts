@@ -50,8 +50,8 @@ export function processFileItem<T extends FileSetItem, C extends DefaultContext>
 // --------------------------------------------------------------------------
 export function toTemplateMap(
   options: LayoutsOptions,
-  data: Array<FileSetItem>,
-  partials: Array<Record<string, H.TemplateDelegate>> = []
+  data: ReadonlyArray<FileSetItem>,
+  partials: ReadonlyArray<Record<string, H.TemplateDelegate>> = []
 ) {
   return P.pipe(
     data.filter(isFileSetItemFile),
@@ -81,7 +81,7 @@ export function toTemplateMap(
 // --------------------------------------------------------------------------
 export function toPartialsList(
   options: LayoutsOptions,
-  data: Array<FileSetItem>
+  data: ReadonlyArray<FileSetItem>
 ): P.Effect.Effect<Array<Record<string, H.TemplateDelegate>>, FuncSmithError> {
   return P.pipe(
     toTemplateMap(options, data),

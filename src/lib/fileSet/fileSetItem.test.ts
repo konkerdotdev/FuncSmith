@@ -165,4 +165,47 @@ describe('fileSetItem', () => {
       expect(actual).toEqual('A');
     });
   });
+
+  describe('createFileSetItemFile', () => {
+    it('should work as expected with string content', async () => {
+      const contents = 'CONTENT';
+      const actual = await P.Effect.runPromise(
+        unit.createFileSetItemFile(TEST_TFS, '/tmp/foo', '/tmp/foo/bar/baz.md', contents)
+      );
+      expect(actual).toStrictEqual({
+        _tag: 'File',
+        _id: '1e23bbd16d9d040cc66c46b68dea8aa6026a748c',
+        path: '/tmp/foo/bar/baz.md',
+        baseDir: '/tmp/foo',
+        relDir: 'bar',
+        relPath: 'bar/baz.md',
+        link: '/bar/baz.md',
+        fileBase: 'baz',
+        fileExt: '.md',
+        fileName: 'baz.md',
+        contents: stringToUint8Array(contents),
+      });
+    });
+
+    it('should work as expected with ArrayBuffer content', async () => {
+      const contents = stringToUint8Array('CONTENT');
+
+      const actual = await P.Effect.runPromise(
+        unit.createFileSetItemFile(TEST_TFS, '/tmp/foo', '/tmp/foo/bar/baz.md', contents)
+      );
+      expect(actual).toStrictEqual({
+        _tag: 'File',
+        _id: '1e23bbd16d9d040cc66c46b68dea8aa6026a748c',
+        path: '/tmp/foo/bar/baz.md',
+        baseDir: '/tmp/foo',
+        relDir: 'bar',
+        relPath: 'bar/baz.md',
+        link: '/bar/baz.md',
+        fileBase: 'baz',
+        fileExt: '.md',
+        fileName: 'baz.md',
+        contents,
+      });
+    });
+  });
 });

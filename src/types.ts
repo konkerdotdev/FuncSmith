@@ -30,15 +30,6 @@ export type FsDepEnv = {
 };
 export const FsDepEnv = P.Context.GenericTag<FsDepEnv>('FsDepEnv');
 
-/*
-// --------------------------------------------------------------------------
-export type FsDepMetadata<T extends Record<string, unknown>> = {
-  readonly metadata: T;
-};
-export const FsDepMetadata = <T extends Record<string, unknown>>() =>
-  P.Context.GenericTag<FsDepMetadata<T>>('FsDepMetadata');
-*/
-
 // --------------------------------------------------------------------------
 export type FsDepTinyFileSystem = {
   readonly tinyFs: TinyFileSystem;

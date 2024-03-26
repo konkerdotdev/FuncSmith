@@ -30,8 +30,10 @@ export const layoutsMappingCtor =
 
     return P.pipe(
       P.Effect.Do,
-      P.Effect.bind('deps', () => P.Effect.all([FsDepContext<C>(), FsDepEnv, FsDepReader])),
-      P.Effect.bind('layoutsFullPath', ({ deps: [fsDepContext, _, fsDepReader] }) =>
+      P.Effect.bind('fsDepContext', () => FsDepContext<C>()),
+      P.Effect.bind('fsDepEnv', () => FsDepEnv),
+      P.Effect.bind('fsDepReader', () => FsDepReader),
+      P.Effect.bind('layoutsFullPath', ({ fsDepContext, fsDepReader }) =>
         fsDepReader.tinyFs.isAbsolute(safeOptions.layoutsPath)
           ? P.Effect.succeed(safeOptions.layoutsPath)
           : P.pipe(
@@ -39,7 +41,7 @@ export const layoutsMappingCtor =
               P.Effect.mapError(toFuncSmithError)
             )
       ),
-      P.Effect.bind('partialsFullPath', ({ deps: [fsDepContext, _fsDepEnv, fsDepReader] }) =>
+      P.Effect.bind('partialsFullPath', ({ fsDepContext, fsDepReader }) =>
         safeOptions.partialsPath
           ? fsDepReader.tinyFs.isAbsolute(safeOptions.partialsPath)
             ? P.Effect.succeed(options.partialsPath)
@@ -49,10 +51,10 @@ export const layoutsMappingCtor =
               )
           : P.Effect.succeed(undefined)
       ),
-      P.Effect.bind('layoutsFileSet', ({ deps: [_fsDepContext, _fsDepEnv, fsDepReader], layoutsFullPath }) =>
+      P.Effect.bind('layoutsFileSet', ({ fsDepReader, layoutsFullPath }) =>
         P.pipe(fsDepReader.reader(layoutsFullPath), P.Effect.mapError(toFuncSmithError))
       ),
-      P.Effect.bind('partialsFileSet', ({ deps: [_fsDepContext, _fsDepEnv, fsDepReader], partialsFullPath }) =>
+      P.Effect.bind('partialsFileSet', ({ fsDepReader, partialsFullPath }) =>
         partialsFullPath
           ? P.pipe(fsDepReader.reader(partialsFullPath), P.Effect.mapError(toFuncSmithError))
           : P.Effect.succeed([])
@@ -61,7 +63,7 @@ export const layoutsMappingCtor =
       P.Effect.bind('templateMap', ({ layoutsFileSet, partialsList }) =>
         toTemplateMap(safeOptions, layoutsFileSet, partialsList)
       ),
-      P.Effect.flatMap(({ deps: [fsDepContext, fsDepEnv, _fsDepReader], templateMap }) =>
+      P.Effect.flatMap(({ fsDepContext, fsDepEnv, templateMap }) =>
         P.pipe(
           fileSet,
           P.Array.map((fileSetItem) =>

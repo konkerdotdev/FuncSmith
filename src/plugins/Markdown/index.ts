@@ -1,8 +1,7 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FileSet, FileSetItem, Html } from '../../lib/fileSet';
-import type { DefaultContext, FileSetMapping } from '../../types';
-import { FsDepContext, FsDepEnv } from '../../types';
+import type { FileSetMapping } from '../../types';
 import type { FrontMatter } from '../FrontMatter/types';
 import { wrapMapping } from '../lib';
 import { processFileSetItem } from './lib';
@@ -20,15 +19,10 @@ export const DEFAULT_MARKDOWN_OPTIONS: MarkdownOptions = {
  */
 // TODO: do we need env and context deps here?
 export const markdownMappingCtor =
-  <IF extends FileSetItem, C extends DefaultContext>(
+  <IF extends FileSetItem>(
     options: Partial<MarkdownOptions> = DEFAULT_MARKDOWN_OPTIONS
-  ): FileSetMapping<IF | FrontMatter<IF>, IF | Html<IF>, FsDepEnv | FsDepContext<C>> =>
+  ): FileSetMapping<IF | FrontMatter<IF>, IF | Html<IF>, never> =>
   (fileSet: FileSet<IF | FrontMatter<IF>>) =>
-    P.pipe(
-      P.Effect.all([FsDepEnv, FsDepContext<C>()]),
-      P.Effect.flatMap(([_fsDepEnv, _fsDepContext]) =>
-        P.pipe(fileSet, P.Array.map(processFileSetItem({ ...DEFAULT_MARKDOWN_OPTIONS, ...options })), P.Effect.all)
-      )
-    );
+    P.pipe(fileSet, P.Array.map(processFileSetItem({ ...DEFAULT_MARKDOWN_OPTIONS, ...options })), P.Effect.all);
 
 export const markdown = wrapMapping(markdownMappingCtor);

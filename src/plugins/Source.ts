@@ -23,8 +23,9 @@ export const sourceInjectionCtor =
   > =>
     P.pipe(
       P.Effect.Do,
-      P.Effect.bind('deps', () => P.Effect.all([FsDepContext<C>(), FsDepReader])),
-      P.Effect.bind('fullSourcePath', ({ deps: [fsDepContext, fsDepReader] }) =>
+      P.Effect.bind('fsDepContext', () => FsDepContext<C>()),
+      P.Effect.bind('fsDepReader', () => FsDepReader),
+      P.Effect.bind('fullSourcePath', ({ fsDepContext, fsDepReader }) =>
         fsDepReader.tinyFs.isAbsolute(sourcePath)
           ? P.Effect.succeed(sourcePath)
           : P.pipe(
@@ -32,7 +33,7 @@ export const sourceInjectionCtor =
               P.Effect.mapError(toFuncSmithError)
             )
       ),
-      P.Effect.flatMap(({ deps: [fsDepContext, _], fullSourcePath }) =>
+      P.Effect.flatMap(({ fsDepContext, fullSourcePath }) =>
         P.pipe(
           result,
           P.Effect.provideService(FsDepSource, FsDepSource.of({ sourcePath: fullSourcePath })),

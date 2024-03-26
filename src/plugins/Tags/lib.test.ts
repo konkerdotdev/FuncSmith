@@ -22,6 +22,8 @@ describe('Tags', () => {
       });
     });
 
+    // TODO: test for compileTagsIndex
+
     describe('createTags', () => {
       it('should work as expected', () => {
         const actual = P.Effect.runSync(
@@ -43,5 +45,9 @@ describe('Tags', () => {
         });
       });
     });
+
+    // TODO: test for createTagPage
+
+    // TODO: test for createTagsPages
   });
 });

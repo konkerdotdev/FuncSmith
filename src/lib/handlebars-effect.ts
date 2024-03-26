@@ -13,7 +13,7 @@ export type HandlebarsError = ReturnType<typeof toHandlebarsError>;
 export function handlebarsCompile(
   templateStr: string,
   helpers: Record<string, H.HelperDelegate> = {},
-  partials: Array<Record<string, H.TemplateDelegate>> = []
+  partials: ReadonlyArray<Record<string, H.TemplateDelegate>> = []
 ): P.Effect.Effect<H.TemplateDelegate, HandlebarsError> {
   return P.Effect.try({
     try: () => {
