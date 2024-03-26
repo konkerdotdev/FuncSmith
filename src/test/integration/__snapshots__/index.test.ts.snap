@@ -1409,7 +1409,7 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
       "title": "Home",
     },
   ],
-  "rootDirPath": "/home/konker/WORKING/konker/@konker.dev/funcsmith/src/test/integration",
+  "rootDirPath": "/tmp",
   "sinkPath": "/tmp/www",
   "sourcePath": "/tmp/foo",
   "tags": {

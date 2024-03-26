@@ -66,7 +66,7 @@ describe('funcsmith', () => {
       }),
       F.sink('/tmp/www'),
       F.source('/tmp/foo'),
-      F.root(__dirname)
+      F.root('/tmp')
     );
 
     const actual = await P.Effect.runPromise(
