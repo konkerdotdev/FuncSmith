@@ -81,7 +81,6 @@ export function createTagPage(
 ): P.Effect.Effect<FileSetItem, FuncSmithError> {
   return P.pipe(
     tfs.joinPath(sourcePath, dirPath, `${fileBase}.md`),
-    P.Effect.tap(console.log),
     P.Effect.flatMap((path) => createFileSetItemFile(tfs, sourcePath, path, content)),
     P.Effect.mapError(toFuncSmithError)
   );
@@ -101,7 +100,7 @@ export function createTagsPages<IF extends FileSetItem>(
     P.Effect.bind('tagsIndexPageContentTemplate', () => readTemplate(TAGS_INDEX_PAGE_CONTENT_TEMPLATE)),
     P.Effect.bind('tagPageContentTemplate', () => readTemplate(TAG_PAGE_CONTENT_TEMPLATE)),
     P.Effect.bind('tagsIndexPageContent', ({ tagsIndexPageContentTemplate }) =>
-      P.pipe(tagsIndexPageContentTemplate, handlebarsRender({ tags }), P.Effect.mapError(toFuncSmithError))
+      P.pipe(tagsIndexPageContentTemplate, handlebarsRender({ tags, ...options }), P.Effect.mapError(toFuncSmithError))
     ),
     P.Effect.bind('tagPagesContentMap', ({ tagPageContentTemplate }) =>
       // Map all the tags into a [tag, content] pair
@@ -110,7 +109,7 @@ export function createTagsPages<IF extends FileSetItem>(
         P.Array.map((tag) =>
           P.pipe(
             tagPageContentTemplate,
-            handlebarsRender({ tags, tag }),
+            handlebarsRender({ tags, tag, ...options }),
             P.Effect.map((content) => [tag, content] as [string, string])
           )
         ),
