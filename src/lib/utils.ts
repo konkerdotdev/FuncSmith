@@ -20,3 +20,5 @@ export function hashHex(s: string): P.Effect.Effect<string, GeneralError> {
     P.Effect.map((buffer) => [...new Uint8Array(buffer)].map((x) => x.toString(16).padStart(2, '0')).join(''))
   );
 }
+
+export { arrayBufferToString, stringToUint8Array } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';
