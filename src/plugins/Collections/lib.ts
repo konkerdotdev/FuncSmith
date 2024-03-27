@@ -3,7 +3,7 @@ import micromatch from 'micromatch';
 
 import type { FuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
-import { isFrontMatter } from '../FrontMatter/lib';
+import { isFrontMatter } from '../../lib/frontMatter';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { Convenience } from '../lib';
 import type { Collection, CollectionItem, CollectionOptions } from './types';

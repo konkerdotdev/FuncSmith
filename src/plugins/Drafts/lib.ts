@@ -1,5 +1,5 @@
 import type { FileSetItem } from '../../lib/fileSet';
-import { isFrontMatter } from '../FrontMatter/lib';
+import { isFrontMatter } from '../../lib/frontMatter';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { DraftsOptions } from './types';
 

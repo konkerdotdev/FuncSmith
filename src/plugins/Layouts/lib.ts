@@ -9,9 +9,9 @@ import {
   fileSetItemMatchesPattern,
   isFileSetItemFile,
 } from '../../lib/fileSet/fileSetItem';
+import { isFrontMatter } from '../../lib/frontMatter';
 import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
 import type { DefaultContext } from '../../types';
-import { isFrontMatter } from '../FrontMatter/lib';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { LayoutsOptions } from './types';
 
