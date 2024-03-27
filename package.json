@@ -1,6 +1,6 @@
 {
   "name": "@konker.dev/funcsmith",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "Konrad Markus <mail@konker.dev>",
   "description": "Functional file processor based on the ideas of Metalsmith",
   "license": "ISC",
@@ -73,7 +73,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
-  "staticFiles": [],
+  "staticFiles": [
+    "./src/plugins/Tags/templates/*"
+  ],
   "scripts": {
     "prepare": "husky install",
     "test": "jest --no-cache -w 4",
