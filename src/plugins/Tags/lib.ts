@@ -7,7 +7,7 @@ import type { FuncSmithError } from '../../error';
 import { toFuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { createFileSetItemFile } from '../../lib/fileSet/fileSetItem';
-import { isFrontMatter } from '../../lib/frontMatter';
+import { extractFrontMatter, isFrontMatter } from '../../lib/frontMatter';
 import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { SourceContext } from '../Source';
@@ -78,10 +78,11 @@ export function createTagPage(
   dirPath: string,
   fileBase: string,
   content: string
-): P.Effect.Effect<FileSetItem, FuncSmithError> {
+): P.Effect.Effect<FrontMatter<FileSetItem>, FuncSmithError> {
   return P.pipe(
     tfs.joinPath(sourcePath, dirPath, `${fileBase}.md`),
     P.Effect.flatMap((path) => createFileSetItemFile(tfs, sourcePath, path, content)),
+    P.Effect.flatMap(extractFrontMatter),
     P.Effect.mapError(toFuncSmithError)
   );
 }
@@ -94,7 +95,7 @@ export function createTagsPages<IF extends FileSetItem>(
   tfs: TinyFileSystem,
   tags: Tags<IF>,
   fileSet: FileSet<IF | TagsItem<FrontMatter<IF>>>
-): P.Effect.Effect<FileSet<FileSetItem | IF | TagsItem<FrontMatter<IF>>>, FuncSmithError> {
+): P.Effect.Effect<FileSet<FileSetItem | IF | FrontMatter<IF>>, FuncSmithError> {
   return P.pipe(
     P.Effect.Do,
     P.Effect.bind('tagsIndexPageContentTemplate', () => readTemplate(TAGS_INDEX_PAGE_CONTENT_TEMPLATE)),
