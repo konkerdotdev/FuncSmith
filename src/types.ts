@@ -7,11 +7,9 @@ import type { FileSinkWriter } from './sink';
 import type { FileSourceReader } from './source';
 
 // --------------------------------------------------------------------------
-export type FsDepContext<T extends FileSetItem = FileSetItem> = {
-  readonly rootDirPath: string;
-  readonly fileSet: FileSet<T>;
-};
-export const FsDepContext = <T extends FileSetItem = FileSetItem>() =>
+export type DefaultContext = Record<string, unknown>;
+export type FsDepContext<T extends Record<string, unknown>> = DefaultContext & T;
+export const FsDepContext = <T extends Record<string, unknown>>() =>
   P.Context.GenericTag<FsDepContext<T>>('FsDepContext');
 
 // --------------------------------------------------------------------------
@@ -31,12 +29,6 @@ export type FsDepEnv = {
   readonly env: Record<string, unknown>;
 };
 export const FsDepEnv = P.Context.GenericTag<FsDepEnv>('FsDepEnv');
-
-// --------------------------------------------------------------------------
-export type FsDepMetadata = {
-  readonly metadata: Record<string, unknown>;
-};
-export const FsDepMetadata = P.Context.GenericTag<FsDepMetadata>('FsDepMetadata');
 
 // --------------------------------------------------------------------------
 export type FsDepTinyFileSystem = {

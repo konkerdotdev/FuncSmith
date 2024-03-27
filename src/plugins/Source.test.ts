@@ -1,7 +1,9 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
-import { FsDepContextTest, FsDepReaderTest } from '../layers';
+import { FsDepContextDefault, FsDepReaderTest } from '../layers';
 import * as fixturesFsFm from '../test/fixtures/fileset-frontmatter-1';
+import { FsDepContext } from '../types';
+import type { RootContext } from './Root';
 import * as unit from './Source';
 
 describe('plugins', () => {
@@ -13,7 +15,7 @@ describe('plugins', () => {
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provideService(FsDepContext<RootContext>(), FsDepContext<RootContext>().of({ rootDirPath: '/tmp' }))
         )
       );
       expect(actual).toStrictEqual(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1);
@@ -26,7 +28,7 @@ describe('plugins', () => {
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1],
           pluginStack,
           P.Effect.provide(FsDepReaderTest),
-          P.Effect.provide(FsDepContextTest)
+          P.Effect.provide(FsDepContextDefault)
         )
       );
       expect(actual).toStrictEqual(fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1);

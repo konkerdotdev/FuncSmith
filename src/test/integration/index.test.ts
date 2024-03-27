@@ -4,20 +4,20 @@ import { fs } from 'memfs';
 import { toTreeSync } from 'memfs/lib/print';
 
 import * as F from '../../index';
-import { FsDepReaderTest, FsDepWriterTest } from '../../layers';
+import { FsDepContextDefault, FsDepReaderTest, FsDepWriterTest } from '../../layers';
 
 describe('funcsmith', () => {
   let env: any;
-  let metadata: any;
+  let context: any;
 
   test('integration', async () => {
     const pluginStack = P.pipe(
       P.Effect.succeed,
       F.writer(),
-      F.debug((fsDepEnv, fsDepMetadata, fileSet) => {
+      F.debug((fsDepEnv, fsDepContext, fileSet) => {
         console.log('DEBUG', fileSet.length);
         env = fsDepEnv;
-        metadata = fsDepMetadata;
+        context = fsDepContext;
       }),
       F.filter(),
       F.layouts({
@@ -53,6 +53,7 @@ describe('funcsmith', () => {
       F.drafts(),
       F.frontMatter(),
       F.reader(),
+      F.cleaner(),
       F.metadata({
         siteName: 'My Static Site & Blog',
         siteUrl: 'https://example.com/',
@@ -63,19 +64,23 @@ describe('funcsmith', () => {
       F.env({
         TEST_SOME_ENV_VAR: 'TEST_SOME_ENV_VAR_VALUE',
       }),
-      F.cleaner(),
       F.sink('/tmp/www'),
       F.source('/tmp/foo'),
-      F.root(__dirname)
+      F.root('/tmp')
     );
 
     const actual = await P.Effect.runPromise(
-      P.pipe(F.FuncSmith(pluginStack), P.Effect.provide(FsDepReaderTest), P.Effect.provide(FsDepWriterTest))
+      P.pipe(
+        F.FuncSmith(pluginStack),
+        P.Effect.provide(FsDepContextDefault),
+        P.Effect.provide(FsDepReaderTest),
+        P.Effect.provide(FsDepWriterTest)
+      )
     );
 
     expect(actual).toMatchSnapshot('integration-test-1');
     expect(toTreeSync(fs)).toMatchSnapshot('integration-test-1-fs');
     expect(env).toMatchSnapshot('integration-test-env-1-env');
-    expect(metadata).toMatchSnapshot('integration-test-env-1-metadata');
+    expect(context).toMatchSnapshot('integration-test-env-1-context');
   });
 });

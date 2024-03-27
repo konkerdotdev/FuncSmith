@@ -1,7 +1,8 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import type { TinyFileSystem, TinyFileSystemError } from '@konker.dev/tiny-filesystem-fp';
-import { arrayBufferToString } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';
+import { arrayBufferToString, stringToUint8Array } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';
 import type { DirectoryData, FileData } from '@konker.dev/tiny-treecrawler-fp';
+import { TreeCrawlerDataType } from '@konker.dev/tiny-treecrawler-fp';
 import { isFileData } from '@konker.dev/tiny-treecrawler-fp/dist/lib/utils';
 import micromatch from 'micromatch';
 
@@ -137,10 +138,31 @@ export const toFileSetItemFile =
 // --------------------------------------------------------------------------
 export const toFileSystemItemList =
   (tfs: TinyFileSystem, sourcePath: string) =>
-  (list: Array<DirectoryData | FileData>): P.Effect.Effect<Array<FileSetItem>, TinyFileSystemError | GeneralError> =>
+  (
+    list: ReadonlyArray<DirectoryData | FileData>
+  ): P.Effect.Effect<Array<FileSetItem>, TinyFileSystemError | GeneralError> =>
     P.pipe(list.filter(isFileData), P.Array.map(toFileSetItemFile(tfs, sourcePath)), P.Effect.all);
 
 // --------------------------------------------------------------------------
 export function fileSetItemContentsToString(contents: ArrayBuffer | string): string {
   return typeof contents === 'string' ? contents : arrayBufferToString(contents);
+}
+
+// --------------------------------------------------------------------------
+// FIXME: check that path is a child of sourcePath
+export function createFileSetItemFile(
+  tfs: TinyFileSystem,
+  sourcePath: string,
+  path: string,
+  data: string | ArrayBuffer
+): P.Effect.Effect<FileSetItemFile, TinyFileSystemError | GeneralError> {
+  return P.pipe(
+    {
+      _tag: TreeCrawlerDataType.File,
+      level: 0,
+      path,
+      data: typeof data === 'string' ? stringToUint8Array(data) : data,
+    },
+    toFileSetItemFile(tfs, sourcePath)
+  );
 }

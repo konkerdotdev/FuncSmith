@@ -2,12 +2,13 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import { MemFsTinyFileSystem, NodeTinyFileSystem } from '@konker.dev/tiny-filesystem-fp';
 
-import { EMPTY_FILESET, FsDepSink, FsDepSource } from './index';
+import type { DefaultContext } from './index';
+import { FsDepSink, FsDepSource } from './index';
 import type { FileSet, FileSetItem } from './lib/fileSet';
 import { fsFileSinkWriter } from './sink/FsFileSinkWriter';
 import { fsFileSourceReader } from './source/FsFileSourceReader';
 import memFs1 from './test/fixtures/memfs-1.json';
-import { FsDepContext, FsDepEnv, FsDepMetadata, FsDepReader, FsDepTinyFileSystem, FsDepWriter } from './types';
+import { FsDepContext, FsDepEnv, FsDepReader, FsDepTinyFileSystem, FsDepWriter } from './types';
 
 // --------------------------------------------------------------------------
 export const FsDepTinyFileSystemLive = P.Layer.succeed(
@@ -75,27 +76,4 @@ export const FsDepEnvDefault = P.Layer.succeed(
 );
 
 // --------------------------------------------------------------------------
-export const FsDepMetadataDefault = P.Layer.succeed(
-  FsDepMetadata,
-  FsDepMetadata.of({
-    metadata: {},
-  })
-);
-
-export const FsDepMetadataTest = P.Layer.succeed(
-  FsDepMetadata,
-  FsDepMetadata.of({
-    metadata: {
-      testMetaDataName1: 'testMetaDataValue1',
-    },
-  })
-);
-
-// --------------------------------------------------------------------------
-export const FsDepContextTest = P.Layer.succeed(
-  FsDepContext(),
-  FsDepContext().of({
-    rootDirPath: '/tmp',
-    fileSet: EMPTY_FILESET(),
-  })
-);
+export const FsDepContextDefault = P.Layer.succeed(FsDepContext<DefaultContext>(), FsDepContext().of({}));

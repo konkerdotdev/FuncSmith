@@ -2,29 +2,56 @@ import * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import type { FileSetMapping } from '../../types';
-import { FsDepMetadata } from '../../types';
+import { FsDepContext, FsDepReader } from '../../types';
+import type { FrontMatter } from '../FrontMatter/types';
+import type { SourceContext } from '../Source';
 import * as lib from './lib';
+import type { Tags, TagsOptions } from './types';
+
+export const DEFAULT_TAGS_OPTIONS: TagsOptions = {
+  relDir: 'tags',
+  directoryIndexFileBase: 'index',
+  directoryIndexLayout: 'tagsIndex.hbs',
+  tagLayout: 'tag.hbs',
+  generatePages: true,
+};
 
 // --------------------------------------------------------------------------
+export type TagsContext<IF extends FileSetItem> = {
+  readonly tags: Tags<FrontMatter<IF>>;
+};
+
 export const tags =
-  <IF extends FileSetItem, OF extends FileSetItem, R>() =>
-  (next: FileSetMapping<IF, OF, R>): FileSetMapping<IF, OF, R | FsDepMetadata> =>
-  (fileSet: FileSet<IF>) => {
+  <IF extends FileSetItem, OF extends FileSetItem, R, C extends SourceContext>(
+    options: Partial<TagsOptions> = DEFAULT_TAGS_OPTIONS
+  ) =>
+  (
+    next: FileSetMapping<FileSetItem | IF, OF, R>
+  ): FileSetMapping<
+    FileSetItem | IF,
+    OF,
+    FsDepReader | Exclude<R, FsDepContext<C & TagsContext<FileSetItem | IF>>> | FsDepContext<C>
+  > =>
+  (fileSet: FileSet<FileSetItem | IF>) => {
+    const safeOptions = { ...DEFAULT_TAGS_OPTIONS, ...options };
+
     return P.pipe(
       P.Effect.Do,
-      P.Effect.bind('fsDepMetadata', () => FsDepMetadata),
+      P.Effect.bind('fsDepContext', () => FsDepContext<C>()),
+      P.Effect.bind('fsDepReader', () => FsDepReader),
       P.Effect.bind('tags', () => lib.createTags(fileSet)),
-      P.Effect.flatMap(({ fsDepMetadata, tags }) =>
+      P.Effect.bind('updatedFileSet', ({ fsDepContext, fsDepReader, tags }) =>
+        lib.createTagsPages(safeOptions, fsDepContext, fsDepReader.tinyFs, tags, fileSet)
+      ),
+      P.Effect.flatMap(({ fsDepContext, tags, updatedFileSet }) =>
         P.pipe(
-          fileSet,
+          updatedFileSet,
           next,
           P.Effect.provideService(
-            FsDepMetadata,
-            FsDepMetadata.of({
-              metadata: {
-                ...fsDepMetadata.metadata,
-                tags,
-              },
+            FsDepContext<C & TagsContext<FileSetItem | IF>>(),
+            FsDepContext<C & TagsContext<FileSetItem | IF>>().of({
+              ...fsDepContext,
+              tags,
             })
           )
         )
