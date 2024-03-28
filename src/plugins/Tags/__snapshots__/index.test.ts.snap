@@ -221,7 +221,6 @@ exports[`plugins Tags should return the expected value: plugin-tags-1 1`] = `
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "
-
 ",
     "fileBase": "index",
     "fileExt": ".md",

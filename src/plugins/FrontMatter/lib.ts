@@ -10,4 +10,4 @@ import type { FrontMatter } from './types';
 export const processItemFrontMatter =
   <T extends FileSetItem>(globPattern: string) =>
   (item: T): P.Effect.Effect<T | FrontMatter<T>, FuncSmithError> =>
-    micromatch.some([item.relPath], [globPattern]) ? extractFrontMatter(item) : P.Effect.succeed(item);
+    micromatch.some([item.relPath], [globPattern]) ? P.pipe(item, extractFrontMatter()) : P.Effect.succeed(item);

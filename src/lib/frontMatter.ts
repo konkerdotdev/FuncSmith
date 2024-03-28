@@ -12,19 +12,22 @@ export function isFrontMatter<T extends FileSetItem>(fileSetItem: T): fileSetIte
   return 'frontMatter' in fileSetItem && typeof fileSetItem.frontMatter === 'object';
 }
 
-export function extractFrontMatter<T extends FileSetItemFile>(
-  fileSetItem: T
-): P.Effect.Effect<FrontMatter<T>, FuncSmithError> {
-  return P.Effect.try({
-    try: () => {
-      const { content, data } = grayMatter(fileSetItemContentsToString(fileSetItem.contents));
-      return {
-        ...fileSetItem,
-        ...data,
-        frontMatter: data,
-        contents: content,
-      };
-    },
-    catch: toFuncSmithError,
-  });
-}
+export const extractFrontMatter =
+  (extraFrontMatter: Record<string, unknown> = {}) =>
+  <T extends FileSetItemFile>(fileSetItem: T): P.Effect.Effect<FrontMatter<T>, FuncSmithError> =>
+    P.Effect.try({
+      try: () => {
+        const { content, data } = grayMatter(fileSetItemContentsToString(fileSetItem.contents));
+        return {
+          ...fileSetItem,
+          ...data,
+          ...extraFrontMatter,
+          frontMatter: {
+            ...data,
+            ...extraFrontMatter,
+          },
+          contents: content,
+        };
+      },
+      catch: toFuncSmithError,
+    });

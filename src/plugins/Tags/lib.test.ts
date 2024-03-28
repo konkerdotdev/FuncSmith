@@ -1,7 +1,10 @@
 import * as P from '@konker.dev/effect-ts-prelude';
+import { MemFsTinyFileSystem } from '@konker.dev/tiny-filesystem-fp';
 
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import * as unit from './lib';
+
+const TEST_TFS = MemFsTinyFileSystem();
 
 describe('Tags', () => {
   describe('lib', () => {
@@ -46,7 +49,55 @@ describe('Tags', () => {
       });
     });
 
-    // TODO: test for createTagPage
+    describe('createTagPage', () => {
+      it('should work as expected', async () => {
+        const actual = await P.Effect.runPromise(
+          unit.createTagPage(TEST_TFS, '/tmp', 'tags', 'index', '---\nfoo: 123\n---\nINDEX-CONTENTS')
+        );
+        expect(actual).toStrictEqual({
+          _id: 'd4d18a98cfda571f501ce060407e30c789e54cd5',
+          _tag: 'File',
+          baseDir: '/tmp',
+          contents: 'INDEX-CONTENTS',
+          fileBase: 'index',
+          fileExt: '.md',
+          fileName: 'index.md',
+          foo: 123,
+          frontMatter: {
+            foo: 123,
+          },
+          link: '/tags/index.md',
+          path: '/tmp/tags/index.md',
+          relDir: 'tags',
+          relPath: 'tags/index.md',
+        });
+      });
+
+      it('should work as expected with extra frontMatter', async () => {
+        const actual = await P.Effect.runPromise(
+          unit.createTagPage(TEST_TFS, '/tmp', 'tags', 'index', '---\nfoo: 123\n---\nINDEX-CONTENTS', { bar: 456 })
+        );
+        expect(actual).toStrictEqual({
+          _id: 'd4d18a98cfda571f501ce060407e30c789e54cd5',
+          _tag: 'File',
+          baseDir: '/tmp',
+          contents: 'INDEX-CONTENTS',
+          fileBase: 'index',
+          fileExt: '.md',
+          fileName: 'index.md',
+          foo: 123,
+          bar: 456,
+          frontMatter: {
+            foo: 123,
+            bar: 456,
+          },
+          link: '/tags/index.md',
+          path: '/tmp/tags/index.md',
+          relDir: 'tags',
+          relPath: 'tags/index.md',
+        });
+      });
+    });
 
     // TODO: test for createTagsPages
   });

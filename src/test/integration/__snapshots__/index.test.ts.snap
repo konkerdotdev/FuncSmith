@@ -600,7 +600,6 @@ exports[`funcsmith integration: integration-test-1 1`] = `
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "
-
 ",
     "fileBase": "index",
     "fileExt": ".md",

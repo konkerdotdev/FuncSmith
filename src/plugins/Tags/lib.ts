@@ -77,12 +77,13 @@ export function createTagPage(
   sourcePath: string,
   dirPath: string,
   fileBase: string,
-  content: string
+  contents: string,
+  extraFrontMatter: Record<string, unknown> = {}
 ): P.Effect.Effect<FrontMatter<FileSetItem>, FuncSmithError> {
   return P.pipe(
     tfs.joinPath(sourcePath, dirPath, `${fileBase}.md`),
-    P.Effect.flatMap((path) => createFileSetItemFile(tfs, sourcePath, path, content)),
-    P.Effect.flatMap(extractFrontMatter),
+    P.Effect.flatMap((path) => createFileSetItemFile(tfs, sourcePath, path, contents)),
+    P.Effect.flatMap(extractFrontMatter(extraFrontMatter)),
     P.Effect.mapError(toFuncSmithError)
   );
 }
@@ -134,12 +135,21 @@ export function createTagsPages<IF extends FileSetItem>(
       )
     ),
     P.Effect.bind('tagsIndexPage', ({ tagsIndexPageContent }) =>
-      createTagPage(tfs, source.fullSourcePath, options.relDir, options.directoryIndexFileBase, tagsIndexPageContent)
+      createTagPage(
+        tfs,
+        source.fullSourcePath,
+        options.relDir,
+        options.fileBaseTagsIndex,
+        tagsIndexPageContent,
+        options.extraFrontMatterTagsIndex
+      )
     ),
     P.Effect.bind('tagPages', ({ tagPagesContentMap }) =>
       P.pipe(
         Object.entries(tagPagesContentMap),
-        P.Array.map(([tag, content]) => createTagPage(tfs, source.fullSourcePath, options.relDir, tag, content)),
+        P.Array.map(([tag, content]) =>
+          createTagPage(tfs, source.fullSourcePath, options.relDir, tag, content, options.extraFrontMatterTag)
+        ),
         P.Effect.all
       )
     ),

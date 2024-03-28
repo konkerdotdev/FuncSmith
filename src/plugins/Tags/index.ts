@@ -10,10 +10,12 @@ import type { Tags, TagsOptions } from './types';
 
 export const DEFAULT_TAGS_OPTIONS: TagsOptions = {
   relDir: 'tags',
-  directoryIndexFileBase: 'index',
-  directoryIndexLayout: 'tagsIndex.hbs',
-  tagLayout: 'tag.hbs',
+  fileBaseTagsIndex: 'index',
+  layoutTagsIndex: 'tagsIndex.hbs',
+  layoutTag: 'tag.hbs',
   generatePages: true,
+  extraFrontMatterTagsIndex: {},
+  extraFrontMatterTag: {},
 };
 
 // --------------------------------------------------------------------------
