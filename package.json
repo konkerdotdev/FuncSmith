@@ -1,6 +1,6 @@
 {
   "name": "@konker.dev/funcsmith",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "author": "Konrad Markus <mail@konker.dev>",
   "description": "Functional file processor based on the ideas of Metalsmith",
   "license": "ISC",
