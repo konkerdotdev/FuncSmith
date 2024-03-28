@@ -15,7 +15,7 @@ export const DEFAULT_NAV_OPTIONS: NavOptions = {
 
 // --------------------------------------------------------------------------
 export type NavContext<IF extends FileSetItem> = {
-  readonly nav: FileSet<NavItem<FrontMatter<IF>>>;
+  readonly navIndex: FileSet<NavItem<FrontMatter<IF>>>;
 };
 
 export const nav =
@@ -40,7 +40,7 @@ export const nav =
             FsDepContext<C & NavContext<IF>>(),
             FsDepContext<C & NavContext<IF>>().of({
               ...fsDepContext,
-              nav,
+              navIndex: nav,
             })
           )
         )

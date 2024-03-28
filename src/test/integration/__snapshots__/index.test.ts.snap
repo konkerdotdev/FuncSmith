@@ -977,7 +977,7 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
     "siteName": "My Static Site & Blog",
     "siteUrl": "https://example.com/",
   },
-  "nav": [
+  "navIndex": [
     {
       "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
       "_tag": "File",
