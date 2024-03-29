@@ -1,115 +1,30 @@
+/* eslint-disable fp/no-mutation,@typescript-eslint/ban-ts-comment */
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { FileSetItemType } from '../../lib/fileSet';
+import type { IdRef } from '../../lib/fileSet/idRefs';
+import { ID_REF } from '../../lib/fileSet/idRefs';
 import type { CollectionItem } from '../../plugins/Collections/types';
 import type { FrontMatter } from '../../plugins/FrontMatter/types';
 
-export const TEST_COLLECTIONS_FIXTURES_DOCS_1: FileSet<
-  CollectionItem<FrontMatter<FileSetItem & Record<string, unknown>>>
-> = [
-  {
-    _id: '0000000000001111111111112222222222220031',
-    _tag: FileSetItemType.File,
-    baseDir: '/tmp/foo',
-    collection: {
-      name: 'docs',
-      len: 3,
-      index: expect.objectContaining({
-        link: '/docs/index.doc',
-        title: 'DOCS-INDEX',
-      }),
-      next: expect.objectContaining({
-        link: '/docs/d2.doc',
-        title: 'D2',
-      }),
-    },
-    contents: 'd1 content',
-    date: '2024-11-01',
-    fileBase: 'd1',
-    fileExt: '.doc',
-    fileName: 'd1.doc',
-    frontMatter: {
-      date: '2024-11-01',
-      layout: 'foo.hbs',
-      title: 'D1',
-    },
-    layout: 'foo.hbs',
-    path: '/tmp/foo/docs/d1.doc',
-    relDir: 'docs',
-    relPath: 'docs/d1.doc',
-    link: '/docs/d1.doc',
-    title: 'D1',
-  },
-  {
-    _id: '0000000000001111111111112222222222220032',
-    _tag: FileSetItemType.File,
-    baseDir: '/tmp/foo',
-    collection: {
-      name: 'docs',
-      len: 3,
-      index: expect.objectContaining({
-        link: '/docs/index.doc',
-        title: 'DOCS-INDEX',
-      }),
-      previous: expect.objectContaining({
-        link: '/docs/d1.doc',
-        title: 'D1',
-      }),
-      next: expect.objectContaining({
-        link: '/docs/d3.doc',
-        title: 'D3',
-      }),
-    },
-    contents: 'd2 content',
-    date: '2024-11-02',
-    fileBase: 'd2',
-    fileExt: '.doc',
-    fileName: 'd2.doc',
-    frontMatter: {
-      date: '2024-11-02',
-      layout: 'bar.hbs',
-      title: 'D2',
-    },
-    layout: 'bar.hbs',
-    path: '/tmp/foo/docs/d2.doc',
-    relDir: 'docs',
-    relPath: 'docs/d2.doc',
-    link: '/docs/d2.doc',
-    title: 'D2',
-  },
-  {
-    _id: '0000000000001111111111112222222222220033',
-    _tag: FileSetItemType.File,
-    baseDir: '/tmp/foo',
-    collection: {
-      name: 'docs',
-      len: 3,
-      index: expect.objectContaining({
-        link: '/docs/index.doc',
-        title: 'DOCS-INDEX',
-      }),
-      previous: expect.objectContaining({
-        link: '/docs/d2.doc',
-        title: 'D2',
-      }),
-    },
-    contents: 'd3 content',
-    date: '2024-11-03',
-    fileBase: 'd3',
-    fileExt: '.doc',
-    fileName: 'd3.doc',
-    frontMatter: {
-      date: '2024-11-03',
-      title: 'D3',
-    },
-    path: '/tmp/foo/docs/d3.doc',
-    relDir: 'docs',
-    relPath: 'docs/d3.doc',
-    link: '/docs/d3.doc',
-    title: 'D3',
-  },
+export const TEST_COLLECTIONS_FIXTURES_INDEX_DOCS_1: IdRef = {
+  _tag: ID_REF,
+  ref: '0000000000001111111111112222222222220030',
+};
+
+export const TEST_COLLECTIONS_FIXTURES_COLLECTION_DOCS_1: ReadonlyArray<IdRef> = [
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220031' },
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220032' },
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220033' },
 ];
 
-export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
+export const TEST_COLLECTIONS_FIXTURES_COLLECTION_POSTS_1: ReadonlyArray<IdRef> = [
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220021' },
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220022' },
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220023' },
+  { _tag: ID_REF, ref: '0000000000001111111111112222222222220024' },
+];
+
+export const TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1: FileSet<
   CollectionItem<FrontMatter<FileSetItem & Record<string, unknown>>>
 > = [
   {
@@ -119,10 +34,10 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
     collection: {
       name: 'posts',
       len: 4,
-      next: expect.objectContaining({
-        link: '/posts/p2.md',
-        title: 'P2',
-      }),
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220022',
+      },
     },
     contents: 'p1 content',
     date: '2024-01-01',
@@ -153,14 +68,14 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
     collection: {
       name: 'posts',
       len: 4,
-      next: expect.objectContaining({
-        link: '/posts/p3.md',
-        title: 'P3',
-      }),
-      previous: expect.objectContaining({
-        link: '/posts/p1.md',
-        title: 'P1',
-      }),
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220023',
+      },
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220021',
+      },
     },
     contents: 'p2 content',
     date: '2024-02-02',
@@ -188,14 +103,14 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
     collection: {
       name: 'posts',
       len: 4,
-      next: expect.objectContaining({
-        link: '/posts/p4.md',
-        title: 'P4',
-      }),
-      previous: expect.objectContaining({
-        link: '/posts/p2.md',
-        title: 'P2',
-      }),
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220024',
+      },
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220022',
+      },
     },
     contents: 'p3 content',
     date: '2024-03-03',
@@ -219,10 +134,10 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
     collection: {
       name: 'posts',
       len: 4,
-      previous: expect.objectContaining({
-        link: '/posts/p3.md',
-        title: 'P3',
-      }),
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220023s',
+      },
     },
     contents: 'p4 content',
     date: '2024-04-04',
@@ -240,3 +155,21 @@ export const TEST_COLLECTIONS_FIXTURES_POSTS_1: FileSet<
     title: 'P4',
   },
 ];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[0]!.collection.next =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[1];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[1]!.collection.next =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[2];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[1]!.collection.previous =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[0];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[2]!.collection.next =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[3];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[2]!.collection.previous =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[1];
+// @ts-expect-error
+TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[3]!.collection.previous =
+  TEST_COLLECTIONS_FIXTURES_FILE_SET_RESOLVED_POSTS_1[2];

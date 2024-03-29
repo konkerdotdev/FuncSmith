@@ -1,5 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
+import { idRefCreate } from '../../lib/fileSet/idRefs';
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import { DEFAULT_NAV_OPTIONS } from './index';
 import * as unit from './lib';
@@ -37,8 +38,8 @@ describe('Nav', () => {
           unit.createNav(DEFAULT_NAV_OPTIONS, [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1])
         );
         expect(actual).toStrictEqual([
-          { ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[1]!, nav: true },
-          { ...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5]!, nav: true },
+          idRefCreate('0000000000001111111111112222222222220021'),
+          idRefCreate('0000000000001111111111112222222222220030'),
         ]);
       });
     });

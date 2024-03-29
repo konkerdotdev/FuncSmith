@@ -10,6 +10,7 @@ import type { FuncSmithError } from '../../error';
 import { toFuncSmithError } from '../../error';
 import type { GeneralError } from '../utils';
 import { hashHex } from '../utils';
+import { ID_PROP } from './idRefs';
 import type { FileSetItem, FileSetItemFile } from './index';
 import { FileSetItemType } from './index';
 
@@ -121,7 +122,7 @@ export const toFileSetItemFile =
       P.Effect.bind('pathHash', () => hashHex(i.path)),
       P.Effect.map(({ link, pathHash, relDir }) => ({
         _tag: FileSetItemType.File,
-        _id: pathHash,
+        [ID_PROP]: pathHash,
         path: i.path,
         baseDir: sourcePath,
         relPath,

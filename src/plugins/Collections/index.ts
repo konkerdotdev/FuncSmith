@@ -13,8 +13,8 @@ export const DEFAULT_COLLECTION_OPTIONS: CollectionOptions = {
   reverse: false,
 } as const;
 
-export type CollectionsContext<IF extends FileSetItem> = {
-  readonly collections: Record<string, Collection<IF>>;
+export type CollectionsContext = {
+  readonly collections: Record<string, Collection>;
 };
 
 // --------------------------------------------------------------------------
@@ -39,8 +39,8 @@ export const collections =
           annotatedItems,
           next,
           P.Effect.provideService(
-            FsDepContext<C & CollectionsContext<IF>>(),
-            FsDepContext<C & CollectionsContext<IF>>().of({
+            FsDepContext<C & CollectionsContext>(),
+            FsDepContext<C & CollectionsContext>().of({
               ...fsDepContext,
               collections,
             })

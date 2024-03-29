@@ -1,4 +1,5 @@
-import type { FileSet, FileSetItem } from '../../lib/fileSet';
+import type { FileSetItem } from '../../lib/fileSet';
+import type { IdRef } from '../../lib/fileSet/idRefs';
 import type { FrontMatter } from '../FrontMatter/types';
 
 export type TagsOptions = {
@@ -28,7 +29,7 @@ export type TagsItem<IF extends FileSetItem> = IF & {
   frontMatter: FrontMatter<IF>['frontMatter'] & { tags: ReadonlyArray<string> };
 };
 
-export type Tags<IF extends FileSetItem> = {
+export type TagsData = {
   readonly keys: ReadonlyArray<string>;
-  readonly index: Record<string, FileSet<FrontMatter<IF>>>;
+  readonly index: Record<string, ReadonlyArray<IdRef>>;
 };

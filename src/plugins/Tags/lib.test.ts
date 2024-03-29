@@ -1,6 +1,7 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import { MemFsTinyFileSystem } from '@konker.dev/tiny-filesystem-fp';
 
+import { idRefCreate } from '../../lib/fileSet/idRefs';
 import * as fixturesFsFm from '../../test/fixtures/fileset-frontmatter-1';
 import * as unit from './lib';
 
@@ -30,7 +31,7 @@ describe('Tags', () => {
     describe('createTags', () => {
       it('should work as expected', () => {
         const actual = P.Effect.runSync(
-          unit.createTags([
+          unit.createTagsData([
             fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[1]!,
             fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5]!,
           ])
@@ -39,11 +40,11 @@ describe('Tags', () => {
           keys: ['tag1', 'tag2', 'tag3'],
           index: {
             tag1: [
-              expect.objectContaining({ relPath: 'posts/p1.md' }),
-              expect.objectContaining({ relPath: 'docs/index.doc' }),
+              idRefCreate('0000000000001111111111112222222222220021'),
+              idRefCreate('0000000000001111111111112222222222220030'),
             ],
-            tag2: [expect.objectContaining({ relPath: 'posts/p1.md' })],
-            tag3: [expect.objectContaining({ relPath: 'docs/index.doc' })],
+            tag2: [idRefCreate('0000000000001111111111112222222222220021')],
+            tag3: [idRefCreate('0000000000001111111111112222222222220030')],
           },
         });
       });

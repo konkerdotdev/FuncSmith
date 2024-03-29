@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.63.2
     version: 0.63.2(effect@2.4.1)(fast-check@3.15.1)
   '@konker.dev/effect-ts-prelude':
-    specifier: ^0.0.14
-    version: 0.0.14(@effect/schema@0.63.2)(effect@2.4.1)
+    specifier: ^0.0.15
+    version: 0.0.15(@effect/schema@0.63.2)(effect@2.4.1)
   '@konker.dev/tiny-error-fp':
     specifier: ^0.0.1
     version: 0.0.1
@@ -32,6 +32,9 @@ dependencies:
   handlebars:
     specifier: ^4.7.8
     version: 4.7.8
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   markdown-it:
     specifier: ^14.1.0
     version: 14.1.0
@@ -52,6 +55,9 @@ devDependencies:
   '@types/jest':
     specifier: ^29.5.11
     version: 29.5.11
+  '@types/lodash':
+    specifier: ^4.17.0
+    version: 4.17.0
   '@types/markdown-it':
     specifier: ^13.0.7
     version: 13.0.7
@@ -1532,8 +1538,8 @@ packages:
       effect: 2.4.1
     dev: false
 
-  /@konker.dev/effect-ts-prelude@0.0.14(@effect/schema@0.63.2)(effect@2.4.1):
-    resolution: {integrity: sha512-/8f9M07UhIyegvjHYO3AOl9tssL4F/YV+/Y8Pr30XpYQDsGsI8h/5xfiRvfffce1rju92Hrr2EXM1l4nu6Yc/g==}
+  /@konker.dev/effect-ts-prelude@0.0.15(@effect/schema@0.63.2)(effect@2.4.1):
+    resolution: {integrity: sha512-mru2NOBjhiFoV5J6W83hs0TxEv2Oem3b14YWv9Dkk8LQkDfXP8tcHx4cYcmJ8ybNCjNnEadp40OWli23IxxJIQ==}
     peerDependencies:
       '@effect/schema': ^0.63.2
       effect: ^2.4.1
@@ -2314,6 +2320,10 @@ packages:
 
   /@types/linkify-it@3.0.5:
     resolution: {integrity: sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==}
+    dev: true
+
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
     dev: true
 
   /@types/markdown-it@13.0.7:
@@ -6157,7 +6167,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}

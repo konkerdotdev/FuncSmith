@@ -1,6 +1,7 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FrontMatter } from '../../plugins/FrontMatter/types';
+import type { ID_PROP } from './idRefs';
 
 export enum FileSetItemType {
   File = 'File',
@@ -8,7 +9,7 @@ export enum FileSetItemType {
 
 export type FileSetItemFile<T = ArrayBuffer | string> = {
   readonly _tag: FileSetItemType.File;
-  readonly _id: string;
+  readonly [ID_PROP]: string;
   readonly path: string;
   readonly baseDir: string;
   readonly relPath: string;
