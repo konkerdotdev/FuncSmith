@@ -6,7 +6,7 @@ import * as unit from './lib';
 
 describe('frontMatter', () => {
   describe('processItemFrontMatter', () => {
-    it('should work as expected K', () => {
+    it('should work as expected', () => {
       const item = fixturesFs.TEST_FILE_SET_1[9]!;
       const actual = P.Effect.runSync(unit.processItemFrontMatter('**/*.md')(item));
       expect(actual).toStrictEqual({
