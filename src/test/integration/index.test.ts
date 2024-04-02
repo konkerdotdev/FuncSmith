@@ -19,7 +19,6 @@ describe('funcsmith', () => {
         env = fsDepEnv;
         context = fsDepContext;
       }),
-      F.filter(),
       F.layouts({
         templateEngine: 'handlebars',
         layoutsPath: '/tmp/layouts',
@@ -35,6 +34,8 @@ describe('funcsmith', () => {
         },
         globPattern: '**/*.html',
       }),
+      F.inlineIdRefs(),
+      F.filter(),
       F.nav(),
       F.tags(),
       F.collections({
@@ -53,7 +54,7 @@ describe('funcsmith', () => {
       F.drafts(),
       F.frontMatter(),
       F.reader(),
-      F.cleaner(),
+      // F.cleaner(),
       F.metadata({
         siteName: 'My Static Site & Blog',
         siteUrl: 'https://example.com/',

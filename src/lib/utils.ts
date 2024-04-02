@@ -21,4 +21,20 @@ export function hashHex(s: string): P.Effect.Effect<string, GeneralError> {
   );
 }
 
+// --------------------------------------------------------------------------
+export function arrayMapInPlace<A, B>(
+  aa: ReadonlyArray<A>,
+  fn: (a: A, i: number, arr: ReadonlyArray<A | B>) => B
+): ReadonlyArray<A | B> {
+  return aa.reduce(
+    (acc: ReadonlyArray<A | B>, val: A, i: number, arr: ReadonlyArray<A>) =>
+      acc
+        .slice(0, i)
+        .concat(fn(val, i, acc))
+        .concat(arr.slice(i + 1)),
+    aa as ReadonlyArray<A>
+  );
+}
+
+// --------------------------------------------------------------------------S
 export { arrayBufferToString, stringToUint8Array } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';

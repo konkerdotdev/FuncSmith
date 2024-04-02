@@ -102,7 +102,7 @@ describe('Collections', () => {
         ]);
         expect(actual).toStrictEqual({
           name: 'posts',
-          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_POSTS_1,
           collectionIndexItem: undefined,
         });
       });
@@ -113,8 +113,8 @@ describe('Collections', () => {
         ]);
         expect(actual).toStrictEqual({
           name: 'docs',
-          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
-          collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+          items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_DOCS_1,
+          collectionIndexItem: fixturesCo.TEST_COLLECTIONS_FIXTURES_INDEX_DOCS_1,
         });
       });
     });
@@ -133,13 +133,13 @@ describe('Collections', () => {
         expect(actual).toStrictEqual({
           posts: {
             name: 'posts',
-            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_POSTS_1,
             collectionIndexItem: undefined,
           },
           docs: {
             name: 'docs',
-            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
-            collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_DOCS_1,
+            collectionIndexItem: fixturesCo.TEST_COLLECTIONS_FIXTURES_INDEX_DOCS_1,
           },
         });
       });
@@ -148,7 +148,11 @@ describe('Collections', () => {
     describe('annotateCollectionItems', () => {
       it('should work as expected', () => {
         const actual = unit.annotateCollectionItems(
-          { name: 'posts', items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1, collectionIndexItem: undefined },
+          {
+            name: 'posts',
+            items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_POSTS_1,
+            collectionIndexItem: undefined,
+          },
           [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]
         );
         expect(actual).toStrictEqual(fixturesFsCo.TEST_FILE_SET_COLLECTIONS_POSTS_1);
@@ -162,13 +166,13 @@ describe('Collections', () => {
             {
               posts: {
                 name: 'posts',
-                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_POSTS_1,
+                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_POSTS_1,
                 collectionIndexItem: undefined,
               },
               docs: {
                 name: 'docs',
-                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_DOCS_1,
-                collectionIndexItem: fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1[5],
+                items: fixturesCo.TEST_COLLECTIONS_FIXTURES_COLLECTION_DOCS_1,
+                collectionIndexItem: fixturesCo.TEST_COLLECTIONS_FIXTURES_INDEX_DOCS_1,
               },
             },
             [...fixturesFsFm.TEST_FILE_SET_FRONT_MATTER_1]

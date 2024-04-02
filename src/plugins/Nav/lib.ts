@@ -2,9 +2,11 @@ import * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
+import type { IdRef } from '../../lib/fileSet/idRefs';
+import { idRefCreateFromFileSetItem } from '../../lib/fileSet/idRefs';
 import { isFrontMatter } from '../../lib/frontMatter';
 import type { FrontMatter } from '../FrontMatter/types';
-import type { NavItem, NavOptions } from './types';
+import type { NavOptions } from './types';
 
 // --------------------------------------------------------------------------
 export function isNavItem<T extends FileSetItem>(options: NavOptions) {
@@ -30,11 +32,12 @@ export const navSorter =
 export function createNav<IF extends FileSetItem>(
   options: NavOptions,
   fileSet: FileSet<IF | FrontMatter<IF>>
-): P.Effect.Effect<FileSet<NavItem<FrontMatter<IF>>>, FuncSmithError> {
+): P.Effect.Effect<ReadonlyArray<IdRef>, FuncSmithError> {
   return P.pipe(
     // eslint-disable-next-line fp/no-mutating-methods
     fileSet.filter(isNavItem(options)).sort(navSorter(options)),
     P.Array.map((i) => ({ ...i, nav: true })),
+    P.Array.map(idRefCreateFromFileSetItem),
     P.Effect.succeed
   );
 }

@@ -6,6 +6,7 @@ export * from './Env';
 export * from './Filter';
 export * from './FrontMatter';
 export * from './Identity';
+export * from './InlineIdRefs';
 export * from './Layouts';
 export * from './Markdown';
 export * from './Metadata';

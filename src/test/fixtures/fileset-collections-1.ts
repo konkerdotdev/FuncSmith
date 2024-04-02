@@ -1,6 +1,9 @@
+/* eslint-disable fp/no-mutation,@typescript-eslint/ban-ts-comment */
 import { stringToUint8Array } from '@konker.dev/tiny-filesystem-fp/dist/lib/array';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import { FileSetItemType } from '../../lib/fileSet';
+import { ID_REF } from '../../lib/fileSet/idRefs';
 
 export const TEST_FILE_SET_COLLECTIONS_1 = [
   {
@@ -232,9 +235,10 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     collection: {
       name: 'posts',
       len: 4,
-      next: expect.objectContaining({
-        relPath: 'posts/p2.md',
-      }),
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220022',
+      },
     },
     contents: 'p1 content',
     date: '2024-01-01',
@@ -265,12 +269,14 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     collection: {
       name: 'posts',
       len: 4,
-      previous: expect.objectContaining({
-        relPath: 'posts/p1.md',
-      }),
-      next: expect.objectContaining({
-        relPath: 'posts/p3.md',
-      }),
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220021',
+      },
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220023',
+      },
     },
     contents: 'p2 content',
     date: '2024-02-02',
@@ -298,12 +304,14 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     collection: {
       name: 'posts',
       len: 4,
-      previous: expect.objectContaining({
-        relPath: 'posts/p2.md',
-      }),
-      next: expect.objectContaining({
-        relPath: 'posts/p4.md',
-      }),
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220022',
+      },
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220024',
+      },
     },
     contents: 'p3 content',
     date: '2024-03-03',
@@ -327,9 +335,10 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     collection: {
       name: 'posts',
       len: 4,
-      previous: expect.objectContaining({
-        relPath: 'posts/p3.md',
-      }),
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220023',
+      },
     },
     contents: 'p4 content',
     date: '2024-04-04',
@@ -347,7 +356,7 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_1 = [
     title: 'P4',
   },
   ...TEST_FILE_SET_COLLECTIONS_1.slice(5),
-];
+] as const;
 
 export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
   ...TEST_FILE_SET_COLLECTIONS_1.slice(0, 5),
@@ -383,12 +392,14 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     collection: {
       name: 'docs',
       len: 3,
-      index: expect.objectContaining({
-        relPath: 'docs/index.doc',
-      }),
-      next: expect.objectContaining({
-        relPath: 'docs/d2.doc',
-      }),
+      index: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220030',
+      },
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220032',
+      },
     },
     contents: 'd1 content',
     date: '2024-11-01',
@@ -414,15 +425,18 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     collection: {
       name: 'docs',
       len: 3,
-      index: expect.objectContaining({
-        relPath: 'docs/index.doc',
-      }),
-      previous: expect.objectContaining({
-        relPath: 'docs/d1.doc',
-      }),
-      next: expect.objectContaining({
-        relPath: 'docs/d3.doc',
-      }),
+      index: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220030',
+      },
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220031',
+      },
+      next: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220033',
+      },
     },
     contents: 'd2 content',
     date: '2024-11-02',
@@ -448,12 +462,14 @@ export const TEST_FILE_SET_COLLECTIONS_DOCS_1 = [
     collection: {
       name: 'docs',
       len: 3,
-      index: expect.objectContaining({
-        relPath: 'docs/index.doc',
-      }),
-      previous: expect.objectContaining({
-        relPath: 'docs/d2.doc',
-      }),
+      index: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220030',
+      },
+      previous: {
+        _tag: ID_REF,
+        ref: '0000000000001111111111112222222222220032',
+      },
     },
     contents: 'd3 content',
     date: '2024-11-03',
@@ -496,3 +512,17 @@ export const TEST_FILE_SET_COLLECTIONS_POSTS_DOCS_1 = [
   ...TEST_FILE_SET_COLLECTIONS_POSTS_1.slice(0, 5),
   ...TEST_FILE_SET_COLLECTIONS_DOCS_1.slice(5),
 ];
+
+export const TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1 = _cloneDeep(TEST_FILE_SET_COLLECTIONS_POSTS_1);
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[1]!.collection.next = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[2];
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[2]!.collection.previous = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[1];
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[2]!.collection.next = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[3];
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[3]!.collection.previous = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[2];
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[3]!.collection.next = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[4];
+// @ts-expect-error
+TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[4]!.collection.previous = TEST_FILE_SET_COLLECTIONS_RESOLVED_POSTS_1[3];

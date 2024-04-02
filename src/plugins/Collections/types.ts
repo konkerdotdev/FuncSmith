@@ -1,13 +1,13 @@
-import type { FileSet, FileSetItem } from '../../lib/fileSet';
-import type { FrontMatter } from '../FrontMatter/types';
+import type { FileSetItem } from '../../lib/fileSet';
+import type { IdRef } from '../../lib/fileSet/idRefs';
 
 export type CollectionItem<T extends FileSetItem> = T & {
   readonly collection: {
     readonly len: number;
     readonly name: string;
-    readonly index?: FrontMatter<T>;
-    readonly previous?: FrontMatter<T>;
-    readonly next?: FrontMatter<T>;
+    readonly index?: IdRef;
+    readonly previous?: IdRef;
+    readonly next?: IdRef;
   };
 };
 
@@ -17,8 +17,8 @@ export type CollectionOptions = {
   readonly reverse: boolean;
 };
 
-export type Collection<T extends FileSetItem> = {
+export type Collection = {
   readonly name: string;
-  readonly collectionIndexItem: FrontMatter<T> | undefined;
-  readonly items: FileSet<CollectionItem<FrontMatter<T>>>;
+  readonly collectionIndexItem: IdRef | undefined;
+  readonly items: ReadonlyArray<IdRef>;
 };

@@ -178,6 +178,11 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "previous": [Circular],
+            },
             "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
@@ -215,6 +220,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": [Circular],
             "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
@@ -316,6 +322,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": [Circular],
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
@@ -382,6 +389,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": [Circular],
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
@@ -473,6 +481,7 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": [Circular],
             "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
@@ -510,6 +519,11 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
             "_tag": "File",
             "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "next": [Circular],
+            },
             "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
@@ -744,6 +758,53 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "next": {
+                  "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
+                  "_tag": "File",
+                  "baseDir": "/tmp/foo",
+                  "collection": {
+                    "len": 3,
+                    "name": "posts",
+                    "previous": [Circular],
+                  },
+                  "contents": "<h1>P3</h1>
+<p>p3 content</p>
+",
+                  "date": 2024-01-03T00:00:00.000Z,
+                  "draft": false,
+                  "fileBase": "index",
+                  "fileExt": ".html",
+                  "fileName": "index.html",
+                  "frontMatter": {
+                    "date": 2024-01-03T00:00:00.000Z,
+                    "draft": false,
+                    "layout": "post.hbs",
+                    "nav": true,
+                    "navOrder": 1,
+                    "tags": [
+                      "tag1",
+                      "tag3",
+                    ],
+                    "title": "P3",
+                  },
+                  "layout": "post.hbs",
+                  "link": "/posts/p3",
+                  "nav": true,
+                  "navOrder": 1,
+                  "path": "/tmp/foo/posts/p3/index.html",
+                  "relDir": "posts/p3",
+                  "relPath": "posts/p3/index.html",
+                  "tags": [
+                    "tag1",
+                    "tag3",
+                  ],
+                  "title": "P3",
+                },
+                "previous": [Circular],
+              },
               "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
@@ -808,6 +869,11 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "previous": [Circular],
+              },
               "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
@@ -845,6 +911,11 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "next": [Circular],
+              },
               "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
@@ -909,6 +980,51 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "next": [Circular],
+                "previous": {
+                  "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
+                  "_tag": "File",
+                  "baseDir": "/tmp/foo",
+                  "collection": {
+                    "len": 3,
+                    "name": "posts",
+                    "next": [Circular],
+                  },
+                  "contents": "<h1>Home</h1>
+<p>home content</p>
+",
+                  "date": 2023-12-31T00:00:00.000Z,
+                  "fileBase": "index",
+                  "fileExt": ".html",
+                  "fileName": "index.html",
+                  "frontMatter": {
+                    "date": 2023-12-31T00:00:00.000Z,
+                    "layout": "layout.hbs",
+                    "nav": true,
+                    "navOrder": 2,
+                    "tags": [
+                      "tag1",
+                      "tag2",
+                    ],
+                    "title": "Home",
+                  },
+                  "layout": "layout.hbs",
+                  "link": "/posts",
+                  "nav": true,
+                  "navOrder": 2,
+                  "path": "/tmp/foo/posts/index.html",
+                  "relDir": "posts",
+                  "relPath": "posts/index.html",
+                  "tags": [
+                    "tag1",
+                    "tag2",
+                  ],
+                  "title": "Home",
+                },
+              },
               "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
@@ -992,47 +1108,16 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
           "collection": {
             "len": 3,
             "name": "posts",
-            "next": {
-              "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "contents": "<h1>P3</h1>
-<p>p3 content</p>
-",
-              "date": 2024-01-03T00:00:00.000Z,
-              "draft": false,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2024-01-03T00:00:00.000Z,
-                "draft": false,
-                "layout": "post.hbs",
-                "nav": true,
-                "navOrder": 1,
-                "tags": [
-                  "tag1",
-                  "tag3",
-                ],
-                "title": "P3",
-              },
-              "layout": "post.hbs",
-              "link": "/posts/p3",
-              "nav": true,
-              "navOrder": 1,
-              "path": "/tmp/foo/posts/p3/index.html",
-              "relDir": "posts/p3",
-              "relPath": "posts/p3/index.html",
-              "tags": [
-                "tag1",
-                "tag3",
-              ],
-              "title": "P3",
-            },
+            "next": [Circular],
             "previous": {
               "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "next": [Circular],
+              },
               "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
@@ -1138,6 +1223,11 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
               "_tag": "File",
               "baseDir": "/tmp/foo",
+              "collection": {
+                "len": 3,
+                "name": "posts",
+                "previous": [Circular],
+              },
               "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
@@ -1171,41 +1261,7 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               ],
               "title": "P3",
             },
-            "previous": {
-              "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "contents": "<h1>Home</h1>
-<p>home content</p>
-",
-              "date": 2023-12-31T00:00:00.000Z,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2023-12-31T00:00:00.000Z,
-                "layout": "layout.hbs",
-                "nav": true,
-                "navOrder": 2,
-                "tags": [
-                  "tag1",
-                  "tag2",
-                ],
-                "title": "Home",
-              },
-              "layout": "layout.hbs",
-              "link": "/posts",
-              "nav": true,
-              "navOrder": 2,
-              "path": "/tmp/foo/posts/index.html",
-              "relDir": "posts",
-              "relPath": "posts/index.html",
-              "tags": [
-                "tag1",
-                "tag2",
-              ],
-              "title": "Home",
-            },
+            "previous": [Circular],
           },
           "contents": "<h1>P1</h1>
 <p>p1 content</p>
@@ -1264,583 +1320,461 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
   "rootDirPath": "/tmp",
   "sinkPath": "/tmp/www",
   "sourcePath": "/tmp/foo",
-  "tags": {
-    "index": {
-      "tag1": [
-        {
-          "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-          "_tag": "File",
-          "baseDir": "/tmp/foo",
-          "collection": {
-            "len": 3,
-            "name": "posts",
-            "next": {
-              "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "collection": {
-                "len": 3,
-                "name": "posts",
-                "next": {
-                  "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>P3</h1>
+  "tags": [
+    "tag1",
+    "tag2",
+    "tag3",
+  ],
+  "tagsIndex": {
+    "tag1": [
+      {
+        "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
+        "_tag": "File",
+        "baseDir": "/tmp/foo",
+        "collection": {
+          "len": 3,
+          "name": "posts",
+          "next": {
+            "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
+            "_tag": "File",
+            "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "next": {
+                "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
+                "_tag": "File",
+                "baseDir": "/tmp/foo",
+                "collection": {
+                  "len": 3,
+                  "name": "posts",
+                  "previous": [Circular],
+                },
+                "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
+                "date": 2024-01-03T00:00:00.000Z,
+                "draft": false,
+                "fileBase": "index",
+                "fileExt": ".html",
+                "fileName": "index.html",
+                "frontMatter": {
                   "date": 2024-01-03T00:00:00.000Z,
                   "draft": false,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2024-01-03T00:00:00.000Z,
-                    "draft": false,
-                    "layout": "post.hbs",
-                    "nav": true,
-                    "navOrder": 1,
-                    "tags": [
-                      "tag1",
-                      "tag3",
-                    ],
-                    "title": "P3",
-                  },
                   "layout": "post.hbs",
-                  "link": "/posts/p3",
                   "nav": true,
                   "navOrder": 1,
-                  "path": "/tmp/foo/posts/p3/index.html",
-                  "relDir": "posts/p3",
-                  "relPath": "posts/p3/index.html",
                   "tags": [
                     "tag1",
                     "tag3",
                   ],
                   "title": "P3",
                 },
-                "previous": {
-                  "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>Home</h1>
-<p>home content</p>
-",
-                  "date": 2023-12-31T00:00:00.000Z,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2023-12-31T00:00:00.000Z,
-                    "layout": "layout.hbs",
-                    "nav": true,
-                    "navOrder": 2,
-                    "tags": [
-                      "tag1",
-                      "tag2",
-                    ],
-                    "title": "Home",
-                  },
-                  "layout": "layout.hbs",
-                  "link": "/posts",
-                  "nav": true,
-                  "navOrder": 2,
-                  "path": "/tmp/foo/posts/index.html",
-                  "relDir": "posts",
-                  "relPath": "posts/index.html",
-                  "tags": [
-                    "tag1",
-                    "tag2",
-                  ],
-                  "title": "Home",
-                },
+                "layout": "post.hbs",
+                "link": "/posts/p3",
+                "nav": true,
+                "navOrder": 1,
+                "path": "/tmp/foo/posts/p3/index.html",
+                "relDir": "posts/p3",
+                "relPath": "posts/p3/index.html",
+                "tags": [
+                  "tag1",
+                  "tag3",
+                ],
+                "title": "P3",
               },
-              "contents": "<h1>P1</h1>
+              "previous": [Circular],
+            },
+            "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
+            "date": 2024-01-01T00:00:00.000Z,
+            "draft": false,
+            "fileBase": "index",
+            "fileExt": ".html",
+            "fileName": "index.html",
+            "frontMatter": {
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2024-01-01T00:00:00.000Z,
-                "draft": false,
-                "layout": "post.hbs",
-                "title": "P1",
-              },
               "layout": "post.hbs",
-              "link": "/posts/p1",
-              "path": "/tmp/foo/posts/p1/index.html",
-              "relDir": "posts/p1",
-              "relPath": "posts/p1/index.html",
               "title": "P1",
             },
+            "layout": "post.hbs",
+            "link": "/posts/p1",
+            "path": "/tmp/foo/posts/p1/index.html",
+            "relDir": "posts/p1",
+            "relPath": "posts/p1/index.html",
+            "title": "P1",
           },
-          "contents": "<h1>Home</h1>
+        },
+        "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
+        "date": 2023-12-31T00:00:00.000Z,
+        "fileBase": "index",
+        "fileExt": ".html",
+        "fileName": "index.html",
+        "frontMatter": {
           "date": 2023-12-31T00:00:00.000Z,
-          "fileBase": "index",
-          "fileExt": ".html",
-          "fileName": "index.html",
-          "frontMatter": {
-            "date": 2023-12-31T00:00:00.000Z,
-            "layout": "layout.hbs",
-            "nav": true,
-            "navOrder": 2,
-            "tags": [
-              "tag1",
-              "tag2",
-            ],
-            "title": "Home",
-          },
           "layout": "layout.hbs",
-          "link": "/posts",
           "nav": true,
           "navOrder": 2,
-          "path": "/tmp/foo/posts/index.html",
-          "relDir": "posts",
-          "relPath": "posts/index.html",
           "tags": [
             "tag1",
             "tag2",
           ],
           "title": "Home",
         },
-        {
-          "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-          "_tag": "File",
-          "baseDir": "/tmp/foo",
-          "collection": {
-            "len": 3,
-            "name": "posts",
-            "previous": {
-              "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "collection": {
-                "len": 3,
-                "name": "posts",
-                "next": {
-                  "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>P3</h1>
-<p>p3 content</p>
-",
-                  "date": 2024-01-03T00:00:00.000Z,
-                  "draft": false,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2024-01-03T00:00:00.000Z,
-                    "draft": false,
-                    "layout": "post.hbs",
-                    "nav": true,
-                    "navOrder": 1,
-                    "tags": [
-                      "tag1",
-                      "tag3",
-                    ],
-                    "title": "P3",
-                  },
-                  "layout": "post.hbs",
-                  "link": "/posts/p3",
-                  "nav": true,
-                  "navOrder": 1,
-                  "path": "/tmp/foo/posts/p3/index.html",
-                  "relDir": "posts/p3",
-                  "relPath": "posts/p3/index.html",
-                  "tags": [
-                    "tag1",
-                    "tag3",
-                  ],
-                  "title": "P3",
+        "layout": "layout.hbs",
+        "link": "/posts",
+        "nav": true,
+        "navOrder": 2,
+        "path": "/tmp/foo/posts/index.html",
+        "relDir": "posts",
+        "relPath": "posts/index.html",
+        "tags": [
+          "tag1",
+          "tag2",
+        ],
+        "title": "Home",
+      },
+      {
+        "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
+        "_tag": "File",
+        "baseDir": "/tmp/foo",
+        "collection": {
+          "len": 3,
+          "name": "posts",
+          "previous": {
+            "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
+            "_tag": "File",
+            "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "next": [Circular],
+              "previous": {
+                "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
+                "_tag": "File",
+                "baseDir": "/tmp/foo",
+                "collection": {
+                  "len": 3,
+                  "name": "posts",
+                  "next": [Circular],
                 },
-                "previous": {
-                  "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>Home</h1>
+                "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
+                "date": 2023-12-31T00:00:00.000Z,
+                "fileBase": "index",
+                "fileExt": ".html",
+                "fileName": "index.html",
+                "frontMatter": {
                   "date": 2023-12-31T00:00:00.000Z,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2023-12-31T00:00:00.000Z,
-                    "layout": "layout.hbs",
-                    "nav": true,
-                    "navOrder": 2,
-                    "tags": [
-                      "tag1",
-                      "tag2",
-                    ],
-                    "title": "Home",
-                  },
                   "layout": "layout.hbs",
-                  "link": "/posts",
                   "nav": true,
                   "navOrder": 2,
-                  "path": "/tmp/foo/posts/index.html",
-                  "relDir": "posts",
-                  "relPath": "posts/index.html",
                   "tags": [
                     "tag1",
                     "tag2",
                   ],
                   "title": "Home",
                 },
+                "layout": "layout.hbs",
+                "link": "/posts",
+                "nav": true,
+                "navOrder": 2,
+                "path": "/tmp/foo/posts/index.html",
+                "relDir": "posts",
+                "relPath": "posts/index.html",
+                "tags": [
+                  "tag1",
+                  "tag2",
+                ],
+                "title": "Home",
               },
-              "contents": "<h1>P1</h1>
+            },
+            "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
+            "date": 2024-01-01T00:00:00.000Z,
+            "draft": false,
+            "fileBase": "index",
+            "fileExt": ".html",
+            "fileName": "index.html",
+            "frontMatter": {
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2024-01-01T00:00:00.000Z,
-                "draft": false,
-                "layout": "post.hbs",
-                "title": "P1",
-              },
               "layout": "post.hbs",
-              "link": "/posts/p1",
-              "path": "/tmp/foo/posts/p1/index.html",
-              "relDir": "posts/p1",
-              "relPath": "posts/p1/index.html",
               "title": "P1",
             },
+            "layout": "post.hbs",
+            "link": "/posts/p1",
+            "path": "/tmp/foo/posts/p1/index.html",
+            "relDir": "posts/p1",
+            "relPath": "posts/p1/index.html",
+            "title": "P1",
           },
-          "contents": "<h1>P3</h1>
+        },
+        "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
+        "date": 2024-01-03T00:00:00.000Z,
+        "draft": false,
+        "fileBase": "index",
+        "fileExt": ".html",
+        "fileName": "index.html",
+        "frontMatter": {
           "date": 2024-01-03T00:00:00.000Z,
           "draft": false,
-          "fileBase": "index",
-          "fileExt": ".html",
-          "fileName": "index.html",
-          "frontMatter": {
-            "date": 2024-01-03T00:00:00.000Z,
-            "draft": false,
-            "layout": "post.hbs",
-            "nav": true,
-            "navOrder": 1,
-            "tags": [
-              "tag1",
-              "tag3",
-            ],
-            "title": "P3",
-          },
           "layout": "post.hbs",
-          "link": "/posts/p3",
           "nav": true,
           "navOrder": 1,
-          "path": "/tmp/foo/posts/p3/index.html",
-          "relDir": "posts/p3",
-          "relPath": "posts/p3/index.html",
           "tags": [
             "tag1",
             "tag3",
           ],
           "title": "P3",
         },
-      ],
-      "tag2": [
-        {
-          "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-          "_tag": "File",
-          "baseDir": "/tmp/foo",
-          "collection": {
-            "len": 3,
-            "name": "posts",
-            "next": {
-              "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "collection": {
-                "len": 3,
-                "name": "posts",
-                "next": {
-                  "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>P3</h1>
+        "layout": "post.hbs",
+        "link": "/posts/p3",
+        "nav": true,
+        "navOrder": 1,
+        "path": "/tmp/foo/posts/p3/index.html",
+        "relDir": "posts/p3",
+        "relPath": "posts/p3/index.html",
+        "tags": [
+          "tag1",
+          "tag3",
+        ],
+        "title": "P3",
+      },
+    ],
+    "tag2": [
+      {
+        "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
+        "_tag": "File",
+        "baseDir": "/tmp/foo",
+        "collection": {
+          "len": 3,
+          "name": "posts",
+          "next": {
+            "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
+            "_tag": "File",
+            "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "next": {
+                "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
+                "_tag": "File",
+                "baseDir": "/tmp/foo",
+                "collection": {
+                  "len": 3,
+                  "name": "posts",
+                  "previous": [Circular],
+                },
+                "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
+                "date": 2024-01-03T00:00:00.000Z,
+                "draft": false,
+                "fileBase": "index",
+                "fileExt": ".html",
+                "fileName": "index.html",
+                "frontMatter": {
                   "date": 2024-01-03T00:00:00.000Z,
                   "draft": false,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2024-01-03T00:00:00.000Z,
-                    "draft": false,
-                    "layout": "post.hbs",
-                    "nav": true,
-                    "navOrder": 1,
-                    "tags": [
-                      "tag1",
-                      "tag3",
-                    ],
-                    "title": "P3",
-                  },
                   "layout": "post.hbs",
-                  "link": "/posts/p3",
                   "nav": true,
                   "navOrder": 1,
-                  "path": "/tmp/foo/posts/p3/index.html",
-                  "relDir": "posts/p3",
-                  "relPath": "posts/p3/index.html",
                   "tags": [
                     "tag1",
                     "tag3",
                   ],
                   "title": "P3",
                 },
-                "previous": {
-                  "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>Home</h1>
-<p>home content</p>
-",
-                  "date": 2023-12-31T00:00:00.000Z,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2023-12-31T00:00:00.000Z,
-                    "layout": "layout.hbs",
-                    "nav": true,
-                    "navOrder": 2,
-                    "tags": [
-                      "tag1",
-                      "tag2",
-                    ],
-                    "title": "Home",
-                  },
-                  "layout": "layout.hbs",
-                  "link": "/posts",
-                  "nav": true,
-                  "navOrder": 2,
-                  "path": "/tmp/foo/posts/index.html",
-                  "relDir": "posts",
-                  "relPath": "posts/index.html",
-                  "tags": [
-                    "tag1",
-                    "tag2",
-                  ],
-                  "title": "Home",
-                },
+                "layout": "post.hbs",
+                "link": "/posts/p3",
+                "nav": true,
+                "navOrder": 1,
+                "path": "/tmp/foo/posts/p3/index.html",
+                "relDir": "posts/p3",
+                "relPath": "posts/p3/index.html",
+                "tags": [
+                  "tag1",
+                  "tag3",
+                ],
+                "title": "P3",
               },
-              "contents": "<h1>P1</h1>
+              "previous": [Circular],
+            },
+            "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
+            "date": 2024-01-01T00:00:00.000Z,
+            "draft": false,
+            "fileBase": "index",
+            "fileExt": ".html",
+            "fileName": "index.html",
+            "frontMatter": {
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2024-01-01T00:00:00.000Z,
-                "draft": false,
-                "layout": "post.hbs",
-                "title": "P1",
-              },
               "layout": "post.hbs",
-              "link": "/posts/p1",
-              "path": "/tmp/foo/posts/p1/index.html",
-              "relDir": "posts/p1",
-              "relPath": "posts/p1/index.html",
               "title": "P1",
             },
+            "layout": "post.hbs",
+            "link": "/posts/p1",
+            "path": "/tmp/foo/posts/p1/index.html",
+            "relDir": "posts/p1",
+            "relPath": "posts/p1/index.html",
+            "title": "P1",
           },
-          "contents": "<h1>Home</h1>
+        },
+        "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
+        "date": 2023-12-31T00:00:00.000Z,
+        "fileBase": "index",
+        "fileExt": ".html",
+        "fileName": "index.html",
+        "frontMatter": {
           "date": 2023-12-31T00:00:00.000Z,
-          "fileBase": "index",
-          "fileExt": ".html",
-          "fileName": "index.html",
-          "frontMatter": {
-            "date": 2023-12-31T00:00:00.000Z,
-            "layout": "layout.hbs",
-            "nav": true,
-            "navOrder": 2,
-            "tags": [
-              "tag1",
-              "tag2",
-            ],
-            "title": "Home",
-          },
           "layout": "layout.hbs",
-          "link": "/posts",
           "nav": true,
           "navOrder": 2,
-          "path": "/tmp/foo/posts/index.html",
-          "relDir": "posts",
-          "relPath": "posts/index.html",
           "tags": [
             "tag1",
             "tag2",
           ],
           "title": "Home",
         },
-      ],
-      "tag3": [
-        {
-          "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-          "_tag": "File",
-          "baseDir": "/tmp/foo",
-          "collection": {
-            "len": 3,
-            "name": "posts",
-            "previous": {
-              "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
-              "_tag": "File",
-              "baseDir": "/tmp/foo",
-              "collection": {
-                "len": 3,
-                "name": "posts",
-                "next": {
-                  "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>P3</h1>
-<p>p3 content</p>
-",
-                  "date": 2024-01-03T00:00:00.000Z,
-                  "draft": false,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2024-01-03T00:00:00.000Z,
-                    "draft": false,
-                    "layout": "post.hbs",
-                    "nav": true,
-                    "navOrder": 1,
-                    "tags": [
-                      "tag1",
-                      "tag3",
-                    ],
-                    "title": "P3",
-                  },
-                  "layout": "post.hbs",
-                  "link": "/posts/p3",
-                  "nav": true,
-                  "navOrder": 1,
-                  "path": "/tmp/foo/posts/p3/index.html",
-                  "relDir": "posts/p3",
-                  "relPath": "posts/p3/index.html",
-                  "tags": [
-                    "tag1",
-                    "tag3",
-                  ],
-                  "title": "P3",
+        "layout": "layout.hbs",
+        "link": "/posts",
+        "nav": true,
+        "navOrder": 2,
+        "path": "/tmp/foo/posts/index.html",
+        "relDir": "posts",
+        "relPath": "posts/index.html",
+        "tags": [
+          "tag1",
+          "tag2",
+        ],
+        "title": "Home",
+      },
+    ],
+    "tag3": [
+      {
+        "_id": "56b92724a5ed41ac6817e76408915c758d1ce978",
+        "_tag": "File",
+        "baseDir": "/tmp/foo",
+        "collection": {
+          "len": 3,
+          "name": "posts",
+          "previous": {
+            "_id": "af1250e6e96150b7d36c7b0448d0a11275cddb93",
+            "_tag": "File",
+            "baseDir": "/tmp/foo",
+            "collection": {
+              "len": 3,
+              "name": "posts",
+              "next": [Circular],
+              "previous": {
+                "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
+                "_tag": "File",
+                "baseDir": "/tmp/foo",
+                "collection": {
+                  "len": 3,
+                  "name": "posts",
+                  "next": [Circular],
                 },
-                "previous": {
-                  "_id": "5da00cfdc5bee8aa488d13af769799a7b4043766",
-                  "_tag": "File",
-                  "baseDir": "/tmp/foo",
-                  "contents": "<h1>Home</h1>
+                "contents": "<h1>Home</h1>
 <p>home content</p>
 ",
+                "date": 2023-12-31T00:00:00.000Z,
+                "fileBase": "index",
+                "fileExt": ".html",
+                "fileName": "index.html",
+                "frontMatter": {
                   "date": 2023-12-31T00:00:00.000Z,
-                  "fileBase": "index",
-                  "fileExt": ".html",
-                  "fileName": "index.html",
-                  "frontMatter": {
-                    "date": 2023-12-31T00:00:00.000Z,
-                    "layout": "layout.hbs",
-                    "nav": true,
-                    "navOrder": 2,
-                    "tags": [
-                      "tag1",
-                      "tag2",
-                    ],
-                    "title": "Home",
-                  },
                   "layout": "layout.hbs",
-                  "link": "/posts",
                   "nav": true,
                   "navOrder": 2,
-                  "path": "/tmp/foo/posts/index.html",
-                  "relDir": "posts",
-                  "relPath": "posts/index.html",
                   "tags": [
                     "tag1",
                     "tag2",
                   ],
                   "title": "Home",
                 },
+                "layout": "layout.hbs",
+                "link": "/posts",
+                "nav": true,
+                "navOrder": 2,
+                "path": "/tmp/foo/posts/index.html",
+                "relDir": "posts",
+                "relPath": "posts/index.html",
+                "tags": [
+                  "tag1",
+                  "tag2",
+                ],
+                "title": "Home",
               },
-              "contents": "<h1>P1</h1>
+            },
+            "contents": "<h1>P1</h1>
 <p>p1 content</p>
 ",
+            "date": 2024-01-01T00:00:00.000Z,
+            "draft": false,
+            "fileBase": "index",
+            "fileExt": ".html",
+            "fileName": "index.html",
+            "frontMatter": {
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
-              "fileBase": "index",
-              "fileExt": ".html",
-              "fileName": "index.html",
-              "frontMatter": {
-                "date": 2024-01-01T00:00:00.000Z,
-                "draft": false,
-                "layout": "post.hbs",
-                "title": "P1",
-              },
               "layout": "post.hbs",
-              "link": "/posts/p1",
-              "path": "/tmp/foo/posts/p1/index.html",
-              "relDir": "posts/p1",
-              "relPath": "posts/p1/index.html",
               "title": "P1",
             },
+            "layout": "post.hbs",
+            "link": "/posts/p1",
+            "path": "/tmp/foo/posts/p1/index.html",
+            "relDir": "posts/p1",
+            "relPath": "posts/p1/index.html",
+            "title": "P1",
           },
-          "contents": "<h1>P3</h1>
+        },
+        "contents": "<h1>P3</h1>
 <p>p3 content</p>
 ",
+        "date": 2024-01-03T00:00:00.000Z,
+        "draft": false,
+        "fileBase": "index",
+        "fileExt": ".html",
+        "fileName": "index.html",
+        "frontMatter": {
           "date": 2024-01-03T00:00:00.000Z,
           "draft": false,
-          "fileBase": "index",
-          "fileExt": ".html",
-          "fileName": "index.html",
-          "frontMatter": {
-            "date": 2024-01-03T00:00:00.000Z,
-            "draft": false,
-            "layout": "post.hbs",
-            "nav": true,
-            "navOrder": 1,
-            "tags": [
-              "tag1",
-              "tag3",
-            ],
-            "title": "P3",
-          },
           "layout": "post.hbs",
-          "link": "/posts/p3",
           "nav": true,
           "navOrder": 1,
-          "path": "/tmp/foo/posts/p3/index.html",
-          "relDir": "posts/p3",
-          "relPath": "posts/p3/index.html",
           "tags": [
             "tag1",
             "tag3",
           ],
           "title": "P3",
         },
-      ],
-    },
-    "keys": [
-      "tag1",
-      "tag2",
-      "tag3",
+        "layout": "post.hbs",
+        "link": "/posts/p3",
+        "nav": true,
+        "navOrder": 1,
+        "path": "/tmp/foo/posts/p3/index.html",
+        "relDir": "posts/p3",
+        "relPath": "posts/p3/index.html",
+        "tags": [
+          "tag1",
+          "tag3",
+        ],
+        "title": "P3",
+      },
     ],
   },
 }

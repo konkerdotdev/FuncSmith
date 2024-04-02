@@ -7,11 +7,12 @@ import type { FuncSmithError } from '../../error';
 import { toFuncSmithError } from '../../error';
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
 import { createFileSetItemFile } from '../../lib/fileSet/fileSetItem';
+import { idRefCreateFromFileSetItem } from '../../lib/fileSet/idRefs';
 import { extractFrontMatter, isFrontMatter } from '../../lib/frontMatter';
 import { handlebarsCompile, handlebarsRender } from '../../lib/handlebars-effect';
 import type { FrontMatter } from '../FrontMatter/types';
 import type { SourceContext } from '../Source';
-import type { Tags, TagsItem, TagsOptions } from './types';
+import type { TagsData, TagsItem, TagsOptions } from './types';
 
 // --------------------------------------------------------------------------
 export const TEMPLATES_DIR = 'templates';
@@ -24,7 +25,7 @@ export function isTagsItem<IF extends FileSetItem>(fileSetItem: IF): fileSetItem
 }
 
 // --------------------------------------------------------------------------
-export function extractTags<IF extends FileSetItem>(fileSet: FileSet<TagsItem<FrontMatter<IF>>>): Tags<IF>['keys'] {
+export function extractTags<IF extends FileSetItem>(fileSet: FileSet<TagsItem<FrontMatter<IF>>>): TagsData['keys'] {
   return P.pipe(
     fileSet,
     P.Array.map((i) => i.frontMatter.tags),
@@ -33,17 +34,21 @@ export function extractTags<IF extends FileSetItem>(fileSet: FileSet<TagsItem<Fr
 }
 
 export function compileTagsIndex<IF extends FileSetItem>(
-  keys: Tags<IF>['keys'],
+  keys: TagsData['keys'],
   fileSet: FileSet<TagsItem<FrontMatter<IF>>>
-): Tags<IF>['index'] {
+): TagsData['index'] {
   return P.pipe(
     keys as Array<string>,
     P.Array.foldl(
       (acc, val) => ({
         ...acc,
-        [val]: fileSet.filter((i) => i.frontMatter?.tags?.includes(val)),
+        [val]: P.pipe(
+          fileSet,
+          P.Array.filter((i) => i.frontMatter?.tags?.includes(val)),
+          P.Array.map(idRefCreateFromFileSetItem)
+        ),
       }),
-      {} as Tags<IF>['index']
+      {}
     )
   );
 }
@@ -61,9 +66,9 @@ export function readTemplate(templateFileName: string) {
 }
 
 // --------------------------------------------------------------------------
-export function createTags<IF extends FileSetItem>(
+export function createTagsData<IF extends FileSetItem>(
   fileSet: FileSet<IF | FrontMatter<IF>>
-): P.Effect.Effect<Tags<FrontMatter<IF>>, FuncSmithError> {
+): P.Effect.Effect<TagsData, FuncSmithError> {
   const tagsItems = fileSet.filter(isTagsItem);
   const keys = extractTags(tagsItems);
   const index = compileTagsIndex(keys, tagsItems);
@@ -94,7 +99,7 @@ export function createTagsPages<IF extends FileSetItem>(
   options: TagsOptions,
   source: SourceContext,
   tfs: TinyFileSystem,
-  tags: Tags<IF>,
+  tags: TagsData,
   fileSet: FileSet<IF | TagsItem<FrontMatter<IF>>>
 ): P.Effect.Effect<FileSet<FileSetItem | IF | FrontMatter<IF>>, FuncSmithError> {
   return P.pipe(

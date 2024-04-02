@@ -1,11 +1,11 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 
 import type { FileSet, FileSetItem } from '../../lib/fileSet';
+import type { IdRef } from '../../lib/fileSet/idRefs';
 import type { DefaultContext, FileSetMapping } from '../../types';
 import { FsDepContext } from '../../types';
-import type { FrontMatter } from '../FrontMatter/types';
 import * as lib from './lib';
-import type { NavItem, NavOptions } from './types';
+import type { NavOptions } from './types';
 
 export const DEFAULT_NAV_OPTIONS: NavOptions = {
   navProperty: 'nav',
@@ -14,8 +14,8 @@ export const DEFAULT_NAV_OPTIONS: NavOptions = {
 } as const;
 
 // --------------------------------------------------------------------------
-export type NavContext<IF extends FileSetItem> = {
-  readonly navIndex: FileSet<NavItem<FrontMatter<IF>>>;
+export type NavContext = {
+  readonly navIndex: ReadonlyArray<IdRef>;
 };
 
 export const nav =
@@ -24,7 +24,7 @@ export const nav =
   ) =>
   (
     next: FileSetMapping<IF, OF, R>
-  ): FileSetMapping<IF, OF, Exclude<R, FsDepContext<C & NavContext<IF>>> | FsDepContext<C>> =>
+  ): FileSetMapping<IF, OF, Exclude<R, FsDepContext<C & NavContext>> | FsDepContext<C>> =>
   (fileSet: FileSet<IF>) => {
     const safeOptions = { ...DEFAULT_NAV_OPTIONS, ...options };
 
@@ -37,8 +37,8 @@ export const nav =
           fileSet,
           next,
           P.Effect.provideService(
-            FsDepContext<C & NavContext<IF>>(),
-            FsDepContext<C & NavContext<IF>>().of({
+            FsDepContext<C & NavContext>(),
+            FsDepContext<C & NavContext>().of({
               ...fsDepContext,
               navIndex: nav,
             })
