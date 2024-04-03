@@ -1,5 +1,6 @@
 import * as P from '@konker.dev/effect-ts-prelude';
 import { toTinyError } from '@konker.dev/tiny-error-fp';
+import H from 'highlight.js';
 import markdownIt from 'markdown-it';
 
 import type { MarkdownOptions } from '../plugins/Markdown/types';
@@ -13,7 +14,17 @@ export type MarkdownItError = ReturnType<typeof toMarkdownItError>;
 
 // --------------------------------------------------------------------------
 export function adaptOptions(_options: MarkdownOptions | undefined): markdownIt.Options {
-  return {};
+  return {
+    highlight: function (str, lang) {
+      if (lang && H.getLanguage(lang)) {
+        try {
+          return H.highlight(lang, str, true).value;
+        } catch (__) {}
+      }
+
+      return ''; // use external default escaping
+    },
+  };
 }
 
 // --------------------------------------------------------------------------
