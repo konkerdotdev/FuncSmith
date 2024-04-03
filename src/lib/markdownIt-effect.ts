@@ -15,10 +15,10 @@ export type MarkdownItError = ReturnType<typeof toMarkdownItError>;
 // --------------------------------------------------------------------------
 export function adaptOptions(_options: MarkdownOptions | undefined): markdownIt.Options {
   return {
-    highlight: function (str, lang) {
-      if (lang && H.getLanguage(lang)) {
+    highlight: function (str, language) {
+      if (language && H.getLanguage(language)) {
         try {
-          return H.highlight(lang, str, true).value;
+          return H.highlight(str, { language, ignoreIllegals: true }).value;
         } catch (__) {}
       }
 

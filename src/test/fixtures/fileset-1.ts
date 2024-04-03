@@ -115,7 +115,7 @@ export const TEST_FILE_SET_1: Array<FileSetItem> = [
     _tag: FileSetItemType.File,
     baseDir: '/tmp/foo',
     contents: stringToUint8Array(
-      '---\ntitle: P1\nlayout: post.hbs\ndate: 2024-01-01\ndraft: false\n---\n# P1\np1 content'
+      "---\ntitle: P1\nlayout: post.hbs\ndate: 2024-01-01\ndraft: false\n---\n# P1\np1 content\n```typescript\nimport * as P from '@konker.dev/effect-ts-prelude';\n\n// A pipeh\nexport function foo(x: number) {\n  P.pipe(x, (x) => x * 2);\n}\n\nconsole.log(foo(2)); // 4\n```"
     ),
     fileBase: 'p1',
     fileExt: '.md',
