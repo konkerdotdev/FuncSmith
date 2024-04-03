@@ -255,6 +255,15 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         },
         "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
         "date": 2024-01-01T00:00:00.000Z,
         "draft": false,
@@ -325,6 +334,15 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "collection": [Circular],
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,
@@ -392,6 +410,15 @@ exports[`funcsmith integration: integration-test-1 1`] = `
             "collection": [Circular],
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,
@@ -558,6 +585,15 @@ exports[`funcsmith integration: integration-test-1 1`] = `
         },
         "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
         "date": 2024-01-01T00:00:00.000Z,
         "draft": false,
@@ -807,6 +843,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               },
               "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
@@ -950,6 +995,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
           },
           "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
           "date": 2024-01-01T00:00:00.000Z,
           "draft": false,
@@ -1027,6 +1081,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
               },
               "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
               "date": 2024-01-01T00:00:00.000Z,
               "draft": false,
@@ -1152,6 +1215,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
           },
           "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
           "date": 2024-01-01T00:00:00.000Z,
           "draft": false,
@@ -1265,6 +1337,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
           },
           "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
           "date": 2024-01-01T00:00:00.000Z,
           "draft": false,
@@ -1387,6 +1468,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
             },
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,
@@ -1496,6 +1586,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
             },
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,
@@ -1611,6 +1710,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
             },
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,
@@ -1722,6 +1830,15 @@ exports[`funcsmith integration: integration-test-env-1-context 1`] = `
             },
             "contents": "<h1>P1</h1>
 <p>p1 content</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> P <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@konker.dev/effect-ts-prelude&#x27;</span>;
+
+<span class="hljs-comment">// A pipeh</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) {
+  P.<span class="hljs-title function_">pipe</span>(x, <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">foo</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 4</span>
+</code></pre>
 ",
             "date": 2024-01-01T00:00:00.000Z,
             "draft": false,

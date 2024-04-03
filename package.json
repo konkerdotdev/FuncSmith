@@ -1,6 +1,6 @@
 {
   "name": "@konker.dev/funcsmith",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "author": "Konrad Markus <mail@konker.dev>",
   "description": "Functional file processor based on the ideas of Metalsmith",
   "license": "ISC",
@@ -35,6 +35,7 @@
     "@konker.dev/tiny-treecrawler-fp": "^0.0.17",
     "effect": "^2.4.1",
     "handlebars": "^4.7.8",
+    "highlight.js": "^11.9.0",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
     "micromatch": "^4.0.5"

@@ -199,7 +199,17 @@ home content",
     "_tag": "File",
     "baseDir": "/tmp/foo",
     "contents": "# P1
-p1 content",
+p1 content
+\`\`\`typescript
+import * as P from '@konker.dev/effect-ts-prelude';
+
+// A pipeh
+export function foo(x: number) {
+  P.pipe(x, (x) => x * 2);
+}
+
+console.log(foo(2)); // 4
+\`\`\`",
     "date": 2024-01-01T00:00:00.000Z,
     "draft": false,
     "fileBase": "p1",
