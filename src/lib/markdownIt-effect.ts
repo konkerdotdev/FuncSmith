@@ -15,6 +15,7 @@ export type MarkdownItError = ReturnType<typeof toMarkdownItError>;
 // --------------------------------------------------------------------------
 export function adaptOptions(_options: MarkdownOptions | undefined): markdownIt.Options {
   return {
+    langPrefix: 'hljs language-',
     highlight: function (str, language) {
       if (language && H.getLanguage(language)) {
         try {
