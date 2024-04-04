@@ -6,6 +6,7 @@ layout: post.hbs
 
 A super-interesting piece of prose I have already written weeks ago.
 
+And now for some code:
 ```typescript
 import * as P from '@konker.dev/effect-ts-prelude';
 

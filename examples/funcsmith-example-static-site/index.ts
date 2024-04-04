@@ -3,6 +3,7 @@ import * as P from '@konker.dev/effect-ts-prelude';
 
 import * as F from '@konker.dev/funcsmith';
 import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/layers';
+import { FsDepContextDefault } from '@konker.dev/funcsmith/dist/layers';
 
 (async () => {
   const pluginStack = P.pipe(
@@ -24,6 +25,7 @@ import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/lay
       },
       globPattern: '**/*.html',
     }),
+    F.inlineIdRefs(),
     F.collections({
       posts: {
         globPattern: 'posts/**/*.html',
@@ -59,6 +61,11 @@ import { FsDepReaderLive, FsDepWriterLive } from '@konker.dev/funcsmith/dist/lay
   );
 
   return P.Effect.runPromise(
-    P.pipe(F.FuncSmith(pluginStack), P.Effect.provide(FsDepReaderLive), P.Effect.provide(FsDepWriterLive))
+    P.pipe(
+      F.FuncSmith(pluginStack),
+      P.Effect.provide(FsDepContextDefault),
+      P.Effect.provide(FsDepReaderLive),
+      P.Effect.provide(FsDepWriterLive)
+    )
   );
 })();

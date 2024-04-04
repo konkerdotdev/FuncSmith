@@ -23,8 +23,9 @@
   "packageManager": "pnpm@8",
   "dependencies": {
     "@konker.dev/effect-ts-prelude": "^0.0.13",
-    "@konker.dev/funcsmith": "^0.0.12",
-    "effect": "^2.4.1"
+    "@konker.dev/funcsmith": "^0.0.24",
+    "effect": "^2.4.1",
+    "highlight.js": "^11.9.0"
   },
   "devDependencies": {
     "@effect/language-service": "^0.0.21",
