@@ -58,7 +58,7 @@
   },
   "scripts": {
     "test": "jest --no-cache --passWithNoTests -w 4",
-    "clean": "rm -rf dist && rm -rf coverage && rm -f tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist && rm -f tsconfig.tsbuildinfo",
     "typecheck": "tsc --noEmit",
     "build": "ts-node --swc ./index.ts",
     "circular-check": "madge --extensions ts --circular --no-color --no-spinner --warning --ts-config ./tsconfig.json .",
